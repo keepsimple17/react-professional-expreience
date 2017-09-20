@@ -1,0 +1,35 @@
+#privacy {
+  background-color: #fff;
+  color: rgba(0, 0, 0, .85);
+  padding: 3rem 0;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 40rem;
+  padding: 0 1.5rem;
+}
+
+h1,
+h2 {
+  text-transform: uppercase;
+}
+
+h1 {
+  color: #63B5E7;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2rem;
+  color: rgba(55, 55, 55, .85);
+}
+
+p {
+  text-align: justify;
+}
+
+hr {
+  max-width: 50%;
+  margin: 3rem auto;
+}
