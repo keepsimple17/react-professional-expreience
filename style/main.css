@@ -102,3 +102,14 @@ and (max-device-width : 1024px)  {
     text-align: center;
   }
 }
+
+.policy a {
+  color: rgba(255, 255, 255, .85);
+  font-size: .8em;
+  text-transform: uppercase;
+}
+
+.policy a:hover,
+.policy a:active {
+  color: rgba(255, 255, 255, 1);
+}
