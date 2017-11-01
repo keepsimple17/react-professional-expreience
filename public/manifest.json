@@ -1,15 +1,18 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "background_color": "#ffffff",
+  "description": "Measure your carbon footprint by using our app to detect where you've been, and purchase carbon offsets through reputable, government-certified programs.",
+  "display": "fullscreen",
   "icons": [
     {
+      "sizes": "32x32 16x16",
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
   ],
+  "lang": "en-US",
+  "name": "CrisisEarth",
+  "orientation": "any",
+  "short_name": "CrisisEarth",
   "start_url": "./index.html",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ffffff"
 }
