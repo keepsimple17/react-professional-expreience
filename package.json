@@ -1,8 +1,16 @@
 {
-  "name": "website",
-  "version": "0.1.0",
-  "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
+  "dependencies": {
+    "bootstrap": "~4.0.0-beta.2",
+    "griddity": "~0.4.0",
+    "react": "~16.0.0",
+    "react-dom": "~16.0.0",
+    "react-router-dom": "~4.2.2"
+  },
   "devDependencies": {
     "autoprefixer": "~7.1.6",
     "babel-core": "~6.26.0",
@@ -46,13 +54,6 @@
     "webpack-manifest-plugin": "~1.3.2",
     "whatwg-fetch": "~2.0.3"
   },
-  "dependencies": {
-    "bootstrap": "~4.0.0-beta.2",
-    "griddity": "~0.4.0",
-    "react": "~16.0.0",
-    "react-dom": "~16.0.0",
-    "react-router-dom": "~4.2.2"
-  },
   "echint": {
     "ignore": [
       "build/**",
@@ -73,6 +74,11 @@
       "jsx-a11y/anchor-is-valid": [
         "error",
         {
+          "aspects": [
+            "noHref",
+            "invalidHref",
+            "preferButton"
+          ],
           "components": [
             "Link",
             "NavLink"
@@ -81,11 +87,6 @@
             "hrefLeft",
             "hrefRight",
             "to"
-          ],
-          "aspects": [
-            "noHref",
-            "invalidHref",
-            "preferButton"
           ]
         }
       ]
@@ -95,37 +96,10 @@
     "build/",
     "src/registerServiceWorker.js"
   ],
-  "scripts": {
-    "build": "node scripts/build.js",
-    "format": "prettier-standard '{config,src,scripts}/**/*.{js,jsx,test.jsx}'",
-    "lint": "echint && eslint '**/*.{js,jsx}'",
-    "start": "node scripts/start.js",
-    "test": "npm run lint && node scripts/test.js --env=jsdom"
-  },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,mjs}"
     ],
-    "setupFiles": [
-      "<rootDir>/config/polyfills.js"
-    ],
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
-      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
-    ],
-    "testEnvironment": "node",
-    "testURL": "http://localhost",
-    "transform": {
-      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-    },
-    "transformIgnorePatterns": [
-      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
-    ],
-    "moduleNameMapper": {
-      "^react-native$": "react-native-web"
-    },
     "moduleFileExtensions": [
       "web.js",
       "mjs",
@@ -134,11 +108,37 @@
       "web.jsx",
       "jsx",
       "node"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web"
+    },
+    "setupFiles": [
+      "<rootDir>/config/polyfills.js"
+    ],
+    "testEnvironment": "node",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+    ],
+    "testURL": "http://localhost",
+    "transform": {
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js",
+      "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js"
+    },
+    "transformIgnorePatterns": [
+      "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$"
     ]
   },
-  "babel": {
-    "presets": [
-      "react-app"
-    ]
-  }
+  "license": "SEE LICENSE IN LICENSE",
+  "name": "website",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build.js",
+    "format": "prettier-standard '{config,src,scripts}/**/*.{js,jsx,test.jsx}'",
+    "lint": "echint && eslint '**/*.{js,jsx}'",
+    "start": "node scripts/start.js",
+    "test": "npm run lint && node scripts/test.js --env=jsdom"
+  },
+  "version": "0.1.0"
 }
