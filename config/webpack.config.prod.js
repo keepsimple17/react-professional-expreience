@@ -186,6 +186,7 @@ module.exports = {
                       ident: 'postcss',
                       plugins: () => [
                         require('postcss-import'),
+                        require('postcss-nesting'),
                         require('postcss-custom-media'),
                         require('postcss-custom-properties'),
                         require('postcss-color-function'),
