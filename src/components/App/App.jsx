@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
+import AppFooter from '../AppFooter/AppFooter'
 import AppHeader from '../AppHeader/AppHeader'
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
         render={({ match }) => `Profile of ${match.params.username}`}
       />
       <Route exact path="/download" render={() => 'Download'} />
+      <AppFooter />
     </div>
   </Router>
 )
