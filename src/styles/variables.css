@@ -1,0 +1,20 @@
+:root {
+  --azure: #1ba1fb;
+  --gunmetal: #50696c;
+  --pale-grey: #f0f3f4;
+  --reddish: #d03b3b;
+  --slate: #4d666a;
+
+  --griddity-gutter-width: 3rem;
+  --griddity-gutter-compensation: calc(var(--griddity-gutter-width) * -0.5);
+  --griddity-half-gutter: calc((var(--griddity-gutter-width) * 0.5));
+  --griddity-container-sm: calc(608px - var(--griddity-gutter-width));
+  --griddity-container-md: calc(912px - var(--griddity-gutter-width));
+  --griddity-container-lg: calc(1200px - var(--griddity-gutter-width));
+  --griddity-container-xl: calc(1500px - var(--griddity-gutter-width));
+}
+
+@custom-media --griddity-sm-viewport only screen and (min-width: 608px);
+@custom-media --griddity-md-viewport only screen and (min-width: 912px);
+@custom-media --griddity-lg-viewport only screen and (min-width: 1200px);
+@custom-media --griddity-xl-viewport only screen and (min-width: 1500px);
