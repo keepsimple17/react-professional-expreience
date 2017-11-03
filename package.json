@@ -60,6 +60,9 @@
       "src/registerServiceWorker.js"
     ]
   },
+  "engines": {
+    "node": ">=6.4.0"
+  },
   "eslintConfig": {
     "env": {
       "jest": true
