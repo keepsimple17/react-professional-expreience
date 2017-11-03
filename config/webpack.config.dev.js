@@ -169,15 +169,17 @@ module.exports = {
                   // https://github.com/facebookincubator/create-react-app/issues/2677
                   ident: 'postcss',
                   plugins: () => [
+                    require('postcss-import'),
                     require('postcss-custom-media'),
                     require('postcss-custom-properties'),
+                    require('postcss-color-function'),
                     require('postcss-flexbugs-fixes'),
                     autoprefixer({
                       browsers: [
                         '>1%',
                         'last 4 versions',
                         'Firefox ESR',
-                        'not ie < 9' // React doesn't support IE8 anyway
+                        'not ie < 11'
                       ],
                       flexbox: 'no-2009'
                     })
