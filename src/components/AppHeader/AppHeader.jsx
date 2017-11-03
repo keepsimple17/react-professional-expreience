@@ -19,11 +19,7 @@ const AppHeader = () => (
           <p className="offer">
             Track and offset your carbon footprint
             <a href="https://store.apple.com">
-              <img
-                src={appleStoreBadge}
-                className="download-badge"
-                alt="Download on apple store"
-              />
+              <img src={appleStoreBadge} className="download-badge" alt="Download on apple store" />
             </a>
           </p>
         </div>

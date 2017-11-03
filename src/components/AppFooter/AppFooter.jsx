@@ -22,25 +22,19 @@ const AppFooter = () => (
             </li>
             <li className="item d-md-inline-block">
               <Link className="link" to="/terms">
-                <small>
-                  Terms of use
-                </small>
+                <small>Terms of use</small>
               </Link>
             </li>
             <li className="item d-md-inline-block">
               <Link className="link" to="/privacy">
-                <small>
-                  Privacy policy
-                </small>
+                <small>Privacy policy</small>
               </Link>
             </li>
           </ul>
         </div>
         <div className="col-12 col-md-auto order-md-first">
           <p className="copyright">
-            <small>
-              © copyright 2017 cirsis:earth - all rights reserved
-            </small>
+            <small>© copyright 2017 cirsis:earth - all rights reserved</small>
           </p>
         </div>
       </div>
