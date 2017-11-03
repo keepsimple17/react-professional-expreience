@@ -1,5 +1,12 @@
+:root {
+  --azure: #1ba1fb;
+  --gunmetal: #50696c;
+  --pale-grey: #f0f3f4;
+  --reddish: #d03b3b;
+  --slate: #4d666a;
+}
+
 body {
-  margin: 0;
-  padding: 0;
+  background-color: var(--pale-grey);
   font-family: sans-serif;
 }
