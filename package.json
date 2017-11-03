@@ -45,7 +45,7 @@
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "format": "prettier-standard 'src/**/*.{js,jsx}'",
+    "format": "prettier-standard 'src/**/*.{js,jsx,test.jsx}'",
     "lint": "echint && eslint '**/*.{js,jsx}'",
     "start": "react-scripts start",
     "test": "npm run lint && react-scripts test --env=jsdom"
