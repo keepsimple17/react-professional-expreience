@@ -1,8 +1,18 @@
+@import '../../styles/variables.css';
+
 .app-header {
   background-color: #fff;
-}
-
-.app-header .logo {
-  height: 1.5rem;
-  margin: 1.75rem 0;
+  border-bottom: 1px solid var(--pale-grey);
+  & .logo {
+    height: 1.5rem;
+    margin: 1.75rem 0;
+  }
+  & .offer {
+    color: color(var(--slate) alpha(50%));
+    margin: 0;
+  }
+  & .download-badge {
+    height: 2rem;
+    margin-left: 1rem;
+  }
 }
