@@ -1,0 +1,8 @@
+.app-header {
+  background-color: #fff;
+}
+
+.app-header .logo {
+  height: 1.5rem;
+  margin: 1.75rem 0;
+}
