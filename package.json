@@ -52,6 +52,8 @@
     "raf": "~3.4.0",
     "react-dev-utils": "~4.2.1",
     "style-loader": "~0.19.0",
+    "stylelint": "~8.2.0",
+    "stylelint-config-standard": "~17.0.0",
     "sw-precache-webpack-plugin": "~0.11.4",
     "url-loader": "~0.6.2",
     "webpack": "~3.8.1",
@@ -143,10 +145,15 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build.js",
-    "format": "prettier-standard '{config,src,scripts}/**/*.{js,jsx,test.jsx}'",
-    "lint": "echint && eslint '**/*.{js,jsx}'",
+    "format": "prettier-standard '{config,scripts,src}/**/*.{js,jsx}' && stylelint 'src/**/*.css' --fix",
+    "lint": "echint && eslint '{config,scripts,src}/**/*.{js,jsx}' && stylelint 'src/**/*.css'",
     "start": "node scripts/start.js",
     "test": "npm run lint && node scripts/test.js --env=jsdom"
+  },
+  "stylelint": {
+    "extends": [
+      "stylelint-config-standard"
+    ]
   },
   "version": "0.1.0"
 }
