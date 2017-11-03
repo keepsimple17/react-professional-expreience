@@ -8,7 +8,11 @@ const App = () => (
     <div>
       <AppHeader />
       <Route exact path="/" render={() => 'Home'} />
-      <Route exact path="/profile/:username" render={({ match }) => `Profile of ${match.params.username}`} />
+      <Route
+        exact
+        path="/profile/:username"
+        render={({ match }) => `Profile of ${match.params.username}`}
+      />
       <Route exact path="/download" render={() => 'Download'} />
     </div>
   </Router>

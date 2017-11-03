@@ -11,7 +11,6 @@ const AppHeader = () => (
       <Link to="/">
         <img src={logo} className="logo" alt="CrisisEarth logo" />
       </Link>
-
     </div>
   </header>
 )
