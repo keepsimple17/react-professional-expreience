@@ -36,7 +36,29 @@
       "airbnb",
       "standard"
     ],
-    "root": true
+    "root": true,
+    "rules": {
+      "import/no-named-as-default": "off",
+      "jsx-a11y/anchor-is-valid": [
+        "error",
+        {
+          "components": [
+            "Link",
+            "NavLink"
+          ],
+          "specialLink": [
+            "hrefLeft",
+            "hrefRight",
+            "to"
+          ],
+          "aspects": [
+            "noHref",
+            "invalidHref",
+            "preferButton"
+          ]
+        }
+      ]
+    }
   },
   "eslintIgnore": [
     "build/",
