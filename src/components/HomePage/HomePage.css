@@ -1,0 +1,17 @@
+@import '../../styles/variables.css';
+
+.home-page {
+  & .single-input-form {
+    margin: 0 auto;
+  }
+}
+
+.search-hero {
+  background-color: var(--azure);
+  padding: 3.5rem 0;
+
+  & .title {
+    color: #fff;
+    font-weight: normal;
+  }
+}
