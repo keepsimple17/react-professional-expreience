@@ -6,8 +6,41 @@
   }
 }
 
+.top-producers {
+  padding: 3rem 0;
+
+  & .top-producers-heading {
+    color: var(--slate);
+    font-weight: normal;
+    margin-bottom: 2rem;
+  }
+}
+
+.producer-row {
+  padding-bottom: 1.5rem;
+  padding-top: 1.5rem;
+}
+
+.trip-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  & .trip-item {
+    display: inline-block;
+    width: 8rem;
+
+    & + .trip-item {
+      margin-left: 1.5rem;
+    }
+  }
+}
+
 .search-hero {
   background-color: var(--azure);
+  box-shadow:
+    0 1px 2px 0 rgba(17, 17, 17, 0.15),
+    0 2px 4px 2px rgba(155, 177, 183, 0.3);
   padding: 3.5rem 0;
 
   & .title {
