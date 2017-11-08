@@ -1,0 +1,64 @@
+@import '../../styles/variables.css';
+
+.profile-card {
+  width: 100%;
+
+  & .picture {
+    height: 7.5rem;
+    border-radius: 50%;
+    width: 7.5rem;
+  }
+
+  & .profile-links-col {
+    /* flex-box + ellipsis hack */
+    color: color(var(--slate) alpha(50%));
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  & .heading {
+    color: var(--slate);
+    display: inline;
+    font-size: 2rem;
+    font-weight: 300;
+  }
+
+  & .small {
+    color: color(var(--slate) alpha(50%));
+    display: inline;
+    font-size: 1rem;
+    margin-left: 1rem;
+  }
+
+  & .danger-button + .danger-button {
+    margin-left: 0.625rem;
+  }
+}
+
+.danger-button {
+  border-radius: 0.25rem;
+  border: 2px solid var(--reddish);
+  color: var(--reddish);
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: -0.0125em;
+  padding: 0.5rem;
+  transition: all 150ms ease-in-out 0s;
+
+  &:hover {
+    border-color: color(var(--reddish) lightness(-6%));
+    color: color(var(--reddish) lightness(-6%));
+    text-decoration: none;
+  }
+
+  &.-fill {
+    background-color: var(--reddish);
+    color: #fff;
+
+    &:hover {
+      background-color: color(var(--reddish) lightness(-6%));
+      color: #fff;
+    }
+  }
+}
