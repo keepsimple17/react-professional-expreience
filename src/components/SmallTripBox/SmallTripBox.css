@@ -1,7 +1,44 @@
+@import '../../styles/variables.css';
 
 .small-trip-box {
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+
   & .trip-picture {
     height: 100%;
+    transition: all 200ms ease-in 0s;
     width: 100%;
+  }
+
+  & .trip-overlay {
+    background-color: color(var(--reddish) alpha(40%));
+    border: 2px solid var(--reddish);
+    bottom: 0;
+    color: #fff;
+    font-size: 1.25rem;
+    left: 0;
+    letter-spacing: 0.01em;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    transition: all 200ms ease-in 0s;
+
+    & p {
+      margin: 0;
+    }
+  }
+
+  &:hover,
+  &:active {
+    & .trip-picture {
+      filter: blur(3px);
+    }
+
+    & .trip-overlay {
+      opacity: 1;
+    }
   }
 }
