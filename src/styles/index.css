@@ -14,3 +14,9 @@ body {
   background-color: var(--pale-grey);
   font-family: 'Montserrat', sans-serif;
 }
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
