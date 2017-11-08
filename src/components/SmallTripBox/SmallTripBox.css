@@ -1,0 +1,7 @@
+
+.small-trip-box {
+  & .trip-picture {
+    height: 100%;
+    width: 100%;
+  }
+}
