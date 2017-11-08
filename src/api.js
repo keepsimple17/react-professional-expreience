@@ -21,10 +21,11 @@ const formatProfile = profile => ({
   username: profile.login.username
 })
 
-const fetchTopProducers = (n = 8) => fetch(`${REACT_APP_API_URI}?results=${n}`)
-  .then(res => res.json())
-  .then(data => data.results)
-  .then(profiles => profiles.map(formatProfile))
+const fetchTopProducers = (n = 8) =>
+  fetch(`${REACT_APP_API_URI}?results=${n}`)
+    .then(res => res.json())
+    .then(data => data.results)
+    .then(profiles => profiles.map(formatProfile))
 
 export default {
   fetchTopProducers

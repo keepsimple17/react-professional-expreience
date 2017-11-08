@@ -29,14 +29,8 @@ class SingleInputForm extends Component {
           value={this.value}
         />
         <button className="submit" type="submit" title={this.props.buttonText || 'Submit'}>
-          {this.props.iconUrl && (
-            <img className="icon" src={this.props.iconUrl} alt="Submit" />
-          )}
-          {this.props.buttonText && (
-            <span className="text">
-              {this.props.buttonText}
-            </span>
-          )}
+          {this.props.iconUrl && <img className="icon" src={this.props.iconUrl} alt="Submit" />}
+          {this.props.buttonText && <span className="text">{this.props.buttonText}</span>}
         </button>
       </form>
     )

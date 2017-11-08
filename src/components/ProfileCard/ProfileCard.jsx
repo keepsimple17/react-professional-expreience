@@ -17,11 +17,19 @@ const ProfileCard = ({ profile }) => {
         </div>
         <div className="col profile-links-col">
           <h3 className="text-ellipsis">
-            <Link className="heading" title="See carbon production" to={`/profile/${profile.username}`}>
+            <Link
+              className="heading"
+              title="See carbon production"
+              to={`/profile/${profile.username}`}
+            >
               {heading}
             </Link>
             {profile.fullName && (
-              <a className="small" title="Go to Instagram profile" href={`https://www.instagram.com/${profile.username}`}>
+              <a
+                className="small"
+                href={`https://www.instagram.com/${profile.username}`}
+                title="Go to Instagram profile"
+              >
                 {`@${profile.username}`}
               </a>
             )}

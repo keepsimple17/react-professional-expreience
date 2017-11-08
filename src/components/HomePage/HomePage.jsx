@@ -33,9 +33,7 @@ class HomePage extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <h2 className="title text-center">
-                  Enter an Instagram username to begin:
-                </h2>
+                <h2 className="title text-center">Enter an Instagram username to begin:</h2>
               </div>
             </div>
             <div className="row">
