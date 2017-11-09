@@ -17,9 +17,19 @@ class ProfilePage extends Component {
     }
   }
 
-  async componentWillMount () {
-    const profile = await api.fetchProfile(this.props.username)
-    const friends = await api.fetchProfileFriends(this.props.username)
+  componentWillMount () {
+    this.updateProfileData(this.props.username)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.username !== nextProps.username) {
+      this.updateProfileData(nextProps.username)
+    }
+  }
+
+  async updateProfileData (username) {
+    const profile = await api.fetchProfile(username)
+    const friends = await api.fetchProfileFriends(username)
 
     this.setState(() => ({
       friends,
