@@ -1,0 +1,36 @@
+@import '../../styles/variables.css';
+
+.profile-page {
+  & .profile-overview {
+    background-color: #fff;
+    padding: 1.5rem 0;
+
+    & .trip-grid {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+
+      & .trip-item {
+        display: inline-block;
+        height: 2rem;
+        width: 2rem;
+        margin: 0 0.5rem 0.5rem 0;
+      }
+    }
+  }
+
+  & .profile-contents {
+    padding: 3rem 0;
+
+    & .trips-heading {
+      color: var(--slate);
+      font-size: 2rem;
+      font-weight: normal;
+      margin-bottom: 1em;
+    }
+  }
+
+  & .trip-col {
+    padding-bottom: 2rem;
+  }
+}
