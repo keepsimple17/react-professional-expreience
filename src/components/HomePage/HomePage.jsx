@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import api from '../../api'
+import randomInt from '../../util/randomInt'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SmallTripBox from '../SmallTripBox/SmallTripBox'
@@ -33,7 +34,9 @@ class HomePage extends Component {
           <div className="container">
             <div className="row">
               <div className="col">
-                <h2 className="title text-center">Enter an Instagram username to begin:</h2>
+                <h2 className="search-hero-title text-center">
+                  Enter an Instagram username to begin:
+                </h2>
               </div>
             </div>
             <div className="row">
@@ -63,9 +66,9 @@ class HomePage extends Component {
                 </div>
                 <div className="d-none d-lg-block col-lg-7">
                   <ul className="trip-list">
-                    {profile.trips.map(trip => (
-                      <li className="trip-item">
-                        <SmallTripBox trip={trip} key={trip.pictureUrl} />
+                    {profile.trips.slice(0, randomInt(1, 6)).map(trip => (
+                      <li className="trip-item" key={trip.pictureUrl}>
+                        <SmallTripBox trip={trip} />
                       </li>
                     ))}
                   </ul>
