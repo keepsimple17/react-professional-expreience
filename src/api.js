@@ -30,7 +30,10 @@ const fetchTopProducers = (n = 8) =>
 
 const fetchProfile = username => fetchTopProducers(1).then(profiles => profiles[0])
 
+const fetchProfileFriends = username => fetchTopProducers()
+
 export default {
   fetchProfile,
+  fetchProfileFriends,
   fetchTopProducers
 }
