@@ -22,6 +22,7 @@
   & .profile-contents {
     padding: 3rem 0;
 
+    & .friends-heading,
     & .trips-heading {
       color: var(--slate);
       font-size: 2rem;
@@ -32,5 +33,21 @@
 
   & .trip-col {
     padding-bottom: 2rem;
+  }
+
+  & .friend-list {
+    list-style: none;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+
+    & .friend-item {
+      padding: 0;
+
+      /* little dirty hack to make these 20% smaller */
+      transform: scale(0.8);
+      transform-origin: center left;
+      width: 125%;
+    }
   }
 }
