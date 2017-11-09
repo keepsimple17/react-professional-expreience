@@ -1,23 +1,24 @@
 /* global fetch */
 
+import randomInt from './util/randomInt'
+
 const { REACT_APP_API_URI } = process.env
 
-const getRandomInt = (min = 0, max = 1) => {
-  const floor = Math.ceil(min)
-  const ceil = Math.floor(max)
-  return Math.floor(Math.random() * (ceil - floor)) + floor
-}
+const getRandomLetter = () => String.fromCharCode(randomInt(65, 91))
 
 const getRandomTrip = () => ({
-  carbonOutput: getRandomInt(100, 1000),
-  pictureUrl: `https://source.unsplash.com/random/420x420?${String.fromCharCode(getRandomInt(65, 91))}`
+  carbonOutput: randomInt(100, 1000),
+  date: '25 Jun 14',
+  destination: 'Honolulu, HI',
+  distance: randomInt(30, 900),
+  pictureUrl: `https://source.unsplash.com/random/420x420?${getRandomLetter()}`
 })
 
 const formatProfile = profile => ({
-  carbonOutput: getRandomInt(1000, 10000),
+  carbonOutput: randomInt(1000, 10000),
   fullName: `${profile.name.first || ''} ${profile.name.last || ''}`.trim(),
   profilePictureUrl: profile.picture.large,
-  trips: Array.from({ length: getRandomInt(3, 6) }, getRandomTrip),
+  trips: Array.from({ length: randomInt(1, 50) }, getRandomTrip),
   username: profile.login.username
 })
 
@@ -27,6 +28,9 @@ const fetchTopProducers = (n = 8) =>
     .then(data => data.results)
     .then(profiles => profiles.map(formatProfile))
 
+const fetchProfile = username => fetchTopProducers(1).then(profiles => profiles[0])
+
 export default {
+  fetchProfile,
   fetchTopProducers
 }
