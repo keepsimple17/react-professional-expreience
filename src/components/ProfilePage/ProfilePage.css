@@ -11,10 +11,28 @@
       list-style: none;
 
       & .trip-item {
+        cursor: pointer;
         display: inline-block;
         height: 2rem;
-        width: 2rem;
         margin: 0 0.5rem 0.5rem 0;
+        position: relative;
+        width: 2rem;
+
+        &:hover .small-trip-box {
+          opacity: 1;
+        }
+
+        & .small-trip-box {
+          height: 300%;
+          left: -50%;
+          opacity: 0;
+          pointer-events: none;
+          position: absolute;
+          top: -50%;
+          transition: all 150ms ease-in-out 0s;
+          width: 300%;
+          z-index: 10;
+        }
       }
     }
   }

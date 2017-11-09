@@ -8,6 +8,17 @@ import TripCard from '../TripCard/TripCard'
 
 import './ProfilePage.css'
 
+const getColor = (carbon) => {
+  // Blue if no carbon output
+  if (!carbon) return '#1ba1fb'
+
+  const s = Math.min(carbon * 64 / 450000, 64)
+  const l = 100 - Math.min(carbon * 48 / 450000, 48)
+  const a = Math.min(carbon / 450000, 1)
+
+  return `hsla(0, ${s}%, ${l}%, ${a})`
+}
+
 class ProfilePage extends Component {
   constructor (props) {
     super(props)
@@ -51,7 +62,13 @@ class ProfilePage extends Component {
               <div className="d-none d-lg-block col-lg-7">
                 <ul className="trip-grid">
                   {this.state.profile && this.state.profile.trips.map(trip => (
-                    <li className="trip-item" key={trip.pictureUrl}>
+                    <li
+                      className="trip-item"
+                      key={trip.pictureUrl}
+                      style={{
+                        backgroundColor: getColor(trip.carbonOutput)
+                      }}
+                    >
                       <SmallTripBox trip={trip} />
                     </li>
                   ))}
