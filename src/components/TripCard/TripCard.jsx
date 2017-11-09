@@ -5,16 +5,20 @@ import './TripCard.css'
 
 const TripCard = ({ profile, trip }) => (
   <div className="trip-card">
-    <div className="row details-row">
+    <div className="row no-gutters details-row">
       <div className="col-auto">
         <img className="profile-picture" src={profile.profilePictureUrl} alt={profile.fullName} />
       </div>
       <div className="col">
         <p className="trip-description">
-          {
-            `${profile.fullName || profile.username} took a ${trip.distance} mile trip to
-            ${trip.destination} and did not pay to offset his carbon.`
-          }
+          <strong>
+            {profile.fullName || `@${profile.username}`}
+          </strong>
+          {' took a '}
+          <strong>
+            {trip.distance}
+          </strong>
+          {` mile trip to ${trip.destination} and did not pay to offset his carbon.`}
         </p>
       </div>
       <div className="col-auto">
