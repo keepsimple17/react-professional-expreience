@@ -12,8 +12,8 @@ import searchIcon from '../../img/icons/search.svg'
 import './HomePage.css'
 
 class HomePage extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       topProducers: []
     }

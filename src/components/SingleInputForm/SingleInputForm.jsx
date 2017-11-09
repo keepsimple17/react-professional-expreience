@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import './SingleInputForm.css'
 
 class SingleInputForm extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       value: ''
     }
@@ -51,6 +50,4 @@ SingleInputForm.propTypes = {
   type: PropTypes.string
 }
 
-export { SingleInputForm }
-
-export default withRouter(SingleInputForm)
+export default SingleInputForm

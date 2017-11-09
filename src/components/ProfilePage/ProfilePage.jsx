@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
 
 import api from '../../api'
 import ProfileCard from '../ProfileCard/ProfileCard'
@@ -10,8 +9,8 @@ import TripCard from '../TripCard/TripCard'
 import './ProfilePage.css'
 
 class ProfilePage extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       friends: null,
       profile: null
@@ -94,6 +93,4 @@ ProfilePage.propTypes = {
   username: PropTypes.string.isRequired
 }
 
-export { ProfilePage }
-
-export default withRouter(ProfilePage)
+export default ProfilePage
