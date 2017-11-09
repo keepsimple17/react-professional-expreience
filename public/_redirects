@@ -1,1 +1,5 @@
+# Redirects for browser-router to work properly and prevent 404 pages
+/*  /index.html  200
+
+# Netlify won't serve dotfiles by default; redirect to a non-dotfile
 /.well-known/apple-developer-merchantid-domain-association /well-known/apple-developer-merchantid-domain-association 200!
