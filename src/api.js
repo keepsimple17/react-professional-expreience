@@ -7,7 +7,7 @@ const { REACT_APP_API_URI } = process.env
 const getRandomLetter = () => String.fromCharCode(randomInt(65, 91))
 
 const getRandomTrip = () => ({
-  carbonOutput: randomInt(30, 5000),
+  carbonOutput: randomInt(100000, 900000),
   date: '25 Jun 14',
   destination: 'Honolulu, HI',
   distance: randomInt(30, 5000),
