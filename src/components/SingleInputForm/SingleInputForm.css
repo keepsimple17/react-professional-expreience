@@ -19,7 +19,7 @@
     }
 
     &::placeholder {
-      color: var(--pale-grey);
+      color: color(var(--slate) alpha(60%));
     }
   }
 
