@@ -36,7 +36,7 @@ const ProfileCard = ({ profile }) => {
           </h3>
           <p>
             <Link className="danger-button -fill" title="Download the app" to="/download">
-              {`${profile.carbonOutput} CO₂/yr`}
+              {`${profile.carbonOutput} CO₂ /yr`}
             </Link>
             <Link className="danger-button" title="Download the app" to="/download">
               Not carbon neutral
