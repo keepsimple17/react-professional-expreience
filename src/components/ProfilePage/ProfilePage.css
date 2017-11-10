@@ -1,6 +1,17 @@
 @import '../../styles/variables.css';
 
 .profile-page {
+  & .profile-loading-bar {
+    background-color: var(--gunmetal);
+    padding: 1rem 0;
+
+    & .loading-message {
+      color: #fff;
+      font-size: 1.25rem;
+      margin: 0;
+    }
+  }
+
   & .profile-overview {
     background-color: #fff;
     padding: 1.5rem 0;

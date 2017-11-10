@@ -84,7 +84,7 @@ class ProfilePage extends Component {
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <p>Calculating carbon footprint…</p>
+                  <p className="loading-message text-center" >Calculating carbon footprint…</p>
                 </div>
               </div>
             </div>
