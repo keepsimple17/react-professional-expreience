@@ -41,7 +41,7 @@ class HomePage extends Component {
               <div className="col">
                 <SingleInputForm
                   iconUrl={searchIcon}
-                  placeholder="asimon9633"
+                  placeholder="example: goodlife"
                   onSubmit={(event, username) => this.props.history.push(`/profile/${username}`)}
                 />
               </div>
