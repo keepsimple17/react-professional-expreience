@@ -3,12 +3,39 @@
 .profile-page {
   & .profile-loading-bar {
     background-color: var(--gunmetal);
-    padding: 1rem 0;
+    padding: 2rem 0;
 
     & .loading-message {
       color: #fff;
       font-size: 1.25rem;
       margin: 0;
+    }
+  }
+
+  & .download-app-bar {
+    background-color: color(var(--reddish) alpha(80%));
+    padding: 1rem 0;
+
+    & p {
+      margin: 0;
+    }
+
+    & .download-app-message {
+      color: #fff;
+      font-size: 1.25rem;
+    }
+
+    & .download-app-link {
+      background-color: #fff;
+      background-image: linear-gradient(109deg, #fff, #eef4f6);
+      border-radius: 0.1875em;
+      box-shadow:
+        0 5px 10px 0 rgba(18, 85, 97, 0.25),
+        0 1px 2px 0 rgba(59, 114, 124, 0.1);
+      color: var(--slate);
+      display: inline-block;
+      font-size: 1rem;
+      padding: 0.625rem 1.5rem;
     }
   }
 

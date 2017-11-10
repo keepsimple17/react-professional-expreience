@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 
 import api from '../../api'
 import ProfileCard from '../ProfileCard/ProfileCard'
@@ -16,6 +17,8 @@ const getColor = (carbon) => {
 
   return `hsla(0, 64%, 52%, ${alpha})`
 }
+
+const getName = profile => profile.fullName || `@${profile.username}`
 
 class ProfilePage extends Component {
   constructor (props) {
@@ -115,14 +118,37 @@ class ProfilePage extends Component {
             </div>
           </div>
         </section>
+
+        {this.state.profile && (
+          <section className="download-app-bar">
+            <div className="container">
+              <div className="row">
+                <div
+                  className="col-12 col-md-auto text-center text-md-left d-flex align-items-center"
+                >
+                  <p className="download-app-message">
+                    {`Are you ${getName(this.state.profile)}? Claim this account to go carbon neutral.`}
+                  </p>
+                </div>
+                <div className="col-12 col-md text-center text-md-right">
+                  <p>
+                    <Link className="download-app-link" to="/download">
+                      Download the app
+                    </Link>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         <section className="profile-contents">
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-lg-8">
                 {this.state.profile && (
                   <h3 className="trips-heading">
-                    {this.state.profile.fullName || `@${this.state.profile.username}`}’s travel
-                    posts
+                    {getName(this.state.profile)}’s travel posts
                   </h3>
                 )}
                 <div className="row">
@@ -137,7 +163,7 @@ class ProfilePage extends Component {
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.state.profile && (
                   <h3 className="friends-heading">
-                    {this.state.profile.fullName || `@${this.state.profile.username}`}’s friends
+                    {getName(this.state.profile)}’s friends
                   </h3>
                 )}
                 <ul className="friend-list">
