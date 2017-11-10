@@ -6,19 +6,21 @@ const { REACT_APP_API_URI } = process.env
 
 const getRandomLetter = () => String.fromCharCode(randomInt(65, 91))
 
+const getRandomSize = () => Array(2).fill(randomInt(200, 500)).join('x')
+
 const getRandomTrip = () => ({
   carbonOutput: randomInt(100000, 900000),
   date: '25 Jun 14',
   destination: 'Honolulu, HI',
   distance: randomInt(30, 5000),
-  pictureUrl: `https://source.unsplash.com/random/420x420?${getRandomLetter()}`
+  pictureUrl: `https://source.unsplash.com/random/${getRandomSize()}?${getRandomLetter()}`
 })
 
 const formatProfile = profile => ({
   carbonOutput: randomInt(1000, 10000),
   fullName: `${profile.name.first || ''} ${profile.name.last || ''}`.trim(),
   profilePictureUrl: profile.picture.large,
-  trips: Array.from({ length: randomInt(1, 50) }, getRandomTrip),
+  trips: Array.from({ length: randomInt(1, 80) }, getRandomTrip),
   username: profile.login.username
 })
 
