@@ -22,7 +22,9 @@ class ProfilePage extends Component {
     super(props)
     this.state = {
       friends: null,
-      profile: null
+      loading: 0,
+      profile: null,
+      trips: null
     }
   }
 
@@ -36,40 +38,78 @@ class ProfilePage extends Component {
     }
   }
 
-  async updateProfileData (username) {
-    const profile = await api.fetchProfile(username)
-    const friends = await api.fetchProfileFriends(username)
-
-    this.setState(() => ({
-      friends,
-      profile
+  decrementLoading (n = 1) {
+    this.setState(prevState => ({
+      loading: Math.max(prevState.loading - n, 0)
     }))
+  }
+
+  incrementLoading (n = 1) {
+    this.setState(prevState => ({
+      loading: prevState.loading + n
+    }))
+  }
+
+  updateProfileData (username) {
+    this.incrementLoading()
+
+    api
+      .fetchProfile(username)
+      .then((profile) => {
+        this.setState(prevState => ({
+          profile
+        }))
+
+        return Promise.all([
+          api.fetchProfileFriends(username).then((data) => {
+            this.setState(prevState => ({
+              friends: data
+            }))
+          }),
+          api.fetchProfileTrips(username).then((data) => {
+            this.setState(prevState => ({
+              trips: data
+            }))
+          })
+        ])
+      })
+      .then(() => this.decrementLoading())
   }
 
   render () {
     return (
       <section className="profile-page">
+        {!!this.state.loading && (
+          <section className="profile-loading-bar">
+            <div className="container">
+              <div className="row">
+                <div className="col">
+                  <p>Calculating carbon footprint…</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
         <section className="profile-overview">
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-lg-5">
-                {this.state.profile && (
-                  <ProfileCard profile={this.state.profile} />
-                )}
+                {this.state.profile && <ProfileCard profile={this.state.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
                 <ul className="trip-grid">
-                  {this.state.profile && this.state.profile.trips.map(trip => (
-                    <li
-                      className="trip-item"
-                      key={trip.pictureUrl}
-                      style={{
-                        backgroundColor: getColor(trip.carbonOutput)
-                      }}
-                    >
-                      <SmallTripBox trip={trip} />
-                    </li>
-                  ))}
+                  {this.state.trips &&
+                    this.state.trips.map(trip => (
+                      <li
+                        className="trip-item"
+                        key={trip.pictureUrl}
+                        style={{
+                          backgroundColor: getColor(trip.carbonOutput)
+                        }}
+                      >
+                        <SmallTripBox trip={trip} />
+                      </li>
+                    ))}
                 </ul>
               </div>
             </div>
@@ -81,15 +121,17 @@ class ProfilePage extends Component {
               <div className="col-xs-12 col-lg-8">
                 {this.state.profile && (
                   <h3 className="trips-heading">
-                    {this.state.profile.fullName || `@${this.state.profile.username}`}’s travel posts
+                    {this.state.profile.fullName || `@${this.state.profile.username}`}’s travel
+                    posts
                   </h3>
                 )}
                 <div className="row">
-                  {this.state.profile && this.state.profile.trips.map(trip => (
-                    <div className="col-12 col-md-6 col-xl-4 trip-col" key={trip.pictureUrl}>
-                      <TripCard profile={this.state.profile} trip={trip} />
-                    </div>
-                  ))}
+                  {this.state.trips &&
+                    this.state.trips.map(trip => (
+                      <div className="col-12 col-md-6 col-xl-4 trip-col" key={trip.pictureUrl}>
+                        <TripCard profile={this.state.profile} trip={trip} />
+                      </div>
+                    ))}
                 </div>
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
@@ -99,11 +141,12 @@ class ProfilePage extends Component {
                   </h3>
                 )}
                 <ul className="friend-list">
-                  {this.state.friends && this.state.friends.map(profile => (
-                    <li className="friend-item" key={profile.username}>
-                      <ProfileCard profile={profile} />
-                    </li>
-                  ))}
+                  {this.state.friends &&
+                    this.state.friends.map(profile => (
+                      <li className="friend-item" key={profile.username}>
+                        <ProfileCard profile={profile} />
+                      </li>
+                    ))}
                 </ul>
               </div>
             </div>

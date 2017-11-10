@@ -7,12 +7,8 @@ const SmallTripBox = ({ trip }) => (
   <div className="small-trip-box embed-responsive-1by1">
     <img className="trip-picture" src={trip.pictureUrl} alt="Trip" />
     <div className="trip-overlay d-flex flex-column justify-content-center">
-      <p>
-        {`${trip.carbonOutput} lbs`}
-      </p>
-      <p>
-        CO₂/yr
-      </p>
+      <p>{`${trip.carbonOutput} lbs`}</p>
+      <p>CO₂/yr</p>
     </div>
   </div>
 )

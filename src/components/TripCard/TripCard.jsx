@@ -11,25 +11,17 @@ const TripCard = ({ profile, trip }) => (
       </div>
       <div className="col">
         <p className="trip-description">
-          <strong>
-            {profile.fullName || `@${profile.username}`}
-          </strong>
+          <strong>{profile.fullName || `@${profile.username}`}</strong>
           {' took a '}
-          <strong>
-            {trip.distance}
-          </strong>
+          <strong>{trip.distance}</strong>
           {` mile trip to ${trip.destination} and did not pay to offset his carbon.`}
         </p>
       </div>
       <div className="col-auto">
         <p className="trip-carbon-output text-right">
-          <span className="trip-badge">
-            {`${trip.carbonOutput} lbs`}
-          </span>
+          <span className="trip-badge">{`${trip.carbonOutput} lbs`}</span>
         </p>
-        <p className="trip-date text-right">
-          {trip.date}
-        </p>
+        <p className="trip-date text-right">{trip.date}</p>
       </div>
     </div>
     <div className="row">

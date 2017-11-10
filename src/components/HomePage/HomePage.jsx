@@ -3,10 +3,8 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import api from '../../api'
-import randomInt from '../../util/randomInt'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
-import ProfileCard from '../ProfileCard/ProfileCard'
-import SmallTripBox from '../SmallTripBox/SmallTripBox'
+import ProfileRow from './ProfileRow'
 import searchIcon from '../../img/icons/search.svg'
 
 import './HomePage.css'
@@ -60,20 +58,7 @@ class HomePage extends Component {
               </div>
             </div>
             {this.state.topProducers.map(profile => (
-              <div className="row producer-row" key={profile.username}>
-                <div className="col col-lg-5">
-                  <ProfileCard profile={profile} />
-                </div>
-                <div className="d-none d-lg-block col-lg-7">
-                  <ul className="trip-list">
-                    {profile.trips.slice(0, randomInt(1, 6)).map(trip => (
-                      <li className="trip-item" key={trip.pictureUrl}>
-                        <SmallTripBox trip={trip} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              <ProfileRow profile={profile} />
             ))}
           </div>
         </section>

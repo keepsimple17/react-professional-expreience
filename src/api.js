@@ -6,7 +6,10 @@ const { REACT_APP_API_URI } = process.env
 
 const getRandomLetter = () => String.fromCharCode(randomInt(65, 91))
 
-const getRandomSize = () => Array(2).fill(randomInt(200, 500)).join('x')
+const getRandomSize = () =>
+  Array(2)
+    .fill(randomInt(200, 500))
+    .join('x')
 
 const getRandomTrip = () => ({
   carbonOutput: randomInt(100000, 900000),
@@ -20,7 +23,6 @@ const formatProfile = profile => ({
   carbonOutput: randomInt(1000, 10000),
   fullName: `${profile.name.first || ''} ${profile.name.last || ''}`.trim(),
   profilePictureUrl: profile.picture.large,
-  trips: Array.from({ length: randomInt(1, 80) }, getRandomTrip),
   username: profile.login.username
 })
 
@@ -34,8 +36,16 @@ const fetchProfile = username => fetchTopProducers(1).then(profiles => profiles[
 
 const fetchProfileFriends = username => fetchTopProducers()
 
+const fetchProfileTrips = (username, zipcode = '33114') =>
+  new Promise((resolve, reject) =>
+    setTimeout(
+      () => resolve(Array.from({ length: randomInt(1, 80) }, getRandomTrip)),
+      randomInt(500, 10000)
+    ))
+
 export default {
   fetchProfile,
   fetchProfileFriends,
+  fetchProfileTrips,
   fetchTopProducers
 }
