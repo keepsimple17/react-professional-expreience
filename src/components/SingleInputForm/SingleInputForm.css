@@ -12,6 +12,7 @@
     color: var(--slate);
     flex-grow: 1;
     font-size: 1.5rem;
+    min-width: 1px;
     padding: 1px 1rem;
 
     &:focus {
