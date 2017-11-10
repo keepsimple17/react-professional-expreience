@@ -12,11 +12,9 @@ const getColor = (carbon) => {
   // Blue if no carbon output
   if (!carbon) return '#1ba1fb'
 
-  const s = Math.min(carbon * 64 / 450000, 64)
-  const l = 100 - Math.min(carbon * 48 / 450000, 48)
-  const a = Math.min(carbon / 450000, 1)
+  const alpha = Math.min(carbon / 800000, 1)
 
-  return `hsla(0, ${s}%, ${l}%, ${a})`
+  return `hsla(0, 64%, 52%, ${alpha})`
 }
 
 class ProfilePage extends Component {
