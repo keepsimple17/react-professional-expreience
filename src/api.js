@@ -2,6 +2,14 @@
 
 const { REACT_APP_API_URI } = process.env
 
+const request = endpoint =>
+  fetch(`${REACT_APP_API_URI}${endpoint}`)
+    .then(res => res.json())
+    .then((data) => {
+      if (data.status !== 'success') throw new Error(data.message)
+      return data
+    })
+
 const formatTrip = data => ({
   carbonOutput: data.carbon,
   destinationName: data.location_name,
@@ -20,10 +28,7 @@ const formatProfile = profile => ({
   zipcode: profile.user.address_zip
 })
 
-const fetchProfile = username =>
-  fetch(`${REACT_APP_API_URI}/users/v1/ig/${username}`)
-    .then(res => res.json())
-    .then(formatProfile)
+const fetchProfile = username => request(`/users/v1/ig/${username}`).then(formatProfile)
 
 const fetchTopProducers = (n = 8) =>
   fetchProfile('asimon9633').then(profile => Array(n).fill(profile))
@@ -31,8 +36,7 @@ const fetchTopProducers = (n = 8) =>
 const fetchProfileFriends = username => fetchTopProducers()
 
 const fetchProfileTrips = (username, zipcode) =>
-  fetch(`${REACT_APP_API_URI}/trips/v1/ABA/${username}/${zipcode}`)
-    .then(res => res.json())
+  request(`/trips/v1/ABA/${username}/${zipcode}`)
     .then(data => data.trips)
     .then(trips => trips.map(formatTrip))
 
