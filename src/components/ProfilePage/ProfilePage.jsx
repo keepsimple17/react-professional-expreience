@@ -193,7 +193,9 @@ class ProfilePage extends Component {
           <section className="download-app-bar">
             <div className="container">
               <div className="row">
-                <div className="col-12 col-md-auto text-center text-md-left d-flex align-items-center">
+                <div
+                  className="col-12 col-md-auto text-center text-md-left d-flex align-items-center"
+                >
                   <p className="download-app-message">
                     {`Are you ${getName(this.state.profile)}? Claim this account to go carbon neutral.`}
                   </p>
