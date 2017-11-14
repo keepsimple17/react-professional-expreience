@@ -82,9 +82,7 @@ class ProfilePage extends Component {
     this.incrementLoading()
 
     api.fetchProfile(username).then((profile) => {
-      this.setState(() => ({
-        profile
-      }))
+      this.setState(() => ({ profile }))
 
       this.updateFriendsData(username)
 
@@ -95,6 +93,9 @@ class ProfilePage extends Component {
       }
 
       this.decrementLoading()
+    }).catch((error) => {
+      this.setState(() => ({ error }))
+      this.decrementLoading()
     })
   }
 
@@ -102,10 +103,10 @@ class ProfilePage extends Component {
     this.incrementLoading()
 
     return api.fetchProfileTrips(username, zipcode).then((data) => {
-      this.setState(() => ({
-        trips: data
-      }))
-
+      this.setState(() => ({ trips: data }))
+      this.decrementLoading()
+    }).catch((error) => {
+      this.setState(() => ({ error }))
       this.decrementLoading()
     })
   }
@@ -114,10 +115,10 @@ class ProfilePage extends Component {
     this.incrementLoading()
 
     return api.fetchProfileFriends(username).then((data) => {
-      this.setState(() => ({
-        friends: data
-      }))
-
+      this.setState(() => ({ friends: data }))
+      this.decrementLoading()
+    }).catch((error) => {
+      this.setState(() => ({ error }))
       this.decrementLoading()
     })
   }
@@ -153,12 +154,33 @@ class ProfilePage extends Component {
             </div>
           </section>
         </Modal>
-        {!!this.state.loading && (
-          <section className="profile-loading-bar">
+        {!!this.state.error && (
+          <section className="profile-message-bar -error">
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <p className="loading-message text-center">Calculating carbon footprint…</p>
+                  <p className="message-bar-content text-center">
+                    {this.state.error.message}
+                    {` – `}
+                    <button
+                      className="btn-link"
+                      onClick={e => window.location.reload()}
+                      type="button"
+                    >
+                      try again
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+        {!!this.state.loading && (
+          <section className="profile-message-bar -info">
+            <div className="container">
+              <div className="row">
+                <div className="col">
+                  <p className="message-bar-content text-center">Calculating carbon footprint…</p>
                 </div>
               </div>
             </div>
