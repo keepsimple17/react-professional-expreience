@@ -17,15 +17,20 @@ class SingleInputForm extends Component {
   }
 
   render () {
+    const {
+      buttonText,
+      iconUrl,
+      onSubmit,
+      ...rest
+    } = this.props
+
     return (
       <form className="single-input-form" onSubmit={event => this.onSubmit(event)}>
         <input
+          {...rest}
           className="input"
-          placeholder={this.props.placeholder}
           onChange={event => this.setState({ value: event.target.value })}
-          required
-          type={this.props.type}
-          value={this.value}
+          value={this.state.value}
         />
         <button className="submit" type="submit" title={this.props.buttonText || 'Submit'}>
           {this.props.iconUrl && <img className="icon" src={this.props.iconUrl} alt="Submit" />}
@@ -38,16 +43,13 @@ class SingleInputForm extends Component {
 
 SingleInputForm.defaultProps = {
   buttonText: null,
-  iconUrl: null,
-  type: 'text'
+  iconUrl: null
 }
 
 SingleInputForm.propTypes = {
   buttonText: PropTypes.string,
   iconUrl: PropTypes.string,
-  onSubmit: PropTypes.func.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  type: PropTypes.string
+  onSubmit: PropTypes.func.isRequired
 }
 
 export default SingleInputForm

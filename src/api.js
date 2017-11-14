@@ -31,7 +31,7 @@ const fetchTopProducers = (n = 8) =>
 
 const fetchProfileFriends = username => fetchTopProducers()
 
-const fetchProfileTrips = (username, zipcode = '33114') =>
+const fetchProfileTrips = (username, zipcode) =>
   fetch(`${REACT_APP_API_URI}/trips/v1/ABA/${username}/${zipcode}`)
     .then(res => res.json())
     .then(data => data.trips)

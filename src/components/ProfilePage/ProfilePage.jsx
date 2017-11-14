@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
+import Modal from 'react-modal'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import api from '../../api'
 import ProfileCard from '../ProfileCard/ProfileCard'
+import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import SmallTripBox from '../SmallTripBox/SmallTripBox'
 import TripCard from '../TripCard/TripCard'
 
@@ -25,6 +27,7 @@ class ProfilePage extends Component {
     super(props)
     this.state = {
       friends: null,
+      isZipcodeModalOpen: false,
       loading: 0,
       profile: null,
       trips: null
@@ -53,35 +56,105 @@ class ProfilePage extends Component {
     }))
   }
 
+  openZipcodeModal (event) {
+    if (event) event.preventDefault()
+
+    this.setState(() => ({
+      isZipcodeModalOpen: true
+    }))
+  }
+
+  closeZipcodeModal (event) {
+    if (event) event.preventDefault()
+
+    this.setState(() => ({
+      isZipcodeModalOpen: false
+    }))
+  }
+
+  submitZipcode (zipcode) {
+    this.closeZipcodeModal()
+
+    this.updateTripsData(this.state.profile.username, zipcode)
+  }
+
   updateProfileData (username) {
     this.incrementLoading()
 
     api
       .fetchProfile(username)
       .then((profile) => {
-        this.setState(prevState => ({
+        this.setState(() => ({
           profile
         }))
 
-        return Promise.all([
-          api.fetchProfileFriends(username).then((data) => {
-            this.setState(prevState => ({
-              friends: data
-            }))
-          }),
-          api.fetchProfileTrips(username).then((data) => {
-            this.setState(prevState => ({
-              trips: data
-            }))
-          })
-        ])
+        this.updateFriendsData(username)
+
+        if (profile.zipcode) {
+          this.updateTripsData(username, profile.zipcode)
+        } else {
+          this.openZipcodeModal()
+        }
+
+        this.decrementLoading()
       })
-      .then(() => this.decrementLoading())
+  }
+
+  updateTripsData (username, zipcode) {
+    this.incrementLoading()
+
+    return api.fetchProfileTrips(username, zipcode).then((data) => {
+      this.setState(() => ({
+        trips: data
+      }))
+
+      this.decrementLoading()
+    })
+  }
+
+  updateFriendsData (username) {
+    this.incrementLoading()
+
+    return api.fetchProfileFriends(username).then((data) => {
+      this.setState(() => ({
+        friends: data
+      }))
+
+      this.decrementLoading()
+    })
   }
 
   render () {
     return (
       <section className="profile-page">
+
+        <Modal
+          className="regular-modal-content"
+          contentLabel="Modal"
+          isOpen={this.state.isZipcodeModalOpen}
+          onRequestClose={() => {}}
+          overlayClassName="regular-modal-overlay"
+        >
+          <section className="modal-header">
+            <h3 className="modal-title">What’s John’s zip code?</h3>
+          </section>
+          <section className="modal-body">
+            <div className="row">
+              <div className="col">
+                <p className="modal-lead-message">
+                  In order to calculate John’s carbon footprint, we need his ZIP code
+                </p>
+                <SingleInputForm
+                  pattern="[0-9]{5}"
+                  required
+                  buttonText="Calculate"
+                  placeholder="5 digits ZIP Code"
+                  onSubmit={(event, zipcode) => this.submitZipcode(zipcode)}
+                />
+              </div>
+            </div>
+          </section>
+        </Modal>
         {!!this.state.loading && (
           <section className="profile-loading-bar">
             <div className="container">
@@ -168,7 +241,7 @@ class ProfilePage extends Component {
                 )}
                 <ul className="friend-list">
                   {this.state.friends &&
-                    this.state.friends.map(profile => (
+                    this.state.friends.map((profile, i) => (
                       <li className="friend-item" key={profile.username}>
                         <ProfileCard profile={profile} />
                       </li>

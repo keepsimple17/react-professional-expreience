@@ -112,3 +112,48 @@
     }
   }
 }
+
+.regular-modal-overlay {
+  align-content: center;
+  align-items: center;
+  background-color: color(#000 alpha(60%));
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 40;
+}
+
+.regular-modal-content {
+  background-color: var(--pale-grey);
+  border-radius: 4px;
+  flex-grow: 0;
+  max-height: 100%;
+  max-width: 520px;
+  overflow: auto;
+
+  & > .modal-header {
+    background-color: #fff;
+    padding: 1.5rem;
+
+    & > .modal-title {
+      color: var(--slate);
+      font-size: 1.875rem;
+      margin: 0;
+    }
+  }
+
+  & > .modal-body {
+    padding: 1.5rem 2.5rem;
+  }
+}
+
+.modal-lead-message {
+  font-size: 1.5rem;
+  font-weight: 300;
+  line-height: 1.82;
+  text-align: center;
+}
