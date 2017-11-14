@@ -48,6 +48,7 @@
   }
 
   & .trip-picture {
+    object-fit: cover;
     width: 100%;
   }
 }

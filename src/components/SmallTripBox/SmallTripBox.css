@@ -7,6 +7,7 @@
 
   & .trip-picture {
     height: 100%;
+    object-fit: cover;
     transition: all 200ms ease-in 0s;
     width: 100%;
   }

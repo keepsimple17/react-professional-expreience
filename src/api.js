@@ -1,47 +1,41 @@
 /* global fetch */
 
-import randomInt from './util/randomInt'
-
 const { REACT_APP_API_URI } = process.env
 
-const getRandomLetter = () => String.fromCharCode(randomInt(65, 91))
-
-const getRandomSize = () =>
-  Array(2)
-    .fill(randomInt(200, 500))
-    .join('x')
-
-const getRandomTrip = () => ({
-  carbonOutput: randomInt(100000, 900000),
-  date: '25 Jun 14',
-  destination: 'Honolulu, HI',
-  distance: randomInt(30, 5000),
-  pictureUrl: `https://source.unsplash.com/random/${getRandomSize()}?${getRandomLetter()}`
+const formatTrip = data => ({
+  carbonOutput: data.carbon,
+  destinationName: data.location_name,
+  distance: data.distance,
+  pictureUrl: data.picture_url,
+  tripDate: data.time
 })
 
 const formatProfile = profile => ({
-  carbonOutput: randomInt(1000, 10000),
-  fullName: `${profile.name.first || ''} ${profile.name.last || ''}`.trim(),
-  profilePictureUrl: profile.picture.large,
-  username: profile.login.username
+  carbonOutput: profile.user.estimated_carbon,
+  fullName: profile.user.instagram_name,
+  instagramId: profile.user.instagramId,
+  profilePictureUrl: profile.user.picture_url,
+  signedUp: profile.is_signup,
+  username: profile.user.instagram_username,
+  zipcode: profile.user.address_zip
 })
 
-const fetchTopProducers = (n = 8) =>
-  fetch(`${REACT_APP_API_URI}?results=${n}`)
+const fetchProfile = username =>
+  fetch(`${REACT_APP_API_URI}/users/v1/ig/${username}`)
     .then(res => res.json())
-    .then(data => data.results)
-    .then(profiles => profiles.map(formatProfile))
+    .then(formatProfile)
 
-const fetchProfile = username => fetchTopProducers(1).then(profiles => profiles[0])
+const fetchTopProducers = (n = 8) =>
+  fetchProfile('asimon9633')
+    .then(profile => Array(n).fill(profile))
 
 const fetchProfileFriends = username => fetchTopProducers()
 
 const fetchProfileTrips = (username, zipcode = '33114') =>
-  new Promise((resolve, reject) =>
-    setTimeout(
-      () => resolve(Array.from({ length: randomInt(1, 80) }, getRandomTrip)),
-      randomInt(500, 10000)
-    ))
+  fetch(`${REACT_APP_API_URI}/trips/v1/ABA/${username}/${zipcode}`)
+    .then(res => res.json())
+    .then(data => data.trips)
+    .then(trips => trips.map(formatTrip))
 
 export default {
   fetchProfile,
