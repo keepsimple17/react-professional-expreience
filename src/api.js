@@ -26,8 +26,7 @@ const fetchProfile = username =>
     .then(formatProfile)
 
 const fetchTopProducers = (n = 8) =>
-  fetchProfile('asimon9633')
-    .then(profile => Array(n).fill(profile))
+  fetchProfile('asimon9633').then(profile => Array(n).fill(profile))
 
 const fetchProfileFriends = username => fetchTopProducers()
 

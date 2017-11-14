@@ -57,9 +57,7 @@ class HomePage extends Component {
                 </h2>
               </div>
             </div>
-            {this.state.topProducers.map(profile => (
-              <ProfileRow profile={profile} />
-            ))}
+            {this.state.topProducers.map(profile => <ProfileRow profile={profile} />)}
           </div>
         </section>
       </section>

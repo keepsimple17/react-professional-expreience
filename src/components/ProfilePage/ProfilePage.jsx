@@ -81,23 +81,21 @@ class ProfilePage extends Component {
   updateProfileData (username) {
     this.incrementLoading()
 
-    api
-      .fetchProfile(username)
-      .then((profile) => {
-        this.setState(() => ({
-          profile
-        }))
+    api.fetchProfile(username).then((profile) => {
+      this.setState(() => ({
+        profile
+      }))
 
-        this.updateFriendsData(username)
+      this.updateFriendsData(username)
 
-        if (profile.zipcode) {
-          this.updateTripsData(username, profile.zipcode)
-        } else {
-          this.openZipcodeModal()
-        }
+      if (profile.zipcode) {
+        this.updateTripsData(username, profile.zipcode)
+      } else {
+        this.openZipcodeModal()
+      }
 
-        this.decrementLoading()
-      })
+      this.decrementLoading()
+    })
   }
 
   updateTripsData (username, zipcode) {
@@ -127,7 +125,6 @@ class ProfilePage extends Component {
   render () {
     return (
       <section className="profile-page">
-
         <Modal
           className="regular-modal-content"
           contentLabel="Modal"
@@ -160,7 +157,7 @@ class ProfilePage extends Component {
             <div className="container">
               <div className="row">
                 <div className="col">
-                  <p className="loading-message text-center" >Calculating carbon footprint…</p>
+                  <p className="loading-message text-center">Calculating carbon footprint…</p>
                 </div>
               </div>
             </div>
@@ -196,9 +193,7 @@ class ProfilePage extends Component {
           <section className="download-app-bar">
             <div className="container">
               <div className="row">
-                <div
-                  className="col-12 col-md-auto text-center text-md-left d-flex align-items-center"
-                >
+                <div className="col-12 col-md-auto text-center text-md-left d-flex align-items-center">
                   <p className="download-app-message">
                     {`Are you ${getName(this.state.profile)}? Claim this account to go carbon neutral.`}
                   </p>
@@ -220,9 +215,7 @@ class ProfilePage extends Component {
             <div className="row">
               <div className="col-xs-12 col-lg-8">
                 {this.state.profile && (
-                  <h3 className="trips-heading">
-                    {getName(this.state.profile)}’s travel posts
-                  </h3>
+                  <h3 className="trips-heading">{getName(this.state.profile)}’s travel posts</h3>
                 )}
                 <div className="row">
                   {this.state.trips &&
@@ -235,9 +228,7 @@ class ProfilePage extends Component {
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.state.profile && (
-                  <h3 className="friends-heading">
-                    {getName(this.state.profile)}’s friends
-                  </h3>
+                  <h3 className="friends-heading">{getName(this.state.profile)}’s friends</h3>
                 )}
                 <ul className="friend-list">
                   {this.state.friends &&

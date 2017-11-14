@@ -18,10 +18,7 @@ class SingleInputForm extends Component {
 
   render () {
     const {
-      buttonText,
-      iconUrl,
-      onSubmit,
-      ...rest
+      buttonText, iconUrl, onSubmit, ...rest
     } = this.props
 
     return (
