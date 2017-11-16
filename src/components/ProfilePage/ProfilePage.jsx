@@ -32,6 +32,13 @@ class ProfilePage extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.username !== nextProps.username) {
+      this.setState(() => ({
+        friends: null,
+        isZipcodeModalOpen: false,
+        profile: null,
+        trips: null,
+        zipcode: null
+      }))
       this.updateProfileData(nextProps.username)
     }
   }

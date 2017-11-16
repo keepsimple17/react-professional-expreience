@@ -29,6 +29,13 @@ class TripGrid extends Component {
     this.updateTripsData(this.props.username, this.props.zipcode)
   }
 
+  componentWillReceiveProps (nextProps) {
+    if (this.props.username !== nextProps.username || this.props.zipcode !== nextProps.zipcode) {
+      this.updateTripsData(nextProps.username, nextProps.zipcode)
+      this.setState(() => ({ lastCount: 0, trips: null }))
+    }
+  }
+
   decrementLoading (n = 1) {
     this.setState(prevState => ({
       loading: Math.max(prevState.loading - n, 0)
