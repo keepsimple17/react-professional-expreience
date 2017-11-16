@@ -11,11 +11,11 @@ const request = endpoint =>
     })
 
 const formatTrip = data => ({
-  carbonOutput: data.carbon,
-  destinationName: data.location_name,
+  carbonOutput: data.carbon_generated,
+  destinationName: data.to.name,
   distance: data.distance,
   pictureUrl: data.picture_url,
-  tripDate: data.time
+  tripDate: data.to.time_unix
 })
 
 const formatProfile = profile => ({
@@ -33,7 +33,9 @@ const fetchProfile = username => request(`/users/v1/ig/${username}`).then(format
 const fetchTopProducers = (n = 8) =>
   fetchProfile('asimon9633').then(profile => Array(n).fill(profile))
 
-const fetchProfileFriends = username => fetchTopProducers()
+const fetchProfileFriends = username =>
+  fetchProfile(username)
+    .then(profile => profile.friends)
 
 const fetchProfileTrips = (username, zipcode) =>
   request(`/trips/v1/ABA/${username}/${zipcode}`)
