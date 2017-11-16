@@ -25,14 +25,8 @@ class TripGrid extends Component {
   }
 
   componentWillMount () {
+    this.setState(() => ({ attempts: 0 }))
     this.updateTripsData(this.props.username, this.props.zipcode)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this.props.username !== nextProps.username) {
-      this.setState(() => ({ attempts: 0 }))
-      this.updateProfileData(nextProps.username)
-    }
   }
 
   decrementLoading (n = 1) {
