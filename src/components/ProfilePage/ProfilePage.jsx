@@ -180,7 +180,7 @@ class ProfilePage extends Component {
             </div>
           </section>
         )}
-        {!!this.state.loading && (
+        {(!!this.state.loading || this.state.isZipcodeModalOpen) && (
           <section className="profile-message-bar -info">
             <div className="container">
               <div className="row">
