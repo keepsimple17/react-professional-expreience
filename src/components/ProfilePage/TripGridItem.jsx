@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import cn from '../../util/cn'
 import SmallTripBox from '../SmallTripBox/SmallTripBox'
 
+import './TripGridItem.css'
+
 const getColor = (carbon) => {
   // Blue if no carbon output
   if (!carbon) return '#1ba1fb'
