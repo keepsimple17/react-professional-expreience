@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import api from '../../api'
 import cn from '../../util/cn'
-import TripItem from './TripItem'
+import TripGridItem from './TripGridItem'
 
 import './TripGrid.css'
 
@@ -62,7 +62,7 @@ class TripGrid extends Component {
       <ul {...cn('trip-grid', { '-loading': this.state.loading })}>
         {this.state.trips &&
           this.state.trips.map((trip, i) => (
-            <TripItem
+            <TripGridItem
               delay={getDelay(this.state.trips.length, this.state.lastCount, i)}
               key={trip.pictureUrl}
               trip={trip}

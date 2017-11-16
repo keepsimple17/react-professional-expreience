@@ -13,7 +13,7 @@ const getColor = (carbon) => {
   return `hsla(0, 64%, 52%, ${alpha})`
 }
 
-class TripItem extends Component {
+class TripGridItem extends Component {
   constructor () {
     super()
     this.state = { ready: false }
@@ -26,7 +26,7 @@ class TripItem extends Component {
   render () {
     return (
       <li
-        {...cn('trip-item', { '-dimmed': !this.state.ready })}
+        {...cn('trip-grid-item', { '-dimmed': !this.state.ready })}
         style={{
           backgroundColor: getColor(this.props.trip.carbonOutput)
         }}
@@ -37,11 +37,11 @@ class TripItem extends Component {
   }
 }
 
-TripItem.propTypes = {
+TripGridItem.propTypes = {
   delay: PropTypes.number.isRequired,
   trip: PropTypes.shape({
     carbonOutput: PropTypes.number
   }).isRequired
 }
 
-export default TripItem
+export default TripGridItem
