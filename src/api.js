@@ -19,23 +19,23 @@ const formatTrip = data => ({
 })
 
 const formatProfile = profile => ({
-  carbonOutput: profile.user.estimated_carbon,
-  fullName: profile.user.instagram_name,
-  instagramId: profile.user.instagramId,
-  profilePictureUrl: profile.user.picture_url,
-  signedUp: profile.is_signup,
-  username: profile.user.instagram_username,
-  zipcode: profile.user.address_zip
+  carbonOutput: profile.estimated_carbon,
+  fullName: profile.instagram_name,
+  friends: profile.friends,
+  instagramId: profile.instagramId,
+  profilePictureUrl: profile.picture_url,
+  username: profile.instagram_username,
+  zipcode: profile.address_zip
 })
 
-const fetchProfile = username => request(`/users/v1/ig/${username}`).then(formatProfile)
+const fetchProfile = username => request(`/users/v1/ig/${username}`).then(data => formatProfile(data.user))
 
 const fetchTopProducers = (n = 8) =>
   fetchProfile('asimon9633').then(profile => Array(n).fill(profile))
 
 const fetchProfileFriends = username =>
   fetchProfile(username)
-    .then(profile => profile.friends)
+    .then(profile => profile.friends.map(formatProfile))
 
 const fetchProfileTrips = (username, zipcode) =>
   request(`/trips/v1/ABA/${username}/${zipcode}`)
