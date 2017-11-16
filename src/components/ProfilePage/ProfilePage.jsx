@@ -6,19 +6,10 @@ import { Link } from 'react-router-dom'
 import api from '../../api'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
-import SmallTripBox from '../SmallTripBox/SmallTripBox'
 import TripCard from '../TripCard/TripCard'
+import TripGrid from './TripGrid'
 
 import './ProfilePage.css'
-
-const getColor = (carbon) => {
-  // Blue if no carbon output
-  if (!carbon) return '#1ba1fb'
-
-  const alpha = Math.min(carbon / 800000, 1)
-
-  return `hsla(0, 64%, 52%, ${alpha})`
-}
 
 const getName = profile => profile.fullName || `@${profile.username}`
 
@@ -30,7 +21,8 @@ class ProfilePage extends Component {
       isZipcodeModalOpen: false,
       loading: 0,
       profile: null,
-      trips: null
+      trips: null,
+      zipcode: null
     }
   }
 
@@ -74,7 +66,7 @@ class ProfilePage extends Component {
 
   submitZipcode (zipcode) {
     this.closeZipcodeModal()
-
+    this.setState(() => ({ zipcode }))
     this.updateTripsData(this.state.profile.username, zipcode)
   }
 
@@ -87,6 +79,7 @@ class ProfilePage extends Component {
       this.updateFriendsData(username)
 
       if (profile.zipcode) {
+        this.setState(() => ({ zipcode: profile.zipcode }))
         this.updateTripsData(username, profile.zipcode)
       } else {
         this.openZipcodeModal()
@@ -193,20 +186,9 @@ class ProfilePage extends Component {
                 {this.state.profile && <ProfileCard profile={this.state.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                <ul className="trip-grid">
-                  {this.state.trips &&
-                    this.state.trips.map(trip => (
-                      <li
-                        className="trip-item"
-                        key={trip.pictureUrl}
-                        style={{
-                          backgroundColor: getColor(trip.carbonOutput)
-                        }}
-                      >
-                        <SmallTripBox trip={trip} />
-                      </li>
-                    ))}
-                </ul>
+                {this.state.profile && this.state.zipcode && (
+                  <TripGrid username={this.state.profile.username} zipcode={this.state.zipcode} />
+                )}
               </div>
             </div>
           </div>

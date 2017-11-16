@@ -1,0 +1,98 @@
+@import '../../styles/variables.css';
+
+@keyframes shimmer-loading-frames {
+  0% {
+    transform: translate(-100%);
+  }
+
+  100% {
+    transform: translate(100%);
+  }
+}
+
+.trip-grid {
+  list-style: none;
+  margin: 0;
+  min-height: calc(3rem * 3);
+  padding: 0;
+  position: relative;
+  transition: all 250ms ease-in-out 0s;
+
+  & > .overlay,
+  & > .overlay::after,
+  & > .loading-message {
+    bottom: 0;
+    display: block;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  & > .overlay {
+    overflow: hidden;
+
+    &::after {
+      animation: 3s ease-in-out 0s infinite normal none running shimmer-loading-frames;
+      background-image:
+        linear-gradient(
+          -45deg,
+          color(#fff alpha(0%)) 0%,
+          color(#fff alpha(0%)) 46%,
+          color(#fff alpha(64%)) 48%,
+          color(#fff alpha(18%)) 51%,
+          color(#fff alpha(0%)) 52%,
+          color(#fff alpha(0%)) 100%
+        );
+      content: " ";
+      opacity: 0;
+    }
+  }
+
+  & > .loading-message {
+    align-items: center;
+    color: var(--gunmetal);
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+    text-align: center;
+  }
+
+  &.-loading > .overlay::after {
+    opacity: 1;
+  }
+
+  & .trip-item {
+    cursor: pointer;
+    display: inline-block;
+    height: 2rem;
+    margin: 0 0.5rem 0.5rem 0;
+    position: relative;
+    opacity: 1;
+    transition: all 250ms ease-out 0s;
+    width: 2rem;
+
+    &.-dimmed {
+      opacity: 0;
+    }
+
+    &:hover .small-trip-box {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    & .small-trip-box {
+      height: 300%;
+      left: -100%;
+      opacity: 0;
+      pointer-events: none;
+      position: absolute;
+      top: -100%;
+      transform: scale(0.6);
+      transition: all 150ms ease-in-out 0s;
+      width: 300%;
+      z-index: 10;
+    }
+  }
+}
