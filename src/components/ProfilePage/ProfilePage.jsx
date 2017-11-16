@@ -126,26 +126,31 @@ class ProfilePage extends Component {
           onRequestClose={() => {}}
           overlayClassName="regular-modal-overlay"
         >
-          <section className="modal-header">
-            <h3 className="modal-title">What’s John’s zip code?</h3>
-          </section>
-          <section className="modal-body">
-            <div className="row">
-              <div className="col">
-                <p className="modal-lead-message">
-                  In order to calculate John’s carbon footprint, we need his ZIP code
-                </p>
-                <SingleInputForm
-                  pattern="[0-9]{5}"
-                  required
-                  autoFocus
-                  buttonText="Calculate"
-                  placeholder="5 digits ZIP Code"
-                  onSubmit={(event, zipcode) => this.submitZipcode(zipcode)}
-                />
+          {this.state.profile && (
+            <section className="modal-header">
+              <h3 className="modal-title">What’s {getName(this.state.profile)}’s zip code?</h3>
+            </section>
+          )}
+          {this.state.profile && (
+            <section className="modal-body">
+              <div className="row">
+                <div className="col">
+                  <p className="modal-lead-message">
+                    In order to calculate {getName(this.state.profile)}’s carbon footprint, we need
+                    his ZIP code
+                  </p>
+                  <SingleInputForm
+                    pattern="[0-9]{5}"
+                    required
+                    autoFocus
+                    buttonText="Calculate"
+                    placeholder="5 digits ZIP Code"
+                    onSubmit={(event, zipcode) => this.submitZipcode(zipcode)}
+                  />
+                </div>
               </div>
-            </div>
-          </section>
+            </section>
+          )}
         </Modal>
         {!!this.state.error && (
           <section className="profile-message-bar -error">
