@@ -4,8 +4,9 @@
   width: 100%;
 
   & .picture {
-    height: 7.5rem;
+    display: inline-block;
     border-radius: 50%;
+    height: 7.5rem;
     width: 7.5rem;
   }
 
