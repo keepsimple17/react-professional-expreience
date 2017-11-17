@@ -147,12 +147,14 @@ class ProfilePage extends Component {
                     his ZIP code
                   </p>
                   <SingleInputForm
-                    pattern="[0-9]{5}"
-                    required
                     autoFocus
                     buttonText="Calculate"
-                    placeholder="5 digits ZIP Code"
+                    maxLength="5"
+                    minLength="5"
                     onSubmit={(event, zipcode) => this.submitZipcode(zipcode)}
+                    pattern="[0-9]{5}"
+                    placeholder="5 digits ZIP Code"
+                    required
                   />
                 </div>
               </div>
