@@ -3,9 +3,10 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 
 import api from '../../api'
-import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import ProfileRow from './ProfileRow'
 import searchIcon from '../../img/icons/search.svg'
+import SingleInputForm from '../SingleInputForm/SingleInputForm'
+import TripsDataWrapper from '../TripsDataWrapper/TripsDataWrapper'
 
 import './HomePage.css'
 
@@ -60,7 +61,14 @@ class HomePage extends Component {
                 </h2>
               </div>
             </div>
-            {this.state.topProducers.map(profile => <ProfileRow profile={profile} />)}
+            {this.state.topProducers.map(profile => (
+              <TripsDataWrapper
+                component={ProfileRow}
+                key={profile.username}
+                profile={profile}
+                zipcode={profile.zipcode}
+              />
+            ))}
           </div>
         </section>
       </section>
