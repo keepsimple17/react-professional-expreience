@@ -44,7 +44,7 @@ class HomePage extends Component {
                   placeholder="example: goodlife"
                   required
                   autoFocus
-                  pattern="[a-z0-9_]{3,}"
+                  pattern="[A-Za-z0-9_]{3,}"
                   onSubmit={(event, username) => this.props.history.push(`/profile/${username}`)}
                 />
               </div>
