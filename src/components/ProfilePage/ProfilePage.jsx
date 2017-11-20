@@ -6,8 +6,9 @@ import { Link } from 'react-router-dom'
 import api from '../../api'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
-import TripCard from '../TripCard/TripCard'
+import TripCardList from './TripCardList'
 import TripGrid from './TripGrid'
+import TripsDataWrapper from '../TripsDataWrapper/TripsDataWrapper'
 
 import './ProfilePage.css'
 
@@ -21,7 +22,6 @@ class ProfilePage extends Component {
       isZipcodeModalOpen: false,
       loading: 0,
       profile: null,
-      trips: null,
       zipcode: null
     }
   }
@@ -36,7 +36,6 @@ class ProfilePage extends Component {
         friends: null,
         isZipcodeModalOpen: false,
         profile: null,
-        trips: null,
         zipcode: null
       }))
       this.updateProfileData(nextProps.username)
@@ -74,7 +73,6 @@ class ProfilePage extends Component {
   submitZipcode (zipcode) {
     this.closeZipcodeModal()
     this.setState(() => ({ zipcode }))
-    this.updateTripsData(this.state.profile.username, zipcode)
   }
 
   updateProfileData (username) {
@@ -87,23 +85,10 @@ class ProfilePage extends Component {
 
       if (profile.zipcode) {
         this.setState(() => ({ zipcode: profile.zipcode }))
-        this.updateTripsData(username, profile.zipcode)
       } else {
         this.openZipcodeModal()
       }
 
-      this.decrementLoading()
-    }).catch((error) => {
-      this.setState(() => ({ error }))
-      this.decrementLoading()
-    })
-  }
-
-  updateTripsData (username, zipcode) {
-    this.incrementLoading()
-
-    return api.fetchProfileTrips(username, zipcode).then((data) => {
-      this.setState(() => ({ trips: data }))
       this.decrementLoading()
     }).catch((error) => {
       this.setState(() => ({ error }))
@@ -201,7 +186,11 @@ class ProfilePage extends Component {
               </div>
               <div className="d-none d-lg-block col-lg-7">
                 {this.state.profile && this.state.zipcode && (
-                  <TripGrid username={this.state.profile.username} zipcode={this.state.zipcode} />
+                  <TripsDataWrapper
+                    component={TripGrid}
+                    profile={this.state.profile}
+                    zipcode={this.state.zipcode}
+                  />
                 )}
               </div>
             </div>
@@ -238,14 +227,13 @@ class ProfilePage extends Component {
                 {this.state.profile && (
                   <h3 className="trips-heading">{getName(this.state.profile)}’s travel posts</h3>
                 )}
-                <div className="row">
-                  {this.state.trips &&
-                    this.state.trips.map(trip => (
-                      <div className="col-12 col-md-6 col-xl-4 trip-col" key={trip.pictureUrl}>
-                        <TripCard profile={this.state.profile} trip={trip} />
-                      </div>
-                    ))}
-                </div>
+                {this.state.profile && this.state.zipcode && (
+                  <TripsDataWrapper
+                    component={TripCardList}
+                    profile={this.state.profile}
+                    zipcode={this.state.zipcode}
+                  />
+                )}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.state.profile && (

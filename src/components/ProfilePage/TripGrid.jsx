@@ -1,7 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
-import api from '../../api'
 import cn from '../../util/cn'
 import TripGridItem from './TripGridItem'
 
@@ -14,84 +13,36 @@ const getDelay = (current, last, index) => {
   return Math.round(step * Math.max(index - last, 0))
 }
 
-class TripGrid extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      lastCount: 0,
-      loading: 0,
-      trips: null
-    }
-  }
+const TripGrid = ({ data }) => (
+  <ul {...cn('trip-grid', { '-loading': data.loading })}>
+    {data.trips &&
+      data.trips.map((trip, i) => (
+        <TripGridItem
+          delay={getDelay(data.trips.length, data.lastCount, i)}
+          key={trip.pictureUrl}
+          trip={trip}
+        />
+      ))}
 
-  componentWillMount () {
-    this.setState(() => ({ attempts: 0 }))
-    this.updateTripsData(this.props.username, this.props.zipcode)
-  }
-
-  componentWillReceiveProps (nextProps) {
-    if (this.props.username !== nextProps.username || this.props.zipcode !== nextProps.zipcode) {
-      this.updateTripsData(nextProps.username, nextProps.zipcode)
-      this.setState(() => ({ lastCount: 0, trips: null }))
-    }
-  }
-
-  decrementLoading (n = 1) {
-    this.setState(prevState => ({
-      loading: Math.max(prevState.loading - n, 0)
-    }))
-  }
-
-  incrementLoading (n = 1) {
-    this.setState(prevState => ({
-      loading: prevState.loading + n
-    }))
-  }
-
-  updateTripsData (username, zipcode) {
-    this.incrementLoading()
-
-    return api.fetchProfileTrips(username, zipcode).then((data) => {
-      this.setState(prevState => ({
-        lastCount: prevState.trips ? prevState.trips.length : 0,
-        trips: data
-      }))
-
-      this.decrementLoading()
-    }).catch((error) => {
-      this.setState(() => ({ error }))
-      this.decrementLoading()
-    })
-  }
-
-  render () {
-    return (
-      <ul {...cn('trip-grid', { '-loading': this.state.loading })}>
-        {this.state.trips &&
-          this.state.trips.map((trip, i) => (
-            <TripGridItem
-              delay={getDelay(this.state.trips.length, this.state.lastCount, i)}
-              key={trip.pictureUrl}
-              trip={trip}
-            />
-          ))}
-
-        {!(this.state.trips && this.state.trips.length) && (
-          <li className="loading-message">
-            <p>
-              {this.state.loading ? 'Searching for travel posts...' : 'No travel posts found'}
-            </p>
-          </li>
-        )}
-        <li className="overlay" />
-      </ul>
-    )
-  }
-}
+    {!(data.trips && data.trips.length) && (
+      <li className="loading-message">
+        <p>
+          {data.loading ? 'Searching for travel posts...' : 'No travel posts found'}
+        </p>
+      </li>
+    )}
+    <li className="overlay" />
+  </ul>
+)
 
 TripGrid.propTypes = {
-  username: PropTypes.string.isRequired,
-  zipcode: PropTypes.string.isRequired
+  data: PropTypes.shape({
+    profile: PropTypes.shape({
+      username: PropTypes.string
+    }),
+    loading: PropTypes.number,
+    trips: PropTypes.arrayOf(PropTypes.shape({}))
+  }).isRequired
 }
 
 export default TripGrid
