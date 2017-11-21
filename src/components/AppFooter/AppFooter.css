@@ -1,0 +1,36 @@
+@import '../../styles/variables.css';
+
+.app-footer {
+  background-color: #fff;
+  border-top: 1px solid var(--pale-grey);
+  padding: 1rem 0;
+
+  & .copyright {
+    color: color(var(--slate) alpha(50%));
+    margin: 0;
+  }
+
+  & .linklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    & .item {
+      margin: 1rem;
+
+      @media (--griddity-md-viewport) {
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+
+      & .link {
+        color: color(var(--slate) alpha(50%));
+      }
+    }
+  }
+
+  & .download-badge {
+    height: 3rem;
+  }
+}

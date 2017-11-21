@@ -1,0 +1,54 @@
+@import '../../styles/variables.css';
+
+.trip-card {
+  background-color: #fff;
+  box-shadow:
+    0 1px 10px 0 rgba(0, 0, 0, 0.08),
+    0 1px 2px 0 rgba(42, 71, 81, 0.1);
+
+  & .details-row {
+    padding: 0.5rem;
+  }
+
+  & .profile-picture {
+    border-radius: 50%;
+    height: 2rem;
+    width: 2rem;
+  }
+
+  & .trip-description {
+    color: color(var(--slate) alpha(60%));
+    font-size: 0.75rem;
+    font-weight: 300;
+    line-height: 1.6;
+    padding: 0 0.5rem;
+    margin: 0;
+
+    & strong {
+      color: var(--gunmetal);
+    }
+  }
+
+  & .trip-carbon-output {
+    margin-bottom: 0.5rem;
+
+    & .trip-badge {
+      background-color: var(--reddish);
+      border-radius: 2px;
+      color: #fff;
+      font-size: 0.625rem;
+      padding: 0.5em 0.75em;
+    }
+  }
+
+  & .trip-date {
+    color: color(var(--slate) alpha(60%));
+    font-size: 0.625rem;
+    margin: 0;
+  }
+
+  & .trip-picture {
+    object-fit: cover;
+    width: 100%;
+  }
+}

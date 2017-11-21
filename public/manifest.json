@@ -1,0 +1,18 @@
+{
+  "background_color": "#ffffff",
+  "description": "Measure your carbon footprint by using our app to detect where you've been, and purchase carbon offsets through reputable, government-certified programs.",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "sizes": "32x32 16x16",
+      "src": "favicon.ico",
+      "type": "image/x-icon"
+    }
+  ],
+  "lang": "en-US",
+  "name": "CrisisEarth",
+  "orientation": "any",
+  "short_name": "CrisisEarth",
+  "start_url": "./index.html",
+  "theme_color": "#ffffff"
+}

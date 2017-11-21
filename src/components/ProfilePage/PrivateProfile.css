@@ -1,0 +1,7 @@
+@import '../../styles/variables.css';
+
+.private-profile {
+  & .private-profile-hero {
+    padding: 3rem 0;
+  }
+}

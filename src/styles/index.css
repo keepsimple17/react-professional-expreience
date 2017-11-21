@@ -1,0 +1,22 @@
+@import 'bootstrap/dist/css/bootstrap-reboot.css';
+@import 'griddity/griddity.css';
+@import './variables.css';
+
+html {
+  font-size: 0.875rem;
+
+  @media (--griddity-sm-viewport) {
+    font-size: 1rem;
+  }
+}
+
+body {
+  background-color: var(--pale-grey);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
