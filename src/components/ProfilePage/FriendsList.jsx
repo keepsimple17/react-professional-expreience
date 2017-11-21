@@ -12,7 +12,7 @@ const FriendsList = ({ data }) => (
       'friends-list',
       {
         '-loading': data.loading,
-        '-empty': !data.friends || !data.friends.lenght
+        '-empty': !data.friends || !data.friends.length
       }
     )}
   >
