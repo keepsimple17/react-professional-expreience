@@ -49,7 +49,7 @@ class TripsDataWrapper extends Component {
     return api.fetchProfileTrips(username, zipcode).then((data) => {
       this.setState(prevState => ({
         lastCount: prevState.trips ? prevState.trips.length : 0,
-        trips: data
+        trips: data.trips
       }))
 
       return data.feed_trips || this.state.attempts >= 9

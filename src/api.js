@@ -39,8 +39,10 @@ const fetchProfileFriends = username =>
 
 const fetchProfileTrips = (username, zipcode) =>
   request(`/trips/v1/ABA/${username}/${zipcode}`)
-    .then(data => data.trips)
-    .then(trips => trips.map(formatTrip))
+    .then(data => ({
+      ...data,
+      trips: data.trips.map(formatTrip)
+    }))
 
 export default {
   fetchProfile,
