@@ -1,0 +1,33 @@
+@import '../../styles/variables.css';
+
+.trip-card-list {
+  border-radius: 4px;
+  border: 2px dashed transparent;
+  min-height: 30rem;
+
+  &.-empty {
+    border: 2px dashed color(var(--slate) alpha(40%));
+  }
+
+  & .trip-col {
+    padding-bottom: 2rem;
+  }
+
+  & > .loading-message {
+    align-items: center;
+    color: var(--gunmetal);
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  &.-empty > .loading-message {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+  }
+}
