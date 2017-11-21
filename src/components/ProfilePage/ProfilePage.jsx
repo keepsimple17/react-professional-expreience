@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
 import api from '../../api'
+import FriendsDataWrapper from '../FriendsDataWrapper/FriendsDataWrapper'
+import FriendsList from './FriendsList'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import TripCardList from './TripCardList'
@@ -18,7 +20,6 @@ class ProfilePage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      friends: null,
       isZipcodeModalOpen: false,
       loading: 0,
       profile: null,
@@ -81,26 +82,12 @@ class ProfilePage extends Component {
     api.fetchProfile(username).then((profile) => {
       this.setState(() => ({ profile }))
 
-      this.updateFriendsData(username)
-
       if (profile.zipcode) {
         this.setState(() => ({ zipcode: profile.zipcode }))
       } else {
         this.openZipcodeModal()
       }
 
-      this.decrementLoading()
-    }).catch((error) => {
-      this.setState(() => ({ error }))
-      this.decrementLoading()
-    })
-  }
-
-  updateFriendsData (username) {
-    this.incrementLoading()
-
-    return api.fetchProfileFriends(username).then((data) => {
-      this.setState(() => ({ friends: data }))
       this.decrementLoading()
     }).catch((error) => {
       this.setState(() => ({ error }))
@@ -239,14 +226,12 @@ class ProfilePage extends Component {
                 {this.state.profile && (
                   <h3 className="friends-heading">{getName(this.state.profile)}’s friends</h3>
                 )}
-                <ul className="friend-list">
-                  {this.state.friends &&
-                    this.state.friends.map((profile, i) => (
-                      <li className="friend-item" key={profile.username}>
-                        <ProfileCard profile={profile} />
-                      </li>
-                    ))}
-                </ul>
+                {this.state.profile && (
+                  <FriendsDataWrapper
+                    component={FriendsList}
+                    profile={this.state.profile}
+                  />
+                )}
               </div>
             </div>
           </div>

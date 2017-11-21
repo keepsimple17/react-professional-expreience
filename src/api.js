@@ -22,8 +22,10 @@ const formatProfile = profile => ({
   carbonOutput: profile.estimated_carbon,
   fullName: profile.instagram_name,
   friends: profile.friends,
+  friendsFetched: profile.friends_complete,
   instagramId: profile.instagramId,
   profilePictureUrl: profile.picture_url,
+  private: profile.private,
   username: profile.instagram_username,
   zipcode: profile.address_zip
 })
@@ -35,7 +37,10 @@ const fetchTopProducers = (n = 8) =>
 
 const fetchProfileFriends = username =>
   fetchProfile(username)
-    .then(profile => profile.friends.map(formatProfile))
+    .then(profile => ({
+      friends: profile.friends.map(formatProfile),
+      friendsFetched: profile.friendsFetched
+    }))
 
 const fetchProfileTrips = (username, zipcode) =>
   request(`/trips/v1/ABA/${username}/${zipcode}`)
