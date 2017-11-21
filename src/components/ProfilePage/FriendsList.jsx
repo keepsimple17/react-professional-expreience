@@ -11,7 +11,7 @@ const FriendsList = ({ data }) => (
     {...cn(
       'friends-list',
       {
-        '-loading': data.loading,
+        '-loading': !!data.loading,
         '-empty': !data.friends || !data.friends.length
       }
     )}
@@ -22,9 +22,11 @@ const FriendsList = ({ data }) => (
           <ProfileCard profile={profile} />
         </li>
       ))}
-    <li className="loading-message">
-      Loading friends...
-    </li>
+    {!!data.loading && (
+      <li className="loading-message">
+        Loading friends...
+      </li>
+    )}
   </ul>
 )
 
