@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import api from '../../api'
 import FriendsDataWrapper from '../FriendsDataWrapper/FriendsDataWrapper'
 import FriendsList from './FriendsList'
+import PrivateProfile from './PrivateProfile'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import TripCardList from './TripCardList'
@@ -96,6 +97,12 @@ class ProfilePage extends Component {
   }
 
   render () {
+    if (this.state.profile && this.state.profile.private) {
+      return (
+        <PrivateProfile profile={this.state.profile} />
+      )
+    }
+
     return (
       <section className="profile-page">
         <Modal
