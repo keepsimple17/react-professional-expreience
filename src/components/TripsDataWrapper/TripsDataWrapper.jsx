@@ -29,6 +29,14 @@ class TripsDataWrapper extends Component {
     }
   }
 
+  componentWillUnmount () {
+    this.unmounted = true
+  }
+
+  setState (...args) {
+    if (!this.unmounted) super.setState(...args)
+  }
+
   decrementLoading (n = 1) {
     this.setState(prevState => ({
       loading: Math.max(prevState.loading - n, 0)
@@ -52,7 +60,7 @@ class TripsDataWrapper extends Component {
         trips: data.trips
       }))
 
-      return data.feed_trips
+      return data.feed_trips || this.unmounted
         ? data
         : wait(3000).then(() => this.updateTripsData(username, zipcode))
     }).then((data) => {

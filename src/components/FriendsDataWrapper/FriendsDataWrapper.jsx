@@ -28,6 +28,14 @@ class FriendsDataWrapper extends Component {
     }
   }
 
+  componentWillUnmount () {
+    this.unmounted = true
+  }
+
+  setState (...args) {
+    if (!this.unmounted) super.setState(...args)
+  }
+
   decrementLoading (n = 1) {
     this.setState(prevState => ({
       loading: Math.max(prevState.loading - n, 0)
@@ -51,7 +59,7 @@ class FriendsDataWrapper extends Component {
         lastCount: prevState.friends ? prevState.friends.length : 0
       }))
 
-      return data.friendsFetched
+      return data.friendsFetched || this.unmounted
         ? data
         : wait(3000).then(() => this.updateFriendsData(username))
     }).then((data) => {
