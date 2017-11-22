@@ -6,17 +6,21 @@ import AppHeader from '../AppHeader/AppHeader'
 import HomePage from '../HomePage/HomePage'
 import ProfilePage from '../ProfilePage/ProfilePage'
 
+import './app.css'
+
 const App = () => (
   <Router>
-    <div>
+    <div className="app">
       <AppHeader />
-      <Route exact path="/" component={HomePage} />
-      <Route
-        exact
-        path="/profile/:username"
-        render={({ match }) => <ProfilePage username={match.params.username} />}
-      />
-      <Route exact path="/download" render={() => 'Download'} />
+      <section className="app-content">
+        <Route exact path="/" component={HomePage} />
+        <Route
+          exact
+          path="/profile/:username"
+          render={({ match }) => <ProfilePage username={match.params.username} />}
+        />
+        <Route exact path="/download" render={() => 'Download'} />
+      </section>
       <AppFooter />
     </div>
   </Router>
