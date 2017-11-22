@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import AppFooter from '../AppFooter/AppFooter'
 import AppHeader from '../AppHeader/AppHeader'
 import HomePage from '../HomePage/HomePage'
+import DownloadPage from '../DownloadPage/DownloadPage'
 import ProfilePage from '../ProfilePage/ProfilePage'
 
 import './app.css'
@@ -19,7 +20,7 @@ const App = () => (
           path="/profile/:username"
           render={({ match }) => <ProfilePage username={match.params.username} />}
         />
-        <Route exact path="/download" render={() => 'Download'} />
+        <Route exact path="/download" component={DownloadPage} />
       </section>
       <AppFooter />
     </div>

@@ -1,0 +1,41 @@
+@import '../../styles/variables.css';
+
+.download-page {
+  & .download-page-hero {
+    background-color: #fff;
+    background-image: url('../../img/map-background.jpg');
+    background-position: center center;
+    background-size: cover;
+    padding: 7.5rem 0;
+  }
+
+  & .hero-heading {
+    color: var(--azure);
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 2.5rem;
+  }
+
+  & .hero-paragraph {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 2;
+    margin-bottom: 2em;
+  }
+
+  & .hero-disclaimer {
+    color: var(--cool-grey);
+    font-size: 1.5rem;
+    line-height: 2;
+    margin-bottom: 2em;
+  }
+
+  & .iphone-app {
+    max-height: 50rem;
+    max-width: 100%;
+  }
+
+  & .download-badge {
+    height: 4.5rem;
+  }
+}
