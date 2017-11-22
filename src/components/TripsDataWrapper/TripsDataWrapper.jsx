@@ -52,7 +52,7 @@ class TripsDataWrapper extends Component {
         trips: data.trips
       }))
 
-      return data.feed_trips || this.state.attempts >= 20
+      return data.feed_trips
         ? data
         : wait(3000).then(() => this.updateTripsData(username, zipcode))
     }).then((data) => {

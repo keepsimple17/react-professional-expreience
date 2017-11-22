@@ -51,7 +51,7 @@ class FriendsDataWrapper extends Component {
         lastCount: prevState.friends ? prevState.friends.length : 0
       }))
 
-      return data.friendsFetched || this.state.attempts >= 20
+      return data.friendsFetched
         ? data
         : wait(3000).then(() => this.updateFriendsData(username))
     }).then((data) => {
