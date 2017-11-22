@@ -1,0 +1,40 @@
+@import '../../styles/variables.css';
+
+.download-promotion {
+  padding: 7.5rem 0;
+  position: relative;
+
+  &::before {
+    @media (--griddity-md-viewport) {
+      background-image: url('../../img/floating-phones.png');
+      background-position: center right;
+      background-repeat: no-repeat;
+      background-size: auto 90%;
+      bottom: 0;
+      content: " ";
+      display: block;
+      left: 0;
+      position: absolute;
+      right: 50%;
+      top: 0;
+    }
+  }
+
+  & .download-heading {
+    color: var(--azure);
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 2.5rem;
+  }
+
+  & .download-paragraph {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 2;
+    margin-bottom: 2em;
+  }
+
+  & .download-badge {
+    height: 4.5rem;
+  }
+}
