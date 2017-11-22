@@ -2,6 +2,72 @@
 
 .private-profile {
   & .private-profile-hero {
-    padding: 3rem 0;
+    background-image: linear-gradient(to bottom, #edf6f8, #fff);
+    padding: 12rem 0;
+    min-height: 50vh;
+  }
+
+  & .download-promotion {
+    padding: 7.5rem 0;
+    position: relative;
+
+    &::before {
+      @media (--griddity-md-viewport) {
+        background-image: url('../../img/floating-phones.png');
+        background-position: center right;
+        background-repeat: no-repeat;
+        background-size: auto 90%;
+        bottom: 0;
+        content: " ";
+        display: block;
+        left: 0;
+        position: absolute;
+        right: 50%;
+        top: 0;
+      }
+    }
+
+    & .download-heading {
+      color: var(--azure);
+      font-size: 2.5rem;
+      font-weight: normal;
+      margin-bottom: 2.5rem;
+    }
+
+    & .download-paragraph {
+      font-size: 1.5rem;
+      font-weight: 300;
+      line-height: 2;
+      margin-bottom: 2em;
+    }
+
+    & .download-badge {
+      height: 4.5rem;
+    }
+  }
+}
+
+.private-profile-card {
+  text-align: center;
+
+  & .profile-picture {
+    border-radius: 50%;
+    height: 7.5rem;
+    width: 7.5rem;
+  }
+
+  & .private-profile-info {
+    color: var(--cool-grey);
+    font-size: 2.25rem;
+
+    & .user-name {
+      color: var(--slate);
+      font-weight: normal;
+    }
+  }
+
+  & .private-profile-question {
+    color: var(--slate);
+    font-size: 1.5rem;
   }
 }
