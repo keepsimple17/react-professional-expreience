@@ -26,9 +26,7 @@ const TripGrid = ({ data }) => (
 
     {!(data.trips && data.trips.length) && (
       <li className="loading-message">
-        <p>
-          {data.loading ? 'Searching for travel posts...' : 'No travel posts found'}
-        </p>
+        <p>{data.loading ? 'Searching for travel posts...' : 'No travel posts found'}</p>
       </li>
     )}
     <li className="overlay" />

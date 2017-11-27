@@ -22,9 +22,7 @@ const TripCardList = ({ data }) => (
         ))}
       {!!data.loading && (
         <div className="col-12 loading-message">
-          <p>
-            Loading travel posts...
-          </p>
+          <p>Loading travel posts...</p>
         </div>
       )}
     </div>

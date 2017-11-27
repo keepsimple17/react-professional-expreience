@@ -54,36 +54,33 @@ class TripsDataWrapper extends Component {
 
     this.setState(prevState => ({ attempts: prevState.attempts + 1 }))
 
-    return api.fetchProfileTrips(username, zipcode).then((data) => {
-      this.setState(prevState => ({
-        lastCount: prevState.trips ? prevState.trips.length : 0,
-        trips: data.trips
-      }))
+    return api
+      .fetchProfileTrips(username, zipcode)
+      .then((data) => {
+        this.setState(prevState => ({
+          lastCount: prevState.trips ? prevState.trips.length : 0,
+          trips: data.trips
+        }))
 
-      return data.feed_trips || this.unmounted
-        ? data
-        : wait(3000).then(() => this.updateTripsData(username, zipcode))
-    }).then((data) => {
-      this.decrementLoading()
-      return data
-    }).catch((error) => {
-      this.setState(() => ({ error }))
-      this.decrementLoading()
-    })
+        return data.feed_trips || this.unmounted
+          ? data
+          : wait(3000).then(() => this.updateTripsData(username, zipcode))
+      })
+      .then((data) => {
+        this.decrementLoading()
+        return data
+      })
+      .catch((error) => {
+        this.setState(() => ({ error }))
+        this.decrementLoading()
+      })
   }
 
   render () {
-    const {
-      component: Comp,
-      profile,
-      ...rest
-    } = this.props
+    const { component: Comp, profile, ...rest } = this.props
 
     const {
-      attempts,
-      lastCount,
-      loading,
-      trips
+      attempts, lastCount, loading, trips
     } = this.state
 
     return (

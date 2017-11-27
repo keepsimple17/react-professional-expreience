@@ -21,15 +21,10 @@ const PrivateProfile = ({ profile }) => (
                 />
               </p>
               <p className="private-profile-info">
-                <strong className="user-name">
-                  {getName(profile)}
-                </strong>
-                {' '}
-                 has a private Instagram account
+                <strong className="user-name">{getName(profile)}</strong> has a private Instagram
+                account
               </p>
-              <p className="private-profile-question">
-                Is this you?
-              </p>
+              <p className="private-profile-question">Is this you?</p>
             </div>
           </div>
         </div>

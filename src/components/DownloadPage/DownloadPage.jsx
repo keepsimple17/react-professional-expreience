@@ -13,7 +13,7 @@ const DownloadPage = () => (
       <div className="container">
         <div className="row">
           <div className="col col-md-6">
-            <h3 className="hero-heading">{'Want to go carbon netural? Here\'s how!'}</h3>
+            <h3 className="hero-heading">Want to go carbon netural? Here&apos;s how!</h3>
             <p className="hero-paragraph">
               {`
                 Download crisis:earth on App Store to track where you're going and how much carbon
@@ -26,9 +26,7 @@ const DownloadPage = () => (
                 carbon neutral.
               `}
             </p>
-            <p className="hero-disclaimer">
-              (*) Based on the average user.
-            </p>
+            <p className="hero-disclaimer">(*) Based on the average user.</p>
             <p>
               <a className="link" href="https://store.apple.com">
                 <img

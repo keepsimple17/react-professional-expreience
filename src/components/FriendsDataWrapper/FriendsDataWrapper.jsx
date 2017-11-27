@@ -20,9 +20,7 @@ class FriendsDataWrapper extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (
-      this.props.profile.username !== nextProps.profile.username
-    ) {
+    if (this.props.profile.username !== nextProps.profile.username) {
       this.setState(() => ({ attempts: 0, lastCount: 0, friends: null }))
       this.updateFriendsData(nextProps.profile.username)
     }
@@ -53,36 +51,33 @@ class FriendsDataWrapper extends Component {
 
     this.setState(prevState => ({ attempts: prevState.attempts + 1 }))
 
-    return api.fetchProfileFriends(username).then((data) => {
-      this.setState(prevState => ({
-        friends: data.friends,
-        lastCount: prevState.friends ? prevState.friends.length : 0
-      }))
+    return api
+      .fetchProfileFriends(username)
+      .then((data) => {
+        this.setState(prevState => ({
+          friends: data.friends,
+          lastCount: prevState.friends ? prevState.friends.length : 0
+        }))
 
-      return data.friendsFetched || this.unmounted
-        ? data
-        : wait(3000).then(() => this.updateFriendsData(username))
-    }).then((data) => {
-      this.decrementLoading()
-      return data
-    }).catch((error) => {
-      this.setState(() => ({ error }))
-      this.decrementLoading()
-    })
+        return data.friendsFetched || this.unmounted
+          ? data
+          : wait(3000).then(() => this.updateFriendsData(username))
+      })
+      .then((data) => {
+        this.decrementLoading()
+        return data
+      })
+      .catch((error) => {
+        this.setState(() => ({ error }))
+        this.decrementLoading()
+      })
   }
 
   render () {
-    const {
-      component: Comp,
-      profile,
-      ...rest
-    } = this.props
+    const { component: Comp, profile, ...rest } = this.props
 
     const {
-      attempts,
-      friends,
-      lastCount,
-      loading
+      attempts, friends, lastCount, loading
     } = this.state
 
     return (

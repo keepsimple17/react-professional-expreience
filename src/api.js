@@ -30,25 +30,23 @@ const formatProfile = profile => ({
   zipcode: profile.address_zip
 })
 
-const fetchProfile = username => request(`/users/v1/ig/${username}`).then(data => formatProfile(data.user))
+const fetchProfile = username =>
+  request(`/users/v1/ig/${username}`).then(data => formatProfile(data.user))
 
 const fetchTopProducers = () =>
-  request('/feeds/v1/top-offenders')
-    .then(data => data.entities.map(formatProfile))
+  request('/feeds/v1/top-offenders').then(data => data.entities.map(formatProfile))
 
 const fetchProfileFriends = username =>
-  fetchProfile(username)
-    .then(profile => ({
-      friends: profile.friends.map(formatProfile),
-      friendsFetched: profile.friendsFetched
-    }))
+  fetchProfile(username).then(profile => ({
+    friends: profile.friends.map(formatProfile),
+    friendsFetched: profile.friendsFetched
+  }))
 
 const fetchProfileTrips = (username, zipcode) =>
-  request(`/trips/v1/ABA/${username}/${zipcode}`)
-    .then(data => ({
-      ...data,
-      trips: data.trips.map(formatTrip)
-    }))
+  request(`/trips/v1/ABA/${username}/${zipcode}`).then(data => ({
+    ...data,
+    trips: data.trips.map(formatTrip)
+  }))
 
 export default {
   fetchProfile,

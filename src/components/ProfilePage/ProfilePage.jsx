@@ -69,9 +69,7 @@ class ProfilePage extends Component {
     if (event) event.preventDefault()
 
     if (!this.state.zipcode) {
-      return this.props.lastLocation
-        ? this.props.history.goBack()
-        : this.props.history.push('/')
+      return this.props.lastLocation ? this.props.history.goBack() : this.props.history.push('/')
     }
 
     return this.setState(() => ({
@@ -87,27 +85,28 @@ class ProfilePage extends Component {
   updateProfileData (username) {
     this.incrementLoading()
 
-    api.fetchProfile(username).then((profile) => {
-      this.setState(() => ({ profile }))
+    api
+      .fetchProfile(username)
+      .then((profile) => {
+        this.setState(() => ({ profile }))
 
-      if (profile.zipcode) {
-        this.setState(() => ({ zipcode: profile.zipcode }))
-      } else {
-        this.openZipcodeModal()
-      }
+        if (profile.zipcode) {
+          this.setState(() => ({ zipcode: profile.zipcode }))
+        } else {
+          this.openZipcodeModal()
+        }
 
-      this.decrementLoading()
-    }).catch((error) => {
-      this.setState(() => ({ error }))
-      this.decrementLoading()
-    })
+        this.decrementLoading()
+      })
+      .catch((error) => {
+        this.setState(() => ({ error }))
+        this.decrementLoading()
+      })
   }
 
   render () {
     if (this.state.profile && this.state.profile.private) {
-      return (
-        <PrivateProfile profile={this.state.profile} />
-      )
+      return <PrivateProfile profile={this.state.profile} />
     }
 
     return (
@@ -186,13 +185,14 @@ class ProfilePage extends Component {
                 {this.state.profile && <ProfileCard profile={this.state.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                {this.state.profile && this.state.zipcode && (
-                  <TripsDataWrapper
-                    component={TripGrid}
-                    profile={this.state.profile}
-                    zipcode={this.state.zipcode}
-                  />
-                )}
+                {this.state.profile &&
+                  this.state.zipcode && (
+                    <TripsDataWrapper
+                      component={TripGrid}
+                      profile={this.state.profile}
+                      zipcode={this.state.zipcode}
+                    />
+                  )}
               </div>
             </div>
           </div>
@@ -236,10 +236,7 @@ class ProfilePage extends Component {
                   <div className="col">
                     {this.state.zipcode && (
                       <p className="zipcode-details">
-                        Trips based on zip code:
-                        { ' ' }
-                        {this.state.zipcode}.
-                        { ' ' }
+                        Trips based on zip code: {this.state.zipcode}.{' '}
                         <button
                           type="button"
                           className="btn-link"
@@ -251,23 +248,21 @@ class ProfilePage extends Component {
                     )}
                   </div>
                 </div>
-                {this.state.profile && this.state.zipcode && (
-                  <TripsDataWrapper
-                    component={TripCardList}
-                    profile={this.state.profile}
-                    zipcode={this.state.zipcode}
-                  />
-                )}
+                {this.state.profile &&
+                  this.state.zipcode && (
+                    <TripsDataWrapper
+                      component={TripCardList}
+                      profile={this.state.profile}
+                      zipcode={this.state.zipcode}
+                    />
+                  )}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.state.profile && (
                   <h3 className="friends-heading">{getName(this.state.profile)}’s friends</h3>
                 )}
                 {this.state.profile && (
-                  <FriendsDataWrapper
-                    component={FriendsList}
-                    profile={this.state.profile}
-                  />
+                  <FriendsDataWrapper component={FriendsList} profile={this.state.profile} />
                 )}
               </div>
             </div>
