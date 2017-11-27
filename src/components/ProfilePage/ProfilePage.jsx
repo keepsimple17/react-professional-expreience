@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
+import { withLastLocation } from 'react-router-last-location'
 
 import api from '../../api'
 import FriendsDataWrapper from '../FriendsDataWrapper/FriendsDataWrapper'
@@ -67,7 +68,13 @@ class ProfilePage extends Component {
   closeZipcodeModal (event) {
     if (event) event.preventDefault()
 
-    this.setState(() => ({
+    if (!this.state.zipcode) {
+      return this.props.lastLocation
+        ? this.props.history.goBack()
+        : this.props.history.push('/')
+    }
+
+    return this.setState(() => ({
       isZipcodeModalOpen: false
     }))
   }
@@ -109,7 +116,7 @@ class ProfilePage extends Component {
           className="regular-modal-content"
           contentLabel="Modal"
           isOpen={this.state.isZipcodeModalOpen}
-          onRequestClose={() => {}}
+          onRequestClose={() => this.closeZipcodeModal()}
           overlayClassName="regular-modal-overlay"
         >
           {this.state.profile && (
@@ -218,9 +225,32 @@ class ProfilePage extends Component {
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-lg-8">
-                {this.state.profile && (
-                  <h3 className="trips-heading">{getName(this.state.profile)}’s travel posts</h3>
-                )}
+                <div className="row align-items-center">
+                  <div className="col">
+                    {this.state.profile && (
+                      <h3 className="trips-heading">
+                        {getName(this.state.profile)}’s travel posts
+                      </h3>
+                    )}
+                  </div>
+                  <div className="col">
+                    {this.state.zipcode && (
+                      <p className="zipcode-details">
+                        Trips based on zip code:
+                        { ' ' }
+                        {this.state.zipcode}.
+                        { ' ' }
+                        <button
+                          type="button"
+                          className="btn-link"
+                          onClick={e => this.openZipcodeModal(e)}
+                        >
+                          Click here to change
+                        </button>
+                      </p>
+                    )}
+                  </div>
+                </div>
                 {this.state.profile && this.state.zipcode && (
                   <TripsDataWrapper
                     component={TripCardList}
@@ -249,7 +279,13 @@ class ProfilePage extends Component {
 }
 
 ProfilePage.propTypes = {
+  history: PropTypes.shape({
+    goBack: PropTypes.func,
+    location: PropTypes.shape({}),
+    push: PropTypes.func
+  }).isRequired,
+  lastLocation: PropTypes.shape({}).isRequired,
   username: PropTypes.string.isRequired
 }
 
-export default ProfilePage
+export default withLastLocation(withRouter(ProfilePage))

@@ -64,6 +64,10 @@
       font-weight: normal;
       margin-bottom: 1em;
     }
+
+    & .zipcode-details {
+      margin-bottom: 2rem;
+    }
   }
 }
 
