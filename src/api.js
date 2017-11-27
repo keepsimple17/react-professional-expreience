@@ -32,8 +32,9 @@ const formatProfile = profile => ({
 
 const fetchProfile = username => request(`/users/v1/ig/${username}`).then(data => formatProfile(data.user))
 
-const fetchTopProducers = (n = 8) =>
-  fetchProfile('asimon9633').then(profile => Array(n).fill(profile))
+const fetchTopProducers = () =>
+  request('/feeds/v1/top-offenders')
+    .then(data => data.entities.map(formatProfile))
 
 const fetchProfileFriends = username =>
   fetchProfile(username)
