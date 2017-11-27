@@ -78,8 +78,10 @@ class ProfilePage extends Component {
   }
 
   submitZipcode (zipcode) {
-    this.closeZipcodeModal()
-    this.setState(() => ({ zipcode }))
+    this.setState(
+      () => ({ zipcode }),
+      () => this.closeZipcodeModal()
+    )
   }
 
   updateProfileData (username) {
