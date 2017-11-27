@@ -4,8 +4,9 @@ import { LastLocationProvider } from 'react-router-last-location'
 
 import AppFooter from '../AppFooter/AppFooter'
 import AppHeader from '../AppHeader/AppHeader'
-import HomePage from '../HomePage/HomePage'
 import DownloadPage from '../DownloadPage/DownloadPage'
+import HomePage from '../HomePage/HomePage'
+import PrivacyTermsPage from '../PrivacyTermsPage/PrivacyTermsPage'
 import ProfilePage from '../ProfilePage/ProfilePage'
 
 import './app.css'
@@ -23,6 +24,7 @@ const App = () => (
             render={({ match }) => <ProfilePage username={match.params.username} />}
           />
           <Route exact path="/download" component={DownloadPage} />
+          <Route exact path="/privacy" component={PrivacyTermsPage} />
         </section>
         <AppFooter />
       </div>

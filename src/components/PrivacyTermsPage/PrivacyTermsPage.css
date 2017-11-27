@@ -1,0 +1,10 @@
+.privacy-terms-page {
+  padding: 3rem 0;
+
+  & .page-heading {
+    font-size: 2.5rem;
+    font-weight: 300;
+    margin-bottom: 1em;
+    text-align: center;
+  }
+}
