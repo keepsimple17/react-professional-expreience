@@ -1,34 +1,34 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react'
 
 import cn from '../../util/cn'
 import ProfileCard from '../ProfileCard/ProfileCard'
 
 import './FriendsList.css'
 
-const FriendsList = ({ data }) => (
+const FriendsList = ({ friends }) => (
   <ul
     {...cn('friends-list', {
-      '-loading': !!data.loading,
-      '-empty': !data.friends || !data.friends.length
+      '-loading': !!friends.loading,
+      '-empty': !friends.friends || !friends.friends.length
     })}
   >
-    {data.friends &&
-      data.friends.map((profile, i) => (
+    {friends.friends &&
+      friends.friends.map((profile, i) => (
         <li className="friend-item" key={profile.username}>
           <ProfileCard profile={profile} />
         </li>
       ))}
-    {!!data.loading && <li className="loading-message">Loading friends...</li>}
+    {!!friends.loading && <li className="loading-message">Loading friends...</li>}
   </ul>
 )
 
 FriendsList.propTypes = {
-  data: PropTypes.shape({
-    friends: PropTypes.arrayOf(PropTypes.shape({
-      username: PropTypes.string
-    }))
+  friends: PropTypes.shape({
+    loading: PropTypes.bool,
+    friends: MobxPropTypes.observableArrayOf(PropTypes.shape({}))
   }).isRequired
 }
 
-export default FriendsList
+export default observer(FriendsList)

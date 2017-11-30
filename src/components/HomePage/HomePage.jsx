@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
+import { inject, observer } from 'mobx-react'
 
-import api from '../../api'
+import pipe from '../../util/pipe'
 import ProfileRow from './ProfileRow'
 import searchIcon from '../../img/icons/search.svg'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
-import TripsDataWrapper from '../TripsDataWrapper/TripsDataWrapper'
 
 import './HomePage.css'
 
@@ -19,7 +19,9 @@ class HomePage extends Component {
   }
 
   async componentWillMount () {
-    const topProducers = await api.fetchTopProducers()
+    const topProducers = await this.props.store.fetchTopProducers()
+
+    topProducers.forEach(profile => profile.trips.pullTrips())
 
     this.setState(() => ({
       topProducers: topProducers || []
@@ -62,12 +64,7 @@ class HomePage extends Component {
               </div>
             </div>
             {this.state.topProducers.map(profile => (
-              <TripsDataWrapper
-                component={ProfileRow}
-                key={profile.username}
-                profile={profile}
-                zipcode={profile.zipcode}
-              />
+              <ProfileRow key={profile.username} profile={profile} />
             ))}
           </div>
         </section>
@@ -79,9 +76,16 @@ class HomePage extends Component {
 HomePage.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func
+  }).isRequired,
+  store: PropTypes.shape({
+    fetchTopProducers: PropTypes.func
   }).isRequired
 }
 
 export { HomePage }
 
-export default withRouter(HomePage)
+export default pipe([
+  observer,
+  inject('store'),
+  withRouter
+])(HomePage)
