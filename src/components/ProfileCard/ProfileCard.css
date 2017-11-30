@@ -1,5 +1,33 @@
 @import '../../styles/variables.css';
 
+.danger-button {
+  border-radius: 0.25rem;
+  border: 2px solid var(--reddish);
+  color: var(--reddish);
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: -0.0125em;
+  padding: 0.5rem;
+  transition: all 150ms ease-in-out 0s;
+
+  &:hover {
+    border-color: color(var(--reddish) lightness(-6%));
+    color: color(var(--reddish) lightness(-6%));
+    text-decoration: none;
+  }
+
+  &.-fill {
+    background-color: var(--reddish);
+    color: #fff;
+
+    &:hover {
+      background-color: color(var(--reddish) lightness(-6%));
+      color: #fff;
+    }
+  }
+}
+
 .profile-card {
   width: 100%;
 
@@ -33,33 +61,5 @@
 
   & .danger-button + .danger-button {
     margin-left: 0.625rem;
-  }
-}
-
-.danger-button {
-  border-radius: 0.25rem;
-  border: 2px solid var(--reddish);
-  color: var(--reddish);
-  display: inline-block;
-  font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: -0.0125em;
-  padding: 0.5rem;
-  transition: all 150ms ease-in-out 0s;
-
-  &:hover {
-    border-color: color(var(--reddish) lightness(-6%));
-    color: color(var(--reddish) lightness(-6%));
-    text-decoration: none;
-  }
-
-  &.-fill {
-    background-color: var(--reddish);
-    color: #fff;
-
-    &:hover {
-      background-color: color(var(--reddish) lightness(-6%));
-      color: #fff;
-    }
   }
 }
