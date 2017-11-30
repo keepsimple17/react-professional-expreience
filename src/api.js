@@ -14,6 +14,7 @@ const formatTrip = data => ({
   carbonOutput: data.carbon_generated,
   destinationName: data.to.name,
   distance: data.distance,
+  id: data.picture_url,
   pictureUrl: data.picture_url,
   tripDate: data.to.time_unix
 })
@@ -21,9 +22,11 @@ const formatTrip = data => ({
 const formatProfile = profile => ({
   carbonOutput: profile.estimated_carbon,
   fullName: profile.instagram_name,
-  friends: profile.friends,
-  friendsFetched: profile.friends_complete,
-  instagramId: profile.instagramId,
+  friends: {
+    friends: profile.friends ? profile.friends.map(formatProfile) : [],
+    completed: profile.friends_complete
+  },
+  instagramId: profile.instagram_id,
   profilePictureUrl: profile.picture_url,
   private: profile.private,
   username: profile.instagram_username,
@@ -37,14 +40,11 @@ const fetchTopProducers = () =>
   request('/feeds/v1/top-offenders').then(data => data.entities.map(formatProfile))
 
 const fetchProfileFriends = username =>
-  fetchProfile(username).then(profile => ({
-    friends: profile.friends.map(formatProfile),
-    friendsFetched: profile.friendsFetched
-  }))
+  fetchProfile(username).then(profile => profile.friends)
 
 const fetchProfileTrips = (username, zipcode) =>
   request(`/trips/v1/ABA/${username}/${zipcode}`).then(data => ({
-    ...data,
+    completed: data.feed_trips,
     trips: data.trips.map(formatTrip)
   }))
 

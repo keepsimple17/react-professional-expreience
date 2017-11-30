@@ -1,18 +1,17 @@
 import React, { Component } from 'react'
 import Modal from 'react-modal'
 import PropTypes from 'prop-types'
+import { inject, observer } from 'mobx-react'
 import { Link, withRouter } from 'react-router-dom'
 import { withLastLocation } from 'react-router-last-location'
 
-import api from '../../api'
-import FriendsDataWrapper from '../FriendsDataWrapper/FriendsDataWrapper'
 import FriendsList from './FriendsList'
+import pipe from '../../util/pipe'
 import PrivateProfile from './PrivateProfile'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import TripCardList from './TripCardList'
 import TripGrid from './TripGrid'
-import TripsDataWrapper from '../TripsDataWrapper/TripsDataWrapper'
 
 import './ProfilePage.css'
 
@@ -22,10 +21,7 @@ class ProfilePage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      isZipcodeModalOpen: false,
-      loading: 0,
-      profile: null,
-      zipcode: null
+      isZipcodeModalOpen: false
     }
   }
 
@@ -35,26 +31,12 @@ class ProfilePage extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.username !== nextProps.username) {
-      this.setState(() => ({
-        friends: null,
-        isZipcodeModalOpen: false,
-        profile: null,
-        zipcode: null
-      }))
       this.updateProfileData(nextProps.username)
     }
   }
 
-  decrementLoading (n = 1) {
-    this.setState(prevState => ({
-      loading: Math.max(prevState.loading - n, 0)
-    }))
-  }
-
-  incrementLoading (n = 1) {
-    this.setState(prevState => ({
-      loading: prevState.loading + n
-    }))
+  get profile () {
+    return this.props.store.profiles.get(this.props.username)
   }
 
   openZipcodeModal (event) {
@@ -68,7 +50,7 @@ class ProfilePage extends Component {
   closeZipcodeModal (event) {
     if (event) event.preventDefault()
 
-    if (!this.state.zipcode) {
+    if (!this.profile.zipcode) {
       return this.props.lastLocation ? this.props.history.goBack() : this.props.history.push('/')
     }
 
@@ -78,37 +60,30 @@ class ProfilePage extends Component {
   }
 
   submitZipcode (zipcode) {
-    this.setState(
-      () => ({ zipcode }),
-      () => this.closeZipcodeModal()
-    )
+    this.profile.updateZipcode(zipcode)
+    this.closeZipcodeModal()
   }
 
   updateProfileData (username) {
-    this.incrementLoading()
-
-    api
+    return this.props.store
       .fetchProfile(username)
       .then((profile) => {
-        this.setState(() => ({ profile }))
+        if (profile.friends.loading) this.profile.friends.pullFriends()
 
         if (profile.zipcode) {
-          this.setState(() => ({ zipcode: profile.zipcode }))
+          this.profile.updateZipcode(profile.zipcode)
         } else {
           this.openZipcodeModal()
         }
-
-        this.decrementLoading()
       })
       .catch((error) => {
         this.setState(() => ({ error }))
-        this.decrementLoading()
       })
   }
 
   render () {
-    if (this.state.profile && this.state.profile.private) {
-      return <PrivateProfile profile={this.state.profile} />
+    if (this.profile && this.profile.private) {
+      return <PrivateProfile profile={this.profile} />
     }
 
     return (
@@ -120,17 +95,17 @@ class ProfilePage extends Component {
           onRequestClose={() => this.closeZipcodeModal()}
           overlayClassName="regular-modal-overlay"
         >
-          {this.state.profile && (
+          {this.profile && (
             <section className="modal-header">
-              <h3 className="modal-title">What’s {getName(this.state.profile)}’s zip code?</h3>
+              <h3 className="modal-title">What’s {getName(this.profile)}’s zip code?</h3>
             </section>
           )}
-          {this.state.profile && (
+          {this.profile && (
             <section className="modal-body">
               <div className="row">
                 <div className="col">
                   <p className="modal-lead-message">
-                    In order to calculate {getName(this.state.profile)}’s carbon footprint, we need
+                    In order to calculate {getName(this.profile)}’s carbon footprint, we need
                     his ZIP code
                   </p>
                   <SingleInputForm
@@ -169,7 +144,7 @@ class ProfilePage extends Component {
             </div>
           </section>
         )}
-        {(!!this.state.loading || this.state.isZipcodeModalOpen) && (
+        {this.profile && this.profile.loading && (
           <section className="profile-message-bar -info">
             <div className="container">
               <div className="row">
@@ -184,23 +159,18 @@ class ProfilePage extends Component {
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-lg-5">
-                {this.state.profile && <ProfileCard profile={this.state.profile} />}
+                {this.profile && <ProfileCard profile={this.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                {this.state.profile &&
-                  this.state.zipcode && (
-                    <TripsDataWrapper
-                      component={TripGrid}
-                      profile={this.state.profile}
-                      zipcode={this.state.zipcode}
-                    />
-                  )}
+                {this.profile && this.profile.zipcode && (
+                  <TripGrid profile={this.profile} />
+                )}
               </div>
             </div>
           </div>
         </section>
 
-        {this.state.profile && (
+        {this.profile && (
           <section className="download-app-bar">
             <div className="container">
               <div className="row">
@@ -208,7 +178,7 @@ class ProfilePage extends Component {
                   className="col-12 col-md-auto text-center text-md-left d-flex align-items-center"
                 >
                   <p className="download-app-message">
-                    {`Are you ${getName(this.state.profile)}? Claim this account to go carbon neutral.`}
+                    {`Are you ${getName(this.profile)}? Claim this account to go carbon neutral.`}
                   </p>
                 </div>
                 <div className="col-12 col-md text-center text-md-right">
@@ -229,16 +199,16 @@ class ProfilePage extends Component {
               <div className="col-xs-12 col-lg-8">
                 <div className="row align-items-center">
                   <div className="col">
-                    {this.state.profile && (
+                    {this.profile && (
                       <h3 className="trips-heading">
-                        {getName(this.state.profile)}’s travel posts
+                        {getName(this.profile)}’s travel posts
                       </h3>
                     )}
                   </div>
                   <div className="col">
-                    {this.state.zipcode && (
+                    {this.profile && this.profile.zipcode && !this.profile.trips.completed && (
                       <p className="zipcode-details">
-                        Trips based on zip code: {this.state.zipcode}.{' '}
+                        Trips based on zip code: {this.profile.zipcode}.{' '}
                         <button
                           type="button"
                           className="btn-link"
@@ -250,21 +220,16 @@ class ProfilePage extends Component {
                     )}
                   </div>
                 </div>
-                {this.state.profile &&
-                  this.state.zipcode && (
-                    <TripsDataWrapper
-                      component={TripCardList}
-                      profile={this.state.profile}
-                      zipcode={this.state.zipcode}
-                    />
-                  )}
+                {this.profile && this.profile.zipcode && (
+                  <TripCardList profile={this.profile} />
+                )}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
-                {this.state.profile && (
-                  <h3 className="friends-heading">{getName(this.state.profile)}’s friends</h3>
+                {this.profile && (
+                  <h3 className="friends-heading">{getName(this.profile)}’s friends</h3>
                 )}
-                {this.state.profile && (
-                  <FriendsDataWrapper component={FriendsList} profile={this.state.profile} />
+                {this.profile && (
+                  <FriendsList friends={this.profile.friends} />
                 )}
               </div>
             </div>
@@ -275,14 +240,29 @@ class ProfilePage extends Component {
   }
 }
 
+ProfilePage.defaultProps = {
+  lastLocation: null
+}
+
 ProfilePage.propTypes = {
+  store: PropTypes.shape({
+    fetchProfile: PropTypes.func,
+    profiles: PropTypes.shape({
+      get: PropTypes.func
+    })
+  }).isRequired,
   history: PropTypes.shape({
     goBack: PropTypes.func,
     location: PropTypes.shape({}),
     push: PropTypes.func
   }).isRequired,
-  lastLocation: PropTypes.shape({}).isRequired,
+  lastLocation: PropTypes.shape({}),
   username: PropTypes.string.isRequired
 }
 
-export default withLastLocation(withRouter(ProfilePage))
+export default pipe([
+  observer,
+  inject('store'),
+  withRouter,
+  withLastLocation
+])(ProfilePage)
