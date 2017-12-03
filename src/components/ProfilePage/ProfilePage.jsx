@@ -51,7 +51,7 @@ class ProfilePage extends Component {
     if (event) event.preventDefault()
 
     if (!this.profile.zipcode) {
-      return this.props.lastLocation ? this.props.history.goBack() : this.props.history.push('/')
+      this.props.lastLocation ? this.props.history.goBack() : this.props.history.push('/')
     }
 
     return this.setState(() => ({
