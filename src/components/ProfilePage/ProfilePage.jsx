@@ -31,6 +31,10 @@ class ProfilePage extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.username !== nextProps.username) {
+      this.setState(() => ({
+        isZipcodeModalOpen: false
+      }))
+
       this.updateProfileData(nextProps.username)
     }
   }
