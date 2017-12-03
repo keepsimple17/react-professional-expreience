@@ -11,25 +11,13 @@ const getFormatedDate = epochSeconds => formatDate(new Date(epochSeconds * 1000)
 
 const TripCard = ({ profile, trip }) => (
   <div className="trip-card">
-    <div className="row no-gutters details-row">
+    <div className="row no-gutters align-items-center details-row">
       <div className="col-auto">
         <img className="profile-picture" src={profile.profilePictureUrl} alt={profile.fullName} />
       </div>
       <div className="col">
         <p className="trip-description">
           <strong>{profile.fullName || `@${profile.username}`}</strong>
-          {' '}
-          took a
-          {' '}
-          <strong>
-            <FormattedNumber value={meterToMiles(trip.distance)} />
-          </strong>
-          {' '}
-          miles trip to
-          {' '}
-          {trip.destinationName}
-          {' '}
-          and did not pay to offset his carbon.
         </p>
       </div>
       <div className="col-auto">
@@ -48,6 +36,21 @@ const TripCard = ({ profile, trip }) => (
         <div className="embed-responsive embed-responsive-1by1">
           <img className="trip-picture embed-responsive-item" src={trip.pictureUrl} alt="Trip" />
         </div>
+      </div>
+    </div>
+    <div className="row no-gutters align-items-center details-row">
+      <div className="col">
+        <p className="trip-description">
+          <strong>
+            Travelled
+            {' '}
+            <FormattedNumber value={meterToMiles(trip.distance)} />
+            {' '}
+            mi to
+            {' '}
+            {trip.destinationName}
+          </strong>
+        </p>
       </div>
     </div>
   </div>
