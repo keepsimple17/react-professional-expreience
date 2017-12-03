@@ -126,6 +126,10 @@
   margin: 0;
   padding: 0;
 
+  &.-blue {
+    color: var(--azure);
+  }
+
   &:hover {
     text-decoration: underline;
   }

@@ -211,7 +211,7 @@ class ProfilePage extends Component {
                         Trips based on zip code: {this.profile.zipcode}.{' '}
                         <button
                           type="button"
-                          className="btn-link"
+                          className="btn-link -blue"
                           onClick={e => this.openZipcodeModal(e)}
                         >
                           Click here to change
