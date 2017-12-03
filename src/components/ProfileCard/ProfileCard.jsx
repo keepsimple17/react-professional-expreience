@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 
+import { gramsToPounds } from '../../util/conversions'
+
 import './ProfileCard.css'
 
 const ProfileCard = ({ profile }) => {
@@ -36,7 +38,7 @@ const ProfileCard = ({ profile }) => {
           </h3>
           <p>
             <Link className="danger-button -fill" title="Download the app" to="/download">
-              {`${profile.carbonOutput} CO₂ /yr`}
+              {`${gramsToPounds(profile.carbonOutput)} CO₂ /yr`}
             </Link>
             <Link className="danger-button" title="Download the app" to="/download">
               Not carbon neutral
