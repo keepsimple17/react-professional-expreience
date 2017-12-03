@@ -46,7 +46,6 @@ class HomePage extends Component {
                   iconUrl={searchIcon}
                   placeholder="example: goodlife"
                   required
-                  autoFocus
                   pattern="[A-Za-z0-9_]{3,}"
                   onSubmit={(event, username) => this.props.history.push(`/profile/${username}`)}
                 />
