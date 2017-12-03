@@ -89,7 +89,7 @@ class ProfilePage extends Component {
     return (
       <section className="profile-page">
         <Modal
-          className="regular-modal-content"
+          className="regular-modal-content zipcode-modal"
           contentLabel="Modal"
           isOpen={this.state.isZipcodeModalOpen}
           onRequestClose={() => this.closeZipcodeModal()}
@@ -104,6 +104,13 @@ class ProfilePage extends Component {
             <section className="modal-body">
               <div className="row">
                 <div className="col">
+                  <p className="profile-image-container">
+                    <img
+                      className="profile-picture"
+                      src={this.profile.profilePictureUrl}
+                      alt={this.profile.username}
+                    />
+                  </p>
                   <p className="modal-lead-message">
                     In order to calculate {getName(this.profile)}’s carbon footprint, we need
                     his ZIP code

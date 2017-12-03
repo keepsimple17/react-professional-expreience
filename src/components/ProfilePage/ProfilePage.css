@@ -90,7 +90,7 @@
   border-radius: 4px;
   flex-grow: 0;
   max-height: 100%;
-  max-width: 520px;
+  max-width: var(--griddity-container-sm);
   overflow: auto;
 
   & > .modal-header {
@@ -110,10 +110,25 @@
 }
 
 .modal-lead-message {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 300;
   line-height: 1.82;
+  margin-bottom: 3.5rem;
   text-align: center;
+}
+
+.zipcode-modal {
+  & .profile-image-container {
+    margin-bottom: 2rem;
+    padding-top: 2.5rem;
+    text-align: center;
+  }
+
+  & .profile-picture {
+    border-radius: 50%;
+    height: 7.5rem;
+    width: 7.5rem;
+  }
 }
 
 .btn-link {
