@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { injectIntl, FormattedNumber } from 'react-intl'
 
 import { gramsToPounds } from '../../util/conversions'
 
@@ -9,7 +10,11 @@ const SmallTripBox = ({ trip }) => (
   <div className="small-trip-box embed-responsive embed-responsive-1by1">
     <img className="trip-picture embed-responsive-item" src={trip.pictureUrl} alt="Trip" />
     <div className="trip-overlay d-flex flex-column justify-content-center">
-      <p>{`${gramsToPounds(trip.carbonOutput)} lbs`}</p>
+      <p>
+        <FormattedNumber value={gramsToPounds(trip.carbonOutput)} />
+        {' '}
+        lbs
+      </p>
       <p>CO₂</p>
     </div>
   </div>
@@ -22,4 +27,4 @@ SmallTripBox.propTypes = {
   }).isRequired
 }
 
-export default SmallTripBox
+export default injectIntl(SmallTripBox)
