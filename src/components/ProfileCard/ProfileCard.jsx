@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { injectIntl, FormattedNumber } from 'react-intl'
 
 import { gramsToPounds } from '../../util/conversions'
 
@@ -38,7 +39,9 @@ const ProfileCard = ({ profile }) => {
           </h3>
           <p>
             <Link className="danger-button -fill" title="Download the app" to="/download">
-              {`${gramsToPounds(profile.carbonOutput)} CO₂ /yr`}
+              <FormattedNumber value={gramsToPounds(profile.carbonOutput)} />
+              {' '}
+              CO₂ /yr
             </Link>
             <Link className="danger-button" title="Download the app" to="/download">
               Not carbon neutral
@@ -59,4 +62,4 @@ ProfileCard.propTypes = {
   }).isRequired
 }
 
-export default ProfileCard
+export default injectIntl(ProfileCard)

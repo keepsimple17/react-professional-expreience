@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { format as formatDate } from 'date-fns'
+import { injectIntl, FormattedNumber } from 'react-intl'
 
 import { gramsToPounds, meterToMiles } from '../../util/conversions'
 
@@ -17,14 +18,27 @@ const TripCard = ({ profile, trip }) => (
       <div className="col">
         <p className="trip-description">
           <strong>{profile.fullName || `@${profile.username}`}</strong>
-          {' took a '}
-          <strong>{meterToMiles(trip.distance)}</strong>
-          {` miles trip to ${trip.destinationName} and did not pay to offset his carbon.`}
+          {' '}
+          took a
+          {' '}
+          <strong>
+            <FormattedNumber value={meterToMiles(trip.distance)} />
+          </strong>
+          {' '}
+          miles trip to
+          {' '}
+          {trip.destinationName}
+          {' '}
+          and did not pay to offset his carbon.
         </p>
       </div>
       <div className="col-auto">
         <p className="trip-carbon-output text-right">
-          <span className="trip-badge">{`${gramsToPounds(trip.carbonOutput)} lbs`}</span>
+          <span className="trip-badge">
+            <FormattedNumber value={gramsToPounds(trip.carbonOutput)} />
+            {' '}
+            lbs
+          </span>
         </p>
         <p className="trip-date text-right">{getFormatedDate(trip.tripDate)}</p>
       </div>
@@ -54,4 +68,4 @@ TripCard.propTypes = {
   }).isRequired
 }
 
-export default TripCard
+export default injectIntl(TripCard)
