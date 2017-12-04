@@ -31,7 +31,7 @@ export const Profile = types.model('Profile', {
 }).actions((self) => {
   const updateZipcode = (zipcode) => {
     self.zipcode = zipcode
-    self.trips.pullTrips()
+    if (!self.private) self.trips.pullTrips()
   }
 
   return {

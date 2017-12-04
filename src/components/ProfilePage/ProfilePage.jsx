@@ -72,7 +72,7 @@ class ProfilePage extends Component {
     return this.props.store
       .fetchProfile(username)
       .then((profile) => {
-        if (profile.friends.loading) this.profile.friends.pullFriends()
+        if (!profile.private && profile.friends.loading) this.profile.friends.pullFriends()
 
         if (profile.zipcode) {
           this.profile.updateZipcode(profile.zipcode)
