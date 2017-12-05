@@ -39,8 +39,9 @@
   }
 
   & .profile-links-col {
-    /* flex-box + ellipsis hack */
     color: color(var(--slate) alpha(50%));
+
+    /* flex-box + ellipsis hack */
     flex: 1 1 auto;
     min-width: 0;
   }

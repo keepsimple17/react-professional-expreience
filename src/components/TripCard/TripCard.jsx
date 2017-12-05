@@ -17,7 +17,7 @@ const TripCard = ({ profile, trip }) => (
       </div>
       <div className="col">
         <p className="trip-description">
-          <strong>{profile.fullName || `@${profile.username}`}</strong>
+          {profile.fullName || `@${profile.username}`}
         </p>
       </div>
       <div className="col-auto">
@@ -41,15 +41,13 @@ const TripCard = ({ profile, trip }) => (
     <div className="row no-gutters align-items-center details-row">
       <div className="col">
         <p className="trip-description">
-          <strong>
-            Travelled
-            {' '}
-            <FormattedNumber value={meterToMiles(trip.distance)} />
-            {' '}
-            mi to
-            {' '}
-            {trip.destinationName}
-          </strong>
+          Travelled
+          {' '}
+          <FormattedNumber value={meterToMiles(trip.distance)} />
+          {' '}
+          mi to
+          {' '}
+          {trip.destinationName}
         </p>
       </div>
     </div>
