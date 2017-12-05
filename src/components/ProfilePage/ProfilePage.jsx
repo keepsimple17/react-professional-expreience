@@ -117,7 +117,7 @@ class ProfilePage extends Component {
                   </p>
                   <p className="modal-lead-message">
                     In order to calculate {getName(this.profile)}’s carbon footprint, we need
-                    his ZIP code
+                    their ZIP code
                   </p>
                   <SingleInputForm
                     autoFocus
