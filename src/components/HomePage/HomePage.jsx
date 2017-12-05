@@ -21,7 +21,9 @@ class HomePage extends Component {
   async componentWillMount () {
     const topProducers = await this.props.store.fetchTopProducers()
 
-    topProducers.forEach(profile => profile.trips.pullTrips())
+    topProducers.forEach((profile) => {
+      if (profile.zipcode) profile.trips.pullTrips()
+    })
 
     this.setState(() => ({
       topProducers: topProducers || []
