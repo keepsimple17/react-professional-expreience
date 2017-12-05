@@ -98,14 +98,14 @@ export const TripsStore = types.model('TripsStore', {
   loading: true,
   trips: types.optional(types.array(Trip), [])
 }).actions((self) => {
-  const updateTrips = flow(function * updateTrips () {
+  const updateTrips = flow(function * updateTrips (limit) {
     self.attempts += 1
     self.lastCount = self.trips.length
 
     try {
       const { username, zipcode } = getParent(self)
 
-      const data = yield api.fetchProfileTrips(username, zipcode)
+      const data = yield api.fetchProfileTrips(username, zipcode, limit)
 
       self.trips = data.trips
       self.completed = data.completed
@@ -116,12 +116,12 @@ export const TripsStore = types.model('TripsStore', {
     }
   })
 
-  const pullTrips = flow(function * pullTrips () {
+  const pullTrips = flow(function * pullTrips (limit) {
     self.loading = true
 
     try {
-      while (!self.completed) {
-        yield updateTrips()
+      while (!self.completed && self.trips.length < limit) {
+        yield updateTrips(limit)
         yield wait(3000)
       }
     } catch (error) {

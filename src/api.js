@@ -2,8 +2,14 @@
 
 const { REACT_APP_API_URI } = process.env
 
-const request = endpoint =>
-  fetch(`${REACT_APP_API_URI}${endpoint}`)
+const serialize = obj => Object
+  .keys(obj)
+  .filter(k => obj[k])
+  .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`)
+  .join('&')
+
+const request = (endpoint, params = {}) =>
+  fetch(`${REACT_APP_API_URI}${endpoint}?${serialize(params)}`)
     .then(res => res.json())
     .then((data) => {
       if (data.status !== 'success') throw new Error(data.message)
@@ -42,8 +48,8 @@ const fetchTopProducers = () =>
 const fetchProfileFriends = username =>
   fetchProfile(username).then(profile => profile.friends)
 
-const fetchProfileTrips = (username, zipcode) =>
-  request(`/trips/v1/ABA/${username}/${zipcode}`).then(data => ({
+const fetchProfileTrips = (username, zipcode, limit) =>
+  request(`/trips/v1/ABA/${username}/${zipcode}`, { limit }).then(data => ({
     completed: data.feed_trips,
     trips: data.trips.map(formatTrip)
   }))

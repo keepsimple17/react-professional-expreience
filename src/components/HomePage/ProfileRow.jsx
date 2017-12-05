@@ -13,7 +13,7 @@ const ProfileRow = ({ profile }) => (
     <div className="d-none d-lg-block col-lg-7">
       <ul className="trip-list">
         {profile.trips.trips &&
-          profile.trips.trips.slice(0, 5).map(trip => (
+          profile.trips.trips.map(trip => (
             <li className="trip-item" key={trip.pictureUrl}>
               <SmallTripBox trip={trip} />
             </li>

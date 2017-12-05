@@ -22,7 +22,7 @@ class HomePage extends Component {
     const topProducers = await this.props.store.fetchTopProducers()
 
     topProducers.forEach((profile) => {
-      if (profile.zipcode) profile.trips.pullTrips()
+      if (profile.zipcode) profile.trips.pullTrips(5)
     })
 
     this.setState(() => ({
