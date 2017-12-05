@@ -41,7 +41,7 @@ const TripCard = ({ profile, trip }) => (
     <div className="row no-gutters align-items-center details-row">
       <div className="col">
         <p className="trip-description">
-          Travelled
+          Traveled
           {' '}
           <FormattedNumber value={meterToMiles(trip.distance)} />
           {' '}
