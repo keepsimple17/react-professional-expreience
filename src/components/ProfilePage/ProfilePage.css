@@ -99,7 +99,7 @@
 
     & > .modal-title {
       color: var(--slate);
-      font-size: 1.875rem;
+      font-size: 1.5rem;
       margin: 0;
     }
   }
