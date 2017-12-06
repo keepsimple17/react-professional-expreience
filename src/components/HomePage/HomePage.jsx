@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
+import LazyLoad from 'react-lazyload'
 
 import pipe from '../../util/pipe'
 import ProfileRow from './ProfileRow'
@@ -63,7 +64,9 @@ class HomePage extends Component {
               </div>
             </div>
             {this.state.topProducers.map(profile => (
-              <ProfileRow key={profile.username} profile={profile} />
+              <LazyLoad key={profile.username} height="8.5rem">
+                <ProfileRow profile={profile} />
+              </LazyLoad>
             ))}
           </div>
         </section>
