@@ -120,7 +120,7 @@ export const TripsStore = types.model('TripsStore', {
     self.loading = true
 
     try {
-      while (!self.completed && self.trips.length < limit) {
+      while (!self.completed && self.trips.length < (limit || Infinity)) {
         yield updateTrips(limit)
         yield wait(3000)
       }
