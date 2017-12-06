@@ -74,8 +74,8 @@ class ProfilePage extends Component {
       .then((profile) => {
         if (!profile.private && profile.friends.loading) this.profile.friends.pullFriends()
 
-        if (profile.zipcode) {
-          this.profile.updateZipcode(profile.zipcode)
+        if (profile.scraped) {
+          this.profile.trips.pullTrips()
         } else {
           this.openZipcodeModal()
         }
@@ -173,7 +173,7 @@ class ProfilePage extends Component {
                 {this.profile && <ProfileCard profile={this.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                {this.profile && this.profile.zipcode && (
+                {this.profile && this.profile.trips.trips && (
                   <TripGrid profile={this.profile} />
                 )}
               </div>
@@ -217,7 +217,7 @@ class ProfilePage extends Component {
                     )}
                   </div>
                   <div className="col">
-                    {this.profile && this.profile.zipcode && !this.profile.trips.completed && (
+                    {this.profile && this.profile.zipcode && !this.profile.scraped && (
                       <p className="zipcode-details">
                         Trips based on zip code: {this.profile.zipcode}.{' '}
                         <button
@@ -231,7 +231,7 @@ class ProfilePage extends Component {
                     )}
                   </div>
                 </div>
-                {this.profile && this.profile.zipcode && (
+                {this.profile && this.profile.trips.trips && (
                   <TripCardList profile={this.profile} />
                 )}
               </div>

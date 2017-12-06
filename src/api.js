@@ -1,5 +1,7 @@
 /* global fetch */
 
+import pipe from './util/pipe'
+
 const { REACT_APP_API_URI } = process.env
 
 const serialize = obj => Object
@@ -25,6 +27,14 @@ const formatTrip = data => ({
   tripDate: data.to.time_unix
 })
 
+const normalizeProfile = (profile) => {
+  const { user, ...rest } = profile
+  return {
+    ...rest,
+    ...user
+  }
+}
+
 const formatProfile = profile => ({
   carbonOutput: profile.estimated_carbon,
   fullName: profile.instagram_name,
@@ -33,14 +43,15 @@ const formatProfile = profile => ({
     completed: profile.friends_complete
   },
   instagramId: profile.instagram_id,
-  profilePictureUrl: profile.picture_url,
   private: profile.private,
+  profilePictureUrl: profile.picture_url,
+  scraped: !!profile.is_feed,
   username: profile.instagram_username,
   zipcode: profile.address_zip
 })
 
 const fetchProfile = username =>
-  request(`/users/v1/ig/${username}`).then(data => formatProfile(data.user))
+  request(`/users/v1/ig/${username}`).then(pipe([normalizeProfile, formatProfile]))
 
 const fetchTopProducers = () =>
   request('/feeds/v1/top-offenders').then(data => data.entities.map(formatProfile))
@@ -49,7 +60,7 @@ const fetchProfileFriends = username =>
   fetchProfile(username).then(profile => profile.friends)
 
 const fetchProfileTrips = (username, zipcode, limit) =>
-  request(`/trips/v1/ABA/${username}/${zipcode}`, { limit }).then(data => ({
+  request(`/trips/v1/${username}`, { limit, zip: zipcode }).then(data => ({
     completed: data.feed_trips,
     trips: data.trips.map(formatTrip)
   }))
