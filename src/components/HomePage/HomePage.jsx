@@ -64,7 +64,7 @@ class HomePage extends Component {
               </div>
             </div>
             {this.state.topProducers.map(profile => (
-              <LazyLoad key={profile.username} height="8.5rem">
+              <LazyLoad key={profile.username} height="8.5rem" offset={300}>
                 <ProfileRow profile={profile} />
               </LazyLoad>
             ))}
