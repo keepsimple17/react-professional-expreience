@@ -74,7 +74,7 @@ class ProfilePage extends Component {
       .then((profile) => {
         if (!profile.private && profile.friends.loading) this.profile.friends.pullFriends()
 
-        if (profile.scraped) {
+        if (profile.scraped || profile.zipcode) {
           this.profile.trips.pullTrips()
         } else {
           this.openZipcodeModal()
