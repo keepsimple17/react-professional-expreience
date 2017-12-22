@@ -74,7 +74,7 @@ class ProfilePage extends Component {
       .then((profile) => {
         if (!profile.private && profile.friends.loading) this.profile.friends.pullFriends()
 
-        if (profile.scraped || profile.zipcode) {
+        if (profile.completed || profile.zipcode) {
           this.profile.trips.pullTrips()
         } else {
           this.openZipcodeModal()
@@ -217,7 +217,7 @@ class ProfilePage extends Component {
                     )}
                   </div>
                   <div className="col">
-                    {this.profile && this.profile.zipcode && !this.profile.scraped && (
+                    {this.profile && this.profile.zipcode && !this.profile.completed && (
                       <p className="zipcode-details">
                         Trips based on zip code: {this.profile.zipcode}.{' '}
                         <button

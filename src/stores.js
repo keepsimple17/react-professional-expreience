@@ -23,7 +23,6 @@ export const Profile = types.model('Profile', {
   instagramId: types.string,
   private: types.boolean,
   profilePictureUrl: types.string,
-  scraped: types.boolean,
   username: types.identifier(types.string),
   trips: types.late(() => types.optional(TripsStore, {
     trips: []
@@ -41,6 +40,9 @@ export const Profile = types.model('Profile', {
 }).views(self => ({
   get loading () {
     return self.friends.loading || self.trips.loading
+  },
+  get completed () {
+    return self.friends.completed && self.trips.completed
   }
 }))
 
