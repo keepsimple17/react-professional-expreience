@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import { injectIntl, FormattedNumber } from 'react-intl'
+import { observer } from 'mobx-react'
 
 import { gramsToPounds } from '../../util/conversions'
 
@@ -62,4 +63,4 @@ ProfileCard.propTypes = {
   }).isRequired
 }
 
-export default injectIntl(ProfileCard)
+export default injectIntl(observer(ProfileCard))
