@@ -48,7 +48,7 @@ class HomePage extends Component {
                   placeholder="example: goodlife"
                   required
                   pattern="[A-Za-z0-9_]{3,}"
-                  onSubmit={(event, username) => this.props.history.push(`/profile/${username}`)}
+                  onSubmit={(event, username) => this.props.history.push(`/profile/${username.toLowerCase()}`)}
                 />
               </div>
             </div>
