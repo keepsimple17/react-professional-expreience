@@ -34,7 +34,20 @@ export const Profile = types.model('Profile', {
     if (!self.private) self.trips.pullTrips()
   }
 
+  const refreshProfile = flow(function * refreshProfile () {
+    try {
+      const { carbonOutput } = yield api.fetchProfile(self.username)
+
+      Object.assign(self, { carbonOutput })
+
+      return Promise.resolve(self)
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  })
+
   return {
+    refreshProfile,
     updateZipcode
   }
 }).views(self => ({
@@ -79,6 +92,7 @@ export const FriendsStore = types.model('FriendsStore', {
         yield updateFriends()
         yield wait(3000)
       }
+      getParent(self).refreshProfile()
     } catch (error) {
       return Promise.reject(error)
     }
@@ -127,6 +141,7 @@ export const TripsStore = types.model('TripsStore', {
         yield updateTrips(limit)
         yield wait(3000)
       }
+      getParent(self).refreshProfile()
     } catch (error) {
       return Promise.reject(error)
     }
