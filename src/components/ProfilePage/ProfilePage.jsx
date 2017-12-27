@@ -35,8 +35,14 @@ class ProfilePage extends Component {
         isZipcodeModalOpen: false
       }))
 
+      if (this.profile) this.profile.cancel()
+
       this.updateProfileData(nextProps.username)
     }
+  }
+
+  componentWillUnmount () {
+    if (this.profile) this.profile.cancel()
   }
 
   get profile () {
