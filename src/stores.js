@@ -46,7 +46,13 @@ export const Profile = types.model('Profile', {
     }
   })
 
+  const cancel = () => {
+    self.friends.cancel()
+    self.trips.cancel()
+  }
+
   return {
+    cancel,
     refreshProfile,
     updateZipcode
   }
@@ -88,7 +94,7 @@ export const FriendsStore = types.model('FriendsStore', {
     self.loading = true
 
     try {
-      while (!self.completed) {
+      while (!self.completed && !self.cancelled) {
         yield updateFriends()
         yield wait(3000)
       }
@@ -98,11 +104,19 @@ export const FriendsStore = types.model('FriendsStore', {
     }
 
     self.loading = false
+    self.cancelled = false
 
     return Promise.resolve(self.friends)
   })
 
+  const cancel = () => {
+    if (self.loading && !self.cancelled) {
+      self.cancelled = true
+    }
+  }
+
   return {
+    cancel,
     pullFriends,
     updateFriends
   }
@@ -110,6 +124,7 @@ export const FriendsStore = types.model('FriendsStore', {
 
 export const TripsStore = types.model('TripsStore', {
   attempts: 0,
+  cancelled: false,
   completed: false,
   lastCount: 0,
   loading: true,
@@ -137,7 +152,7 @@ export const TripsStore = types.model('TripsStore', {
     self.loading = true
 
     try {
-      while (!self.completed && self.trips.length < (limit || Infinity)) {
+      while (!self.completed && !self.cancelled && self.trips.length < (limit || Infinity)) {
         yield updateTrips(limit)
         yield wait(3000)
       }
@@ -147,11 +162,19 @@ export const TripsStore = types.model('TripsStore', {
     }
 
     self.loading = false
+    self.cancelled = false
 
     return Promise.resolve(self.trips)
   })
 
+  const cancel = () => {
+    if (self.loading && !self.cancelled) {
+      self.cancelled = true
+    }
+  }
+
   return {
+    cancel,
     pullTrips,
     updateTrips
   }
