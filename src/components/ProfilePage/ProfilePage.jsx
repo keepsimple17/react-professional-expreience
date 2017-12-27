@@ -15,6 +15,8 @@ import TripGrid from './TripGrid'
 
 import './ProfilePage.css'
 
+Modal.setAppElement('#root')
+
 const getName = profile => profile.fullName || `@${profile.username}`
 
 class ProfilePage extends Component {
