@@ -40,12 +40,12 @@ const formatProfile = profile => ({
   fullName: profile.instagram_name,
   friends: {
     friends: profile.friends ? profile.friends.map(formatProfile) : [],
-    completed: profile.friends_complete
+    completed: profile.friends ? profile.friends_complete : false
   },
   instagramId: profile.instagram_id,
   private: profile.private,
   profilePictureUrl: profile.picture_url,
-  scraped: !!profile.is_feed,
+  scraped: 'is_feed' in profile ? !!profile.is_feed : true,
   username: profile.instagram_username,
   zipcode: profile.address_zip
 })
