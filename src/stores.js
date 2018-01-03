@@ -91,13 +91,15 @@ export const FriendsStore = types.model('FriendsStore', {
     }
   })
 
+  const shouldRetry = store => !store.completed && !store.cancelled
+
   const pullFriends = flow(function * pullFriends () {
     self.loading = true
 
     try {
-      while (!self.completed && !self.cancelled) {
+      while (shouldRetry(self)) {
         yield updateFriends()
-        yield wait(3000)
+        if (shouldRetry(self)) yield wait(3000)
       }
       if (self.attempts > 1) getParent(self).refreshProfile()
     } catch (error) {
@@ -149,13 +151,16 @@ export const TripsStore = types.model('TripsStore', {
     }
   })
 
+  const shouldRetry = (store, limit) =>
+    !store.completed && !store.cancelled && store.trips.length < (limit || Infinity)
+
   const pullTrips = flow(function * pullTrips (limit) {
     self.loading = true
 
     try {
-      while (!self.completed && !self.cancelled && self.trips.length < (limit || Infinity)) {
+      while (shouldRetry(self, limit)) {
         yield updateTrips(limit)
-        yield wait(3000)
+        if (shouldRetry(self, limit)) yield wait(3000)
       }
       if (self.attempts > 1) getParent(self).refreshProfile()
     } catch (error) {
