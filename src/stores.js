@@ -23,6 +23,7 @@ export const Profile = types.model('Profile', {
   instagramId: types.string,
   private: types.boolean,
   profilePictureUrl: types.string,
+  scraped: types.boolean,
   username: types.identifier(types.string),
   trips: types.late(() => types.optional(TripsStore, {
     trips: []
@@ -98,7 +99,7 @@ export const FriendsStore = types.model('FriendsStore', {
         yield updateFriends()
         yield wait(3000)
       }
-      getParent(self).refreshProfile()
+      if (self.attempts > 1) getParent(self).refreshProfile()
     } catch (error) {
       return Promise.reject(error)
     }
@@ -156,7 +157,7 @@ export const TripsStore = types.model('TripsStore', {
         yield updateTrips(limit)
         yield wait(3000)
       }
-      getParent(self).refreshProfile()
+      if (self.attempts > 1) getParent(self).refreshProfile()
     } catch (error) {
       return Promise.reject(error)
     }
@@ -182,7 +183,7 @@ export const TripsStore = types.model('TripsStore', {
 
 export const AppStore = types.model('AppStore', {
   profiles: types.optional(types.map(Profile), {}),
-  topProducers: types.optional(types.array(Profile), [])
+  topProducers: types.optional(types.array(types.reference(Profile)), [])
 }).actions((self) => {
   const fetchProfile = flow(function * fetchProfile (username) {
     const cached = self.profiles.get(username)
@@ -201,8 +202,16 @@ export const AppStore = types.model('AppStore', {
   })
 
   const fetchTopProducers = flow(function * fetchTopProducers () {
+    if (self.topProducers.length) return Promise.resolve(self.topProducers)
+
     try {
-      self.topProducers = yield api.fetchTopProducers()
+      const profiles = yield api.fetchTopProducers()
+
+      profiles.forEach((profile) => {
+        self.profiles.put(profile)
+        self.topProducers.push(profile.username)
+      })
+
       return Promise.resolve(self.topProducers)
     } catch (error) {
       return Promise.reject(error)

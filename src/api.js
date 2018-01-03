@@ -37,7 +37,6 @@ const normalizeProfile = (profile) => {
 
 const formatProfile = profile => ({
   carbonOutput: profile.estimated_carbon,
-  completed: !!profile.is_feed,
   fullName: profile.instagram_name,
   friends: {
     friends: profile.friends ? profile.friends.map(formatProfile) : [],
@@ -46,6 +45,7 @@ const formatProfile = profile => ({
   instagramId: profile.instagram_id,
   private: profile.private,
   profilePictureUrl: profile.picture_url,
+  scraped: !!profile.is_feed,
   username: profile.instagram_username,
   zipcode: profile.address_zip
 })
