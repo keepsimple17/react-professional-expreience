@@ -46,6 +46,10 @@ const formatProfile = profile => ({
   private: profile.private,
   profilePictureUrl: profile.picture_url,
   scraped: 'is_feed' in profile ? !!profile.is_feed : true,
+  trips: {
+    trips: profile.trips ? profile.trips.map(formatTrip) : [],
+    completed: 'trips' in profile
+  },
   username: profile.instagram_username,
   zipcode: profile.address_zip
 })
