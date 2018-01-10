@@ -4,11 +4,11 @@ import pipe from './util/pipe'
 
 const { REACT_APP_API_URI } = process.env
 
-const serialize = obj => Object
-  .keys(obj)
-  .filter(k => obj[k])
-  .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`)
-  .join('&')
+const serialize = obj =>
+  Object.keys(obj)
+    .filter(k => obj[k])
+    .map(k => `${encodeURIComponent(k)}=${encodeURIComponent(obj[k])}`)
+    .join('&')
 
 const request = (endpoint, params = {}) =>
   fetch(`${REACT_APP_API_URI}${endpoint}?${serialize(params)}`)
@@ -60,8 +60,7 @@ const fetchProfile = username =>
 const fetchTopProducers = () =>
   request('/feeds/v1/top-offenders').then(data => data.entities.map(formatProfile))
 
-const fetchProfileFriends = username =>
-  fetchProfile(username).then(profile => profile.friends)
+const fetchProfileFriends = username => fetchProfile(username).then(profile => profile.friends)
 
 const fetchProfileTrips = (username, zipcode, limit) =>
   request(`/trips/v1/${username}`, { limit, zip: zipcode }).then(data => ({

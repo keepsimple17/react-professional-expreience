@@ -16,16 +16,12 @@ const TripCard = ({ profile, trip }) => (
         <img className="profile-picture" src={profile.profilePictureUrl} alt={profile.fullName} />
       </div>
       <div className="col">
-        <p className="trip-description">
-          {profile.fullName || `@${profile.username}`}
-        </p>
+        <p className="trip-description">{profile.fullName || `@${profile.username}`}</p>
       </div>
       <div className="col-auto">
         <p className="trip-carbon-output text-right">
           <span className="trip-badge">
-            <FormattedNumber value={gramsToPounds(trip.carbonOutput)} />
-            {' '}
-            lbs
+            <FormattedNumber value={gramsToPounds(trip.carbonOutput)} /> lbs
           </span>
         </p>
         <p className="trip-date text-right">{getFormatedDate(trip.tripDate)}</p>
@@ -41,12 +37,7 @@ const TripCard = ({ profile, trip }) => (
     <div className="row no-gutters align-items-center details-row">
       <div className="col">
         <p className="trip-description">
-          Traveled
-          {' '}
-          <FormattedNumber value={meterToMiles(trip.distance)} />
-          {' '}
-          mi to
-          {' '}
+          Traveled <FormattedNumber value={meterToMiles(trip.distance)} /> mi to{' '}
           {trip.destinationName}
         </p>
       </div>

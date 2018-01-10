@@ -48,7 +48,9 @@ class HomePage extends Component {
                   placeholder="example: goodlife"
                   required
                   pattern="[A-Za-z0-9_]{3,}"
-                  onSubmit={(event, username) => this.props.history.push(`/profile/${username.toLowerCase()}`)}
+                  onSubmit={(event, username) =>
+                    this.props.history.push(`/profile/${username.toLowerCase()}`)
+                  }
                 />
               </div>
             </div>
@@ -86,8 +88,4 @@ HomePage.propTypes = {
 
 export { HomePage }
 
-export default pipe([
-  observer,
-  inject('store'),
-  withRouter
-])(HomePage)
+export default pipe([observer, inject('store'), withRouter])(HomePage)

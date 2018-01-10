@@ -124,8 +124,8 @@ class ProfilePage extends Component {
                     />
                   </p>
                   <p className="modal-lead-message">
-                    In order to calculate {getName(this.profile)}’s carbon footprint, we need
-                    their ZIP code
+                    In order to calculate {getName(this.profile)}’s carbon footprint, we need their
+                    ZIP code
                   </p>
                   <SingleInputForm
                     autoFocus
@@ -163,17 +163,18 @@ class ProfilePage extends Component {
             </div>
           </section>
         )}
-        {this.profile && this.profile.loading && (
-          <section className="profile-message-bar -info">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <p className="message-bar-content text-center">Calculating carbon footprint…</p>
+        {this.profile &&
+          this.profile.loading && (
+            <section className="profile-message-bar -info">
+              <div className="container">
+                <div className="row">
+                  <div className="col">
+                    <p className="message-bar-content text-center">Calculating carbon footprint…</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
         <section className="profile-overview">
           <div className="container">
             <div className="row">
@@ -181,9 +182,7 @@ class ProfilePage extends Component {
                 {this.profile && <ProfileCard profile={this.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                {this.profile && this.profile.trips.trips && (
-                  <TripGrid profile={this.profile} />
-                )}
+                {this.profile && this.profile.trips.trips && <TripGrid profile={this.profile} />}
               </div>
             </div>
           </div>
@@ -219,37 +218,34 @@ class ProfilePage extends Component {
                 <div className="row align-items-center">
                   <div className="col">
                     {this.profile && (
-                      <h3 className="trips-heading">
-                        {getName(this.profile)}’s travel posts
-                      </h3>
+                      <h3 className="trips-heading">{getName(this.profile)}’s travel posts</h3>
                     )}
                   </div>
                   <div className="col">
-                    {this.profile && this.profile.zipcode && !this.profile.completed && (
-                      <p className="zipcode-details">
-                        Trips based on zip code: {this.profile.zipcode}.{' '}
-                        <button
-                          type="button"
-                          className="btn-link -blue"
-                          onClick={e => this.openZipcodeModal(e)}
-                        >
-                          Click here to change
-                        </button>
-                      </p>
-                    )}
+                    {this.profile &&
+                      this.profile.zipcode &&
+                      !this.profile.completed && (
+                        <p className="zipcode-details">
+                          Trips based on zip code: {this.profile.zipcode}.{' '}
+                          <button
+                            type="button"
+                            className="btn-link -blue"
+                            onClick={e => this.openZipcodeModal(e)}
+                          >
+                            Click here to change
+                          </button>
+                        </p>
+                      )}
                   </div>
                 </div>
-                {this.profile && this.profile.trips.trips && (
-                  <TripCardList profile={this.profile} />
-                )}
+                {this.profile &&
+                  this.profile.trips.trips && <TripCardList profile={this.profile} />}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.profile && (
                   <h3 className="friends-heading">{getName(this.profile)}’s friends</h3>
                 )}
-                {this.profile && (
-                  <FriendsList friends={this.profile.friends} />
-                )}
+                {this.profile && <FriendsList friends={this.profile.friends} />}
               </div>
             </div>
           </div>
@@ -279,9 +275,4 @@ ProfilePage.propTypes = {
   username: PropTypes.string.isRequired
 }
 
-export default pipe([
-  observer,
-  inject('store'),
-  withRouter,
-  withLastLocation
-])(ProfilePage)
+export default pipe([observer, inject('store'), withRouter, withLastLocation])(ProfilePage)

@@ -11,9 +11,7 @@ const SmallTripBox = ({ trip }) => (
     <img className="trip-picture embed-responsive-item" src={trip.pictureUrl} alt="Trip" />
     <div className="trip-overlay d-flex flex-column justify-content-center">
       <p>
-        <FormattedNumber value={gramsToPounds(trip.carbonOutput)} />
-        {' '}
-        lbs
+        <FormattedNumber value={gramsToPounds(trip.carbonOutput)} /> lbs
       </p>
       <p>CO₂</p>
     </div>

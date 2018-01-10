@@ -14,217 +14,228 @@ export const Trip = types.model('Trip', {
   tripDate: types.number
 })
 
-export const Profile = types.model('Profile', {
-  carbonOutput: types.number,
-  friends: types.late(() => types.optional(FriendsStore, {
-    friends: []
-  })),
-  fullName: types.maybe(types.string),
-  instagramId: types.string,
-  private: types.boolean,
-  profilePictureUrl: types.string,
-  scraped: types.boolean,
-  username: types.identifier(types.string),
-  trips: types.late(() => types.optional(TripsStore, {
-    trips: []
-  })),
-  zipcode: types.maybe(types.string, null)
-}).actions((self) => {
-  const updateZipcode = (zipcode) => {
-    self.zipcode = zipcode
-    if (!self.private) self.trips.pullTrips()
-  }
+export const Profile = types
+  .model('Profile', {
+    carbonOutput: types.number,
+    friends: types.late(() =>
+      types.optional(FriendsStore, {
+        friends: []
+      })),
+    fullName: types.maybe(types.string),
+    instagramId: types.string,
+    private: types.boolean,
+    profilePictureUrl: types.string,
+    scraped: types.boolean,
+    username: types.identifier(types.string),
+    trips: types.late(() =>
+      types.optional(TripsStore, {
+        trips: []
+      })),
+    zipcode: types.maybe(types.string, null)
+  })
+  .actions((self) => {
+    const updateZipcode = (zipcode) => {
+      self.zipcode = zipcode
+      if (!self.private) self.trips.pullTrips()
+    }
 
-  const refreshProfile = flow(function * refreshProfile () {
-    try {
-      const { carbonOutput } = yield api.fetchProfile(self.username)
+    const refreshProfile = flow(function * refreshProfile () {
+      try {
+        const { carbonOutput } = yield api.fetchProfile(self.username)
 
-      Object.assign(self, { carbonOutput })
+        Object.assign(self, { carbonOutput })
 
-      return Promise.resolve(self)
-    } catch (error) {
-      return Promise.reject(error)
+        return Promise.resolve(self)
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
+
+    const cancel = () => {
+      self.friends.cancel()
+      self.trips.cancel()
+    }
+
+    return {
+      cancel,
+      refreshProfile,
+      updateZipcode
     }
   })
+  .views(self => ({
+    get loading () {
+      return self.friends.loading || self.trips.loading
+    },
+    get completed () {
+      return self.friends.completed && self.trips.completed
+    }
+  }))
 
-  const cancel = () => {
-    self.friends.cancel()
-    self.trips.cancel()
-  }
+export const FriendsStore = types
+  .model('FriendsStore', {
+    attempts: 0,
+    completed: false,
+    friends: types.late(() => types.optional(types.array(Profile), [])),
+    lastCount: 0,
+    loading: true
+  })
+  .actions((self) => {
+    const updateFriends = flow(function * updateFriends () {
+      self.attempts += 1
+      self.lastCount = self.friends.length
 
-  return {
-    cancel,
-    refreshProfile,
-    updateZipcode
-  }
-}).views(self => ({
-  get loading () {
-    return self.friends.loading || self.trips.loading
-  },
-  get completed () {
-    return self.friends.completed && self.trips.completed
-  }
-}))
+      try {
+        const { username, zipcode } = getParent(self)
 
-export const FriendsStore = types.model('FriendsStore', {
-  attempts: 0,
-  completed: false,
-  friends: types.late(() => types.optional(types.array(Profile), [])),
-  lastCount: 0,
-  loading: true
-}).actions((self) => {
-  const updateFriends = flow(function * updateFriends () {
-    self.attempts += 1
-    self.lastCount = self.friends.length
+        const data = yield api.fetchProfileFriends(username, zipcode)
 
-    try {
-      const { username, zipcode } = getParent(self)
+        self.friends = data.friends
+        self.completed = data.completed
 
-      const data = yield api.fetchProfileFriends(username, zipcode)
+        return Promise.resolve(self.friends)
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
 
-      self.friends = data.friends
-      self.completed = data.completed
+    const shouldRetry = store => !store.completed && !store.cancelled
+
+    const pullFriends = flow(function * pullFriends () {
+      self.loading = true
+
+      try {
+        while (shouldRetry(self)) {
+          yield updateFriends()
+          if (shouldRetry(self)) yield wait(3000)
+        }
+        if (self.attempts > 1) getParent(self).refreshProfile()
+      } catch (error) {
+        return Promise.reject(error)
+      }
+
+      self.loading = false
+      self.cancelled = false
 
       return Promise.resolve(self.friends)
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  })
+    })
 
-  const shouldRetry = store => !store.completed && !store.cancelled
-
-  const pullFriends = flow(function * pullFriends () {
-    self.loading = true
-
-    try {
-      while (shouldRetry(self)) {
-        yield updateFriends()
-        if (shouldRetry(self)) yield wait(3000)
+    const cancel = () => {
+      if (self.loading && !self.cancelled) {
+        self.cancelled = true
       }
-      if (self.attempts > 1) getParent(self).refreshProfile()
-    } catch (error) {
-      return Promise.reject(error)
     }
 
-    self.loading = false
-    self.cancelled = false
-
-    return Promise.resolve(self.friends)
+    return {
+      cancel,
+      pullFriends,
+      updateFriends
+    }
   })
 
-  const cancel = () => {
-    if (self.loading && !self.cancelled) {
-      self.cancelled = true
-    }
-  }
+export const TripsStore = types
+  .model('TripsStore', {
+    attempts: 0,
+    cancelled: false,
+    completed: false,
+    lastCount: 0,
+    loading: true,
+    trips: types.optional(types.array(Trip), [])
+  })
+  .actions((self) => {
+    const updateTrips = flow(function * updateTrips (limit) {
+      self.attempts += 1
+      self.lastCount = self.trips.length
 
-  return {
-    cancel,
-    pullFriends,
-    updateFriends
-  }
-})
+      try {
+        const { username, zipcode } = getParent(self)
 
-export const TripsStore = types.model('TripsStore', {
-  attempts: 0,
-  cancelled: false,
-  completed: false,
-  lastCount: 0,
-  loading: true,
-  trips: types.optional(types.array(Trip), [])
-}).actions((self) => {
-  const updateTrips = flow(function * updateTrips (limit) {
-    self.attempts += 1
-    self.lastCount = self.trips.length
+        const data = yield api.fetchProfileTrips(username, zipcode, limit)
 
-    try {
-      const { username, zipcode } = getParent(self)
+        self.trips = data.trips
+        self.completed = data.completed
 
-      const data = yield api.fetchProfileTrips(username, zipcode, limit)
+        return Promise.resolve(self.trips)
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
 
-      self.trips = data.trips
-      self.completed = data.completed
+    const shouldRetry = (store, limit) =>
+      !store.completed && !store.cancelled && store.trips.length < (limit || Infinity)
+
+    const pullTrips = flow(function * pullTrips (limit) {
+      self.loading = true
+
+      try {
+        while (shouldRetry(self, limit)) {
+          yield updateTrips(limit)
+          if (shouldRetry(self, limit)) yield wait(3000)
+        }
+        if (self.attempts > 1) getParent(self).refreshProfile()
+      } catch (error) {
+        return Promise.reject(error)
+      }
+
+      self.loading = false
+      self.cancelled = false
 
       return Promise.resolve(self.trips)
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  })
+    })
 
-  const shouldRetry = (store, limit) =>
-    !store.completed && !store.cancelled && store.trips.length < (limit || Infinity)
-
-  const pullTrips = flow(function * pullTrips (limit) {
-    self.loading = true
-
-    try {
-      while (shouldRetry(self, limit)) {
-        yield updateTrips(limit)
-        if (shouldRetry(self, limit)) yield wait(3000)
+    const cancel = () => {
+      if (self.loading && !self.cancelled) {
+        self.cancelled = true
       }
-      if (self.attempts > 1) getParent(self).refreshProfile()
-    } catch (error) {
-      return Promise.reject(error)
     }
 
-    self.loading = false
-    self.cancelled = false
-
-    return Promise.resolve(self.trips)
-  })
-
-  const cancel = () => {
-    if (self.loading && !self.cancelled) {
-      self.cancelled = true
-    }
-  }
-
-  return {
-    cancel,
-    pullTrips,
-    updateTrips
-  }
-})
-
-export const AppStore = types.model('AppStore', {
-  profiles: types.optional(types.map(Profile), {}),
-  topProducers: types.optional(types.array(types.reference(Profile)), [])
-}).actions((self) => {
-  const fetchProfile = flow(function * fetchProfile (username) {
-    const cached = self.profiles.get(username)
-
-    if (cached) return Promise.resolve(cached)
-
-    try {
-      const data = yield api.fetchProfile(username)
-
-      self.profiles.put(data)
-
-      return Promise.resolve(self.profiles.get(username))
-    } catch (error) {
-      return Promise.reject(error)
+    return {
+      cancel,
+      pullTrips,
+      updateTrips
     }
   })
 
-  const fetchTopProducers = flow(function * fetchTopProducers () {
-    if (self.topProducers.length) return Promise.resolve(self.topProducers)
+export const AppStore = types
+  .model('AppStore', {
+    profiles: types.optional(types.map(Profile), {}),
+    topProducers: types.optional(types.array(types.reference(Profile)), [])
+  })
+  .actions((self) => {
+    const fetchProfile = flow(function * fetchProfile (username) {
+      const cached = self.profiles.get(username)
 
-    try {
-      const profiles = yield api.fetchTopProducers()
+      if (cached) return Promise.resolve(cached)
 
-      profiles.forEach((profile) => {
-        self.profiles.put(profile)
-        self.topProducers.push(profile.username)
-      })
+      try {
+        const data = yield api.fetchProfile(username)
 
-      return Promise.resolve(self.topProducers)
-    } catch (error) {
-      return Promise.reject(error)
+        self.profiles.put(data)
+
+        return Promise.resolve(self.profiles.get(username))
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
+
+    const fetchTopProducers = flow(function * fetchTopProducers () {
+      if (self.topProducers.length) return Promise.resolve(self.topProducers)
+
+      try {
+        const profiles = yield api.fetchTopProducers()
+
+        profiles.forEach((profile) => {
+          self.profiles.put(profile)
+          self.topProducers.push(profile.username)
+        })
+
+        return Promise.resolve(self.topProducers)
+      } catch (error) {
+        return Promise.reject(error)
+      }
+    })
+
+    return {
+      fetchProfile,
+      fetchTopProducers
     }
   })
-
-  return {
-    fetchProfile,
-    fetchTopProducers
-  }
-})

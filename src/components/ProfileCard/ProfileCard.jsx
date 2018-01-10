@@ -40,9 +40,7 @@ const ProfileCard = ({ profile }) => {
           </h3>
           <p>
             <Link className="danger-button -fill" title="Download the app" to="/download">
-              <FormattedNumber value={gramsToPounds(profile.carbonOutput)} />
-              {' '}
-              CO₂ /yr
+              <FormattedNumber value={gramsToPounds(profile.carbonOutput)} /> CO₂ /yr
             </Link>
             <Link className="danger-button" title="Download the app" to="/download">
               Not carbon neutral
