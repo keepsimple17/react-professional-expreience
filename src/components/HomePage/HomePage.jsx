@@ -59,7 +59,7 @@ class HomePage extends Component {
             <div className="row">
               <div className="col">
                 <h2 className="top-producers-heading">
-                  Worst carbon producers who are not offsetting
+                  Users Producing the <strong>Most Carbon</strong>
                 </h2>
               </div>
             </div>

@@ -5,8 +5,10 @@ import { observer } from 'mobx-react'
 import ProfileCard from '../ProfileCard/ProfileCard'
 import SmallTripBox from '../SmallTripBox/SmallTripBox'
 
+import './ProfileRow.css'
+
 const ProfileRow = ({ profile }) => (
-  <div className="row producer-row">
+  <div className="row profile-row">
     <div className="col col-lg-5">
       <ProfileCard profile={profile} />
     </div>
