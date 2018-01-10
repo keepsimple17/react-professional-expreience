@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { format as formatDate } from 'date-fns/esm'
+import { format as formatDate } from 'date-fns'
 import { injectIntl, FormattedNumber } from 'react-intl'
 
 import { gramsToPounds, meterToMiles } from '../../util/conversions'
