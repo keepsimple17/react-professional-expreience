@@ -14,7 +14,7 @@
 
     & .search-hero-title {
       color: #fff;
-      font-weight: normal;
+      font-weight: 500;
       margin-bottom: 1.75rem;
     }
   }
@@ -24,7 +24,7 @@
 
     & .top-producers-heading {
       color: var(--slate);
-      font-weight: normal;
+      font-weight: 500;
       padding: 2rem;
       text-align: center;
     }

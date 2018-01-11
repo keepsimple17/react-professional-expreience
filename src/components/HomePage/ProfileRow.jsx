@@ -2,15 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 
-import ProfileCard from '../ProfileCard/ProfileCard'
+import ProfileRankStats from '../ProfileRankStats/ProfileRankStats'
 import SmallTripBox from '../SmallTripBox/SmallTripBox'
 
 import './ProfileRow.css'
 
-const ProfileRow = ({ profile }) => (
+const ProfileRow = ({ profile, rank }) => (
   <div className="row profile-row">
     <div className="col col-lg-5">
-      <ProfileCard profile={profile} />
+      <ProfileRankStats profile={profile} rank={rank} />
     </div>
     <div className="d-none d-lg-block col-lg-7">
       <ul className="trip-list">
@@ -28,7 +28,8 @@ const ProfileRow = ({ profile }) => (
 ProfileRow.propTypes = {
   profile: PropTypes.shape({
     username: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  rank: PropTypes.number.isRequired
 }
 
 export default observer(ProfileRow)

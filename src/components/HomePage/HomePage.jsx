@@ -63,9 +63,9 @@ class HomePage extends Component {
                 </h2>
               </div>
             </div>
-            {this.state.topProducers.map(profile => (
+            {this.state.topProducers.map((profile, i) => (
               <LazyLoad key={profile.username} height="8.5rem" offset={300}>
-                <ProfileRow profile={profile} />
+                <ProfileRow profile={profile} rank={i + 1} />
               </LazyLoad>
             ))}
           </div>
