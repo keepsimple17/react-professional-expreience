@@ -23,7 +23,7 @@
 
     & .user-name {
       color: var(--slate);
-      font-weight: normal;
+      font-weight: 500;
     }
   }
 

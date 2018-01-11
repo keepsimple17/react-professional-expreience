@@ -23,13 +23,13 @@
   & .download-heading {
     color: var(--azure);
     font-size: 2.5rem;
-    font-weight: normal;
+    font-weight: 500;
     margin-bottom: 2.5rem;
   }
 
   & .download-paragraph {
     font-size: 1.5rem;
-    font-weight: 300;
+    font-weight: 400;
     line-height: 2;
     margin-bottom: 2em;
   }
