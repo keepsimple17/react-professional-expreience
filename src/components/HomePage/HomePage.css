@@ -20,8 +20,6 @@
   }
 
   & .top-producers {
-    padding-bottom: 3rem;
-
     & .top-producers-heading {
       color: var(--slate);
       font-weight: 400;
