@@ -3,22 +3,4 @@
 .profile-row {
   padding-bottom: 1.5rem;
   padding-top: 1.5rem;
-
-  & .trip-list {
-    list-style: none;
-    margin: 0;
-    mask-image: linear-gradient(to right, #000 0%, #000 90%, rgba(0, 0, 0, 0) 100%);
-    overflow: hidden;
-    padding: 0;
-    white-space: nowrap;
-
-    & .trip-item {
-      display: inline-block;
-      width: 8rem;
-
-      & + .trip-item {
-        margin-left: 1.5rem;
-      }
-    }
-  }
 }

@@ -3,31 +3,25 @@ import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 
 import ProfileRankStats from '../ProfileRankStats/ProfileRankStats'
-import SmallTripBox from '../SmallTripBox/SmallTripBox'
+import TripsTimeline from '../TripsTimeline/TripsTimeline'
 
 import './ProfileRow.css'
 
 const ProfileRow = ({ profile, rank }) => (
   <div className="row profile-row">
-    <div className="col col-lg-5">
+    <div className="col-12">
       <ProfileRankStats profile={profile} rank={rank} />
     </div>
-    <div className="d-none d-lg-block col-lg-7">
-      <ul className="trip-list">
-        {profile.trips.trips &&
-          profile.trips.trips.map(trip => (
-            <li className="trip-item" key={trip.pictureUrl}>
-              <SmallTripBox trip={trip} />
-            </li>
-          ))}
-      </ul>
+    <div className="col-12">
+      <TripsTimeline trips={profile.trips} />
     </div>
   </div>
 )
 
 ProfileRow.propTypes = {
   profile: PropTypes.shape({
-    username: PropTypes.string
+    username: PropTypes.string,
+    trips: PropTypes.array
   }).isRequired,
   rank: PropTypes.number.isRequired
 }
