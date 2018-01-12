@@ -23,8 +23,8 @@
     & .top-producers-heading {
       color: var(--slate);
       font-weight: 400;
-      font-size: 2rem;
-      padding: 2rem;
+      font-size: 1.875rem;
+      padding: 1.5rem;
       text-align: center;
     }
   }
