@@ -20,11 +20,7 @@ const ProfileRankStats = ({ profile, rank }) => {
         <div className="col d-none d-md-flex col-md-auto">
           <p className="profile-picture">
             <Link title="See carbon production" to={`/profile/${profile.username}`}>
-              <img
-                alt={profile.username}
-                className="picture"
-                src={profile.profilePictureUrl}
-              />
+              <img alt={profile.username} className="picture" src={profile.profilePictureUrl} />
             </Link>
           </p>
         </div>
@@ -49,11 +45,7 @@ const ProfileRankStats = ({ profile, rank }) => {
             <div className="col-12 d-md-none">
               <p className="profile-picture">
                 <Link title="See carbon production" to={`/profile/${profile.username}`}>
-                  <img
-                    alt={profile.username}
-                    className="picture"
-                    src={profile.profilePictureUrl}
-                  />
+                  <img alt={profile.username} className="picture" src={profile.profilePictureUrl} />
                 </Link>
               </p>
             </div>

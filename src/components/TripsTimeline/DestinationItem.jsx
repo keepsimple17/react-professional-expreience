@@ -9,17 +9,11 @@ const DestinationItem = ({ trip }) => (
     <div className="row align-items-center">
       <div className="col-auto">
         <div className="ring-wrapper">
-          <img
-            alt="Trip"
-            className="trip-picture"
-            src={trip.pictureUrl}
-          />
+          <img alt="Trip" className="trip-picture" src={trip.pictureUrl} />
         </div>
       </div>
       <div className="col">
-        <div className="destination-name">
-          {trip.destinationName}
-        </div>
+        <div className="destination-name">{trip.destinationName}</div>
       </div>
     </div>
   </div>
