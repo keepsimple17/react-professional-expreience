@@ -19,4 +19,16 @@
         rgba(0, 0, 0, 0.1)
       );
   }
+
+  & .divider {
+    background-color: var(--slate);
+    height: 3px;
+    margin: 2.5rem auto;
+    max-width: 136px;
+
+    @media (--griddity-md-viewport) {
+      background-color: transparent;
+      margin: 1.625rem auto;
+    }
+  }
 }

@@ -53,17 +53,18 @@
       background-color: #fff;
       box-shadow: 0 0.25em 1.25em 0 rgba(0, 0, 0, 0.21);
       color: var(--slate);
-      line-height: 2;
+      line-height: 2.25;
       border-radius: 50%;
       font-weight: 700;
-      height: 2em;
-      width: 2em;
+      height: 2.25em;
+      width: 2.25em;
     }
   }
 
   & .carbon-output {
     color: var(--reddish);
-    font-size: 1.125rem;
+    font-size: 0.875rem;
+    font-weight: 600;
     text-align: center;
 
     & .inline-icon {

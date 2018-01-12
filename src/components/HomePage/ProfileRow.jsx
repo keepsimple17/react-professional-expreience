@@ -16,6 +16,9 @@ const ProfileRow = ({ profile, rank }) => (
           <ProfileRankStats profile={profile} rank={rank} />
         </div>
         <div className="col-12">
+          <div className="divider" />
+        </div>
+        <div className="col-12">
           <TripsTimeline trips={profile.trips} />
         </div>
       </div>

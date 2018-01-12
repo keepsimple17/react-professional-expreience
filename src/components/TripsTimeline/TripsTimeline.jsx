@@ -13,7 +13,7 @@ const TripsTimeline = ({ trips }) => (
       {trips.trips &&
         trips.trips.map((trip, i, l, last = l.length === i + 1) => (
           <li className="trip-item" key={trip.pictureUrl}>
-            <div className="row flex-nowrap">
+            <div className="row flex-nowrap align-items-center">
               <div className="col">
                 <DestinationItem trip={trip} />
               </div>
