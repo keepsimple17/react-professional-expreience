@@ -2,7 +2,6 @@
 
 .destination-item {
   display: inline-block;
-  white-space: normal;
   width: 16rem;
 
   & .ring-wrapper {
