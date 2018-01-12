@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { observer } from 'mobx-react'
 
+import cn from '../../util/cn'
 import DestinationItem from './DestinationItem'
 import DistanceItem from './DistanceItem'
 
@@ -27,7 +28,25 @@ const TripsTimeline = ({ trips }) => (
         ))}
     </ul>
     <div className="controls">
-      controls
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <ul className="bullet-controls">
+              {trips.trips.map((el, i) => (
+                <li className="bullet-item">
+                  <span
+                    {...cn('bullet', {
+                      '-active': i === 1
+                    })}
+                  >
+                    {i + 1}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 )
