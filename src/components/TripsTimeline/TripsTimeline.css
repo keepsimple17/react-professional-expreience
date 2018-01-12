@@ -7,7 +7,7 @@
     list-style: none;
     margin: 0;
     mask-image: linear-gradient(to right, #000, #000 calc(100% - 3rem), rgba(0, 0, 0, 0));
-    overflow-x: auto;
+    overflow: hidden;
     padding: 0;
     white-space: nowrap;
 
