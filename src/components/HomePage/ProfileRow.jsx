@@ -19,7 +19,7 @@ const ProfileRow = ({ profile, rank }) => (
           <div className="divider" />
         </div>
         <div className="col-12">
-          <TripsTimeline trips={profile.trips} />
+          <TripsTimeline trips={profile.trips} url={`/profile/${profile.username}`} />
         </div>
       </div>
     </div>
