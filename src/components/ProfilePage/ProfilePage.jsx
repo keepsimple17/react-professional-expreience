@@ -29,6 +29,7 @@ class ProfilePage extends Component {
 
   componentWillMount () {
     this.updateProfileData(this.props.username)
+    window.scrollTo(0, 0)
   }
 
   componentWillReceiveProps (nextProps) {
@@ -40,6 +41,8 @@ class ProfilePage extends Component {
       if (this.profile) this.profile.cancel()
 
       this.updateProfileData(nextProps.username)
+
+      window.scrollTo(0, 0)
     }
   }
 
