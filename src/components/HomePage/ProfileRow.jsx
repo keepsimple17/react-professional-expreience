@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react'
 
 import cn from '../../util/cn'
 import ProfileRankStats from '../ProfileRankStats/ProfileRankStats'
@@ -29,7 +29,9 @@ const ProfileRow = ({ profile, rank }) => (
 ProfileRow.propTypes = {
   profile: PropTypes.shape({
     username: PropTypes.string,
-    trips: PropTypes.array
+    trips: PropTypes.shape({
+      trips: MobxPropTypes.observableArray
+    })
   }).isRequired,
   rank: PropTypes.number.isRequired
 }

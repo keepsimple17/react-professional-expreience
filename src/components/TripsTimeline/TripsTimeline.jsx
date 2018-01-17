@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react'
 
 import cn from '../../util/cn'
 import DestinationItem from './DestinationItem'
@@ -32,8 +32,8 @@ const TripsTimeline = ({ trips }) => (
         <div className="row">
           <div className="col-12">
             <ul className="bullet-controls">
-              {trips.trips.map((el, i) => (
-                <li className="bullet-item">
+              {trips.trips.map((trip, i) => (
+                <li className="bullet-item" key={trip.pictureUrl}>
                   <span
                     {...cn('bullet', {
                       '-active': i === 1
@@ -52,9 +52,11 @@ const TripsTimeline = ({ trips }) => (
 )
 
 TripsTimeline.propTypes = {
-  trips: PropTypes.arrayOf(PropTypes.shape({
-    pictureUrl: PropTypes.string
-  })).isRequired
+  trips: PropTypes.shape({
+    trips: MobxPropTypes.observableArrayOf(PropTypes.shape({
+      pictureUrl: PropTypes.string
+    }))
+  }).isRequired
 }
 
 export default observer(TripsTimeline)
