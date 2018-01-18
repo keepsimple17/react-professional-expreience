@@ -18,6 +18,10 @@
       font-size: 2rem;
       text-transform: uppercase;
     }
+
+    @media (--griddity-md-viewport) {
+      text-align: left;
+    }
   }
 
   & .profile-picture {

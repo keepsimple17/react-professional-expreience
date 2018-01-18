@@ -26,7 +26,7 @@ const ProfileRankStats = ({ profile }) => {
         </div>
         <div className="col">
           <div className="row align-items-center">
-            <div className="col-12 col-md-auto">
+            <div className="col-12 col-md">
               <h2 className="heading">
                 <Link
                   className="full-name-link"
