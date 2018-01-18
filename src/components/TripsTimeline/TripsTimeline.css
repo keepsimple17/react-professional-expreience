@@ -1,0 +1,44 @@
+@import '../../styles/variables.css';
+
+.trips-timeline {
+  & .trip-list {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    list-style: none;
+    margin: 0 0 2.5rem 0;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+
+    & .trip-item {
+      flex: 0 0 auto;
+      display: none;
+      white-space: normal;
+
+      &.-first {
+        display: inline-block;
+      }
+
+      & + .trip-item {
+        margin-left: 2rem;
+      }
+
+      @media (--griddity-md-viewport) {
+        display: inline-block;
+      }
+    }
+
+    @media (--griddity-md-viewport) {
+      justify-content: left;
+      mask-image: linear-gradient(to right, #000, #000 calc(100% - 5rem), rgba(0, 0, 0, 0));
+      text-align: left;
+    }
+  }
+
+  & .see-all-trips-link {
+    color: var(--slate);
+    font-weight: 700;
+  }
+}

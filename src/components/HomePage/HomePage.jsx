@@ -59,16 +59,16 @@ class HomePage extends Component {
             <div className="row">
               <div className="col">
                 <h2 className="top-producers-heading">
-                  Worst carbon producers who are not offsetting
+                  Users Producing the <strong>Most Carbon</strong>
                 </h2>
               </div>
             </div>
-            {this.state.topProducers.map(profile => (
-              <LazyLoad key={profile.username} height="8.5rem" offset={300}>
-                <ProfileRow profile={profile} />
-              </LazyLoad>
-            ))}
           </div>
+          {this.state.topProducers.map((profile, i) => (
+            <LazyLoad key={profile.username} height="8.5rem" offset={300}>
+              <ProfileRow profile={profile} rank={i + 1} />
+            </LazyLoad>
+          ))}
         </section>
       </section>
     )

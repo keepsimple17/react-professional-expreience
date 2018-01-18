@@ -5,7 +5,7 @@
   --pale-grey: #f0f3f4;
   --reddish: #d03b3b;
   --slate: #4d666a;
-  --griddity-gutter-width: 2rem;
+  --griddity-gutter-width: 1rem;
   --griddity-gutter-compensation: calc(var(--griddity-gutter-width) * -0.5);
   --griddity-half-gutter: calc((var(--griddity-gutter-width) * 0.5));
   --griddity-container-sm: calc(608px - var(--griddity-gutter-width));

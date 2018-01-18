@@ -1,32 +1,48 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { observer } from 'mobx-react'
+import { observer, PropTypes as MobxPropTypes } from 'mobx-react'
 
-import ProfileCard from '../ProfileCard/ProfileCard'
-import SmallTripBox from '../SmallTripBox/SmallTripBox'
+import cn from '../../util/cn'
+import ProfileRankStats from '../ProfileRankStats/ProfileRankStats'
+import TripsTimeline from '../TripsTimeline/TripsTimeline'
 
-const ProfileRow = ({ profile }) => (
-  <div className="row producer-row">
-    <div className="col col-lg-5">
-      <ProfileCard profile={profile} />
-    </div>
-    <div className="d-none d-lg-block col-lg-7">
-      <ul className="trip-list">
-        {profile.trips.trips &&
-          profile.trips.trips.map(trip => (
-            <li className="trip-item" key={trip.pictureUrl}>
-              <SmallTripBox trip={trip} />
-            </li>
-          ))}
-      </ul>
+import './ProfileRow.css'
+
+const ProfileRow = ({ profile, rank }) => (
+  <div {...cn('profile-row', { '-odd': rank % 2, '-even': !(rank % 2) })}>
+    <div className="container">
+      <div className="row">
+        <div className="col-12 col-md-1">
+          <p className="profile-rank">
+            <span className="rank">{rank}</span>
+          </p>
+        </div>
+        <div className="col-12 col-md-11">
+          <div className="row">
+            <div className="col-12">
+              <ProfileRankStats profile={profile} rank={rank} />
+            </div>
+            <div className="col-12">
+              <div className="divider" />
+            </div>
+            <div className="col-12">
+              <TripsTimeline trips={profile.trips} url={`/profile/${profile.username}`} />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 )
 
 ProfileRow.propTypes = {
   profile: PropTypes.shape({
-    username: PropTypes.string
-  }).isRequired
+    username: PropTypes.string,
+    trips: PropTypes.shape({
+      trips: MobxPropTypes.observableArray
+    })
+  }).isRequired,
+  rank: PropTypes.number.isRequired
 }
 
 export default observer(ProfileRow)

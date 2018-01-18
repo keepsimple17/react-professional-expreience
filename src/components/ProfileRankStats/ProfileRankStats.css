@@ -1,0 +1,86 @@
+@import '../../styles/variables.css';
+
+.inline-icon {
+  display: inline-block;
+  height: 1em;
+  vertical-align: -0.125rem;
+  width: 1em;
+}
+
+.profile-rank-stats {
+  width: 100%;
+
+  & .heading {
+    text-align: center;
+
+    & .full-name-link {
+      color: var(--slate);
+      font-size: 2rem;
+      text-transform: uppercase;
+    }
+
+    @media (--griddity-md-viewport) {
+      text-align: left;
+    }
+  }
+
+  & .profile-picture {
+    text-align: center;
+
+    & .picture {
+      display: inline-block;
+      border-radius: 50%;
+      height: 7.5rem;
+      width: 7.5rem;
+    }
+  }
+
+  & .heading,
+  & .profile-picture,
+  & .profile-rank,
+  & .carbon-output,
+  & .carbon-status,
+  & .instagram-username {
+    margin: 0 0 1.25rem 0;
+
+
+    @media (--griddity-md-viewport) {
+      margin: 0;
+    }
+  }
+
+  & .carbon-output {
+    color: var(--reddish);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: center;
+
+    & .inline-icon {
+      margin-right: 0.5em;
+    }
+  }
+
+  & .carbon-status {
+    text-align: center;
+
+    & .danger-button {
+      display: block;
+    }
+  }
+
+  & .instagram-username {
+    text-align: center;
+
+    @media (--griddity-md-viewport) {
+      text-align: left;
+    }
+
+    & .instagram-link {
+      color: var(--slate);
+    }
+
+    & .inline-icon {
+      margin-right: 0.5em;
+    }
+  }
+}

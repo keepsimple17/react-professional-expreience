@@ -1,0 +1,36 @@
+@import '../../styles/variables.css';
+
+.destination-item {
+  display: inline-block;
+
+  & .ring-wrapper {
+    border-color: color(var(--slate) alpha(50%));
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 0.4rem;
+    margin: 0 auto 0.5rem auto;
+    padding: 0.3rem;
+    height: 6.75rem;
+    width: 6.75rem;
+
+    & .trip-picture {
+      border-radius: 50%;
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+  }
+
+  & .trip-date {
+    color: var(--slate);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  & .destination-name {
+    color: var(--slate);
+    font-weight: 600;
+    text-align: center;
+  }
+}

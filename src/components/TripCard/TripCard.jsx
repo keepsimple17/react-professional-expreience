@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { format as formatDate } from 'date-fns'
-import { injectIntl, FormattedNumber } from 'react-intl'
+import { injectIntl, FormattedNumber, FormattedDate } from 'react-intl'
 
 import { gramsToPounds, meterToMiles } from '../../util/conversions'
 
 import './TripCard.css'
-
-const getFormatedDate = epochSeconds => formatDate(new Date(epochSeconds * 1000), 'DD MMM YY')
 
 const TripCard = ({ profile, trip }) => (
   <div className="trip-card">
@@ -24,7 +21,14 @@ const TripCard = ({ profile, trip }) => (
             <FormattedNumber value={gramsToPounds(trip.carbonOutput)} /> lbs
           </span>
         </p>
-        <p className="trip-date text-right">{getFormatedDate(trip.tripDate)}</p>
+        <p className="trip-date text-right">
+          <FormattedDate
+            day="2-digit"
+            month="short"
+            value={new Date(trip.tripDate * 1000)}
+            year="2-digit"
+          />
+        </p>
       </div>
     </div>
     <div className="row">

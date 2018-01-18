@@ -1,0 +1,29 @@
+@import '../../styles/variables.css';
+
+.distance-item {
+  display: inline-block;
+  text-align: center;
+  white-space: normal;
+
+  & .carbon-output {
+    color: var(--reddish);
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+
+  & .distance-iconography {
+    & .travel-icon {
+      width: 2.5rem;
+    }
+
+    & .travel-dashes-icon {
+      width: 4.5rem;
+    }
+  }
+
+  & .distance {
+    color: var(--slate);
+    font-size: 1.125rem;
+    font-weight: 400;
+  }
+}

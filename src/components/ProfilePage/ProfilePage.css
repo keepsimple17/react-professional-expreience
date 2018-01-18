@@ -61,7 +61,7 @@
     & .trips-heading {
       color: var(--slate);
       font-size: 2rem;
-      font-weight: normal;
+      font-weight: 500;
       margin-bottom: 1em;
     }
 
@@ -111,7 +111,7 @@
 
 .modal-lead-message {
   font-size: 1.375rem;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.82;
   margin-bottom: 3.5rem;
   text-align: center;
@@ -137,7 +137,7 @@
   color: inherit;
   cursor: pointer;
   display: inline;
-  font-weight: 400;
+  font-weight: 500;
   margin: 0;
   padding: 0;
 
