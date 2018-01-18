@@ -71,6 +71,10 @@
   & .instagram-username {
     text-align: center;
 
+    @media (--griddity-md-viewport) {
+      text-align: left;
+    }
+
     & .instagram-link {
       color: var(--slate);
     }

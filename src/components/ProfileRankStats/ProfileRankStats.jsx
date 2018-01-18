@@ -53,7 +53,7 @@ const ProfileRankStats = ({ profile }) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-6 col-md-auto">
+            <div className="col-6 col-md">
               <p className="instagram-username">
                 <a
                   className="instagram-link"
