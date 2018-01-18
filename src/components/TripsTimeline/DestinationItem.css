@@ -2,7 +2,6 @@
 
 .destination-item {
   display: inline-block;
-  width: 16rem;
 
   & .ring-wrapper {
     border-color: color(var(--slate) alpha(50%));
@@ -20,14 +19,18 @@
       object-fit: cover;
       width: 100%;
     }
+  }
 
-    @media (--griddity-md-viewport) {
-      margin: 0 auto;
-    }
+  & .trip-date {
+    color: var(--slate);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
   }
 
   & .destination-name {
     color: var(--slate);
     font-weight: 600;
+    text-align: center;
   }
 }

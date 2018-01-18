@@ -12,14 +12,23 @@ const ProfileRow = ({ profile, rank }) => (
   <div {...cn('profile-row', { '-odd': rank % 2, '-even': !(rank % 2) })}>
     <div className="container">
       <div className="row">
-        <div className="col-12">
-          <ProfileRankStats profile={profile} rank={rank} />
+        <div className="col-12 col-md-1">
+          <p className="profile-rank">
+            <span className="rank">{rank}</span>
+          </p>
         </div>
-        <div className="col-12">
-          <div className="divider" />
-        </div>
-        <div className="col-12">
-          <TripsTimeline trips={profile.trips} url={`/profile/${profile.username}`} />
+        <div className="col-12 col-md-11">
+          <div className="row">
+            <div className="col-12">
+              <ProfileRankStats profile={profile} rank={rank} />
+            </div>
+            <div className="col-12">
+              <div className="divider" />
+            </div>
+            <div className="col-12">
+              <TripsTimeline trips={profile.trips} url={`/profile/${profile.username}`} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

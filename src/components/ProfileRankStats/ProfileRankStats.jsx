@@ -11,7 +11,7 @@ import instagramLogo from '../../img/icons/instagram.svg'
 
 import './ProfileRankStats.css'
 
-const ProfileRankStats = ({ profile, rank }) => {
+const ProfileRankStats = ({ profile }) => {
   const heading = profile.fullName || `@${profile.username}`
 
   return (
@@ -37,22 +37,11 @@ const ProfileRankStats = ({ profile, rank }) => {
                 </Link>
               </h2>
             </div>
-            <div className="col-12 col-md-auto order-md-first">
-              <p className="profile-rank">
-                <span className="rank">{rank}</span>
-              </p>
-            </div>
             <div className="col-12 d-md-none">
               <p className="profile-picture">
                 <Link title="See carbon production" to={`/profile/${profile.username}`}>
                   <img alt={profile.username} className="picture" src={profile.profilePictureUrl} />
                 </Link>
-              </p>
-            </div>
-            <div className="col-12 col-md-auto">
-              <p className="carbon-output">
-                <img alt="Carbon Output Icon" className="inline-icon" src={carbonCloud} />
-                <FormattedNumber value={gramsToPounds(profile.carbonOutput)} /> lb CO₂ /yr
               </p>
             </div>
             <div className="col-12 col-md-auto">
@@ -64,7 +53,7 @@ const ProfileRankStats = ({ profile, rank }) => {
             </div>
           </div>
           <div className="row">
-            <div className="col-12 col-md-auto">
+            <div className="col-6 col-md-auto">
               <p className="instagram-username">
                 <a
                   className="instagram-link"
@@ -74,6 +63,12 @@ const ProfileRankStats = ({ profile, rank }) => {
                   <img alt="Instagram Logo" className="inline-icon" src={instagramLogo} />
                   {profile.username}
                 </a>
+              </p>
+            </div>
+            <div className="col-6 col-md-auto">
+              <p className="carbon-output">
+                <img alt="Carbon Output Icon" className="inline-icon" src={carbonCloud} />
+                <FormattedNumber value={gramsToPounds(profile.carbonOutput)} /> lb CO₂ /yr
               </p>
             </div>
           </div>
@@ -89,8 +84,7 @@ ProfileRankStats.propTypes = {
     fullName: PropTypes.string,
     profilePictureUrl: PropTypes.string,
     username: PropTypes.string
-  }).isRequired,
-  rank: PropTypes.number.isRequired
+  }).isRequired
 }
 
 export default injectIntl(observer(ProfileRankStats))

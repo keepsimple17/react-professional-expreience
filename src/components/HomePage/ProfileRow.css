@@ -20,6 +20,27 @@
       );
   }
 
+  & .profile-rank {
+    font-size: 1rem;
+    text-align: center;
+
+    & .rank {
+      display: inline-block;
+      background-color: #fff;
+      box-shadow: 0 0.25em 1.25em 0 rgba(0, 0, 0, 0.21);
+      color: var(--slate);
+      line-height: 2.25;
+      border-radius: 50%;
+      font-weight: 700;
+      height: 2.25em;
+      width: 2.25em;
+    }
+
+    @media (--griddity-md-viewport) {
+      line-height: 7.5;
+    }
+  }
+
   & .divider {
     background-color: var(--slate);
     height: 3px;
