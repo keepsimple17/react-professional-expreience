@@ -31,7 +31,7 @@ const FriendsList = ({ friends }) => (
     {!friends.loading && !friends.friends.length && (
       <div className="col-12 box-message">
         <p className="box-title">No friends</p>
-        <p className="box-tagline">We could not find any any friends</p>
+        <p className="box-tagline">We could not find any friends</p>
       </div>
     )}
   </ul>
