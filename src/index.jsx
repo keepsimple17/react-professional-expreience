@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { LastLocationProvider } from 'react-router-last-location'
 import { Provider as StoreProvider } from 'mobx-react'
 
 import { IntlProvider } from 'react-intl'
@@ -18,9 +17,7 @@ ReactDOM.render(
   <StoreProvider store={store}>
     <IntlProvider locale={navigator.language}>
       <Router>
-        <LastLocationProvider>
-          <App />
-        </LastLocationProvider>
+        <App />
       </Router>
     </IntlProvider>
   </StoreProvider>,
