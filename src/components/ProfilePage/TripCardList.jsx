@@ -27,12 +27,13 @@ const TripCardList = ({ profile }) => (
           <p className="box-tagline">Calculating carbon footprint…</p>
         </div>
       )}
-      {!profile.trips.loading && !profile.trips.trips.length && (
-        <div className="col-12 box-message">
-          <p className="box-title">No trips</p>
-          <p className="box-tagline">@{profile.username} does not have any travel posts</p>
-        </div>
-      )}
+      {!profile.trips.loading &&
+        !profile.trips.trips.length && (
+          <div className="col-12 box-message">
+            <p className="box-title">No trips</p>
+            <p className="box-tagline">@{profile.username} does not have any travel posts</p>
+          </div>
+        )}
     </div>
   </div>
 )

@@ -14,13 +14,12 @@ const FriendsList = ({ friends }) => (
       '-empty': !friends.loading && !friends.friends.length
     })}
   >
-    {friends.friends && (
+    {friends.friends &&
       friends.friends.map((profile, i) => (
         <li className="friend-item" key={profile.username}>
           <ProfileCard profile={profile} />
         </li>
-      ))
-    )}
+      ))}
 
     {friends.loading && (
       <div className="col-12 box-message">
@@ -28,12 +27,13 @@ const FriendsList = ({ friends }) => (
         <p className="box-tagline">Finding friends…</p>
       </div>
     )}
-    {!friends.loading && !friends.friends.length && (
-      <div className="col-12 box-message">
-        <p className="box-title">No friends</p>
-        <p className="box-tagline">We could not find any friends</p>
-      </div>
-    )}
+    {!friends.loading &&
+      !friends.friends.length && (
+        <div className="col-12 box-message">
+          <p className="box-title">No friends</p>
+          <p className="box-tagline">We could not find any friends</p>
+        </div>
+      )}
   </ul>
 )
 

@@ -43,7 +43,6 @@
   & .instagram-username {
     margin: 0 0 1.25rem 0;
 
-
     @media (--griddity-md-viewport) {
       margin: 0;
     }
