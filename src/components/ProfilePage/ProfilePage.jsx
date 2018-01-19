@@ -87,29 +87,26 @@ class ProfilePage extends Component {
             </div>
           </section>
         )}
-        {this.profile && this.profile.loading && (
-          <section className="profile-message-bar -info">
-            <div className="container">
-              <div className="row">
-                <div className="col">
-                  <p className="message-bar-content text-center">Calculating carbon footprint…</p>
+        {this.profile &&
+          this.profile.loading && (
+            <section className="profile-message-bar -info">
+              <div className="container">
+                <div className="row">
+                  <div className="col">
+                    <p className="message-bar-content text-center">Calculating carbon footprint…</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          </section>
-        )}
+            </section>
+          )}
         <section className="profile-overview">
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-lg-5">
-                {this.profile && (
-                  <ProfileCard profile={this.profile} />
-                )}
+                {this.profile && <ProfileCard profile={this.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                {this.profile && (
-                  <TripGrid profile={this.profile} />
-                )}
+                {this.profile && <TripGrid profile={this.profile} />}
               </div>
             </div>
           </div>
@@ -149,9 +146,8 @@ class ProfilePage extends Component {
                     )}
                   </div>
                 </div>
-                {this.profile && this.profile.trips.trips && (
-                  <TripCardList profile={this.profile} />
-                )}
+                {this.profile &&
+                  this.profile.trips.trips && <TripCardList profile={this.profile} />}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.profile && (

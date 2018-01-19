@@ -30,7 +30,4 @@ DestinationItem.propTypes = {
   }).isRequired
 }
 
-export default pipe([
-  observer,
-  injectIntl
-])(DestinationItem)
+export default pipe([observer, injectIntl])(DestinationItem)

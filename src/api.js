@@ -62,14 +62,11 @@ const fetchTopProducers = () =>
 const fetchProfileFriends = username => fetchProfile(username).then(profile => profile.friends)
 
 const fetchProfileTrips = (username, limit) =>
-  request(
-    `/trips/v1/${username}`,
-    {
-      limit,
-      // TODO: This is required for the API to not break. Remove when API is ready.
-      zip: 10001
-    }
-  ).then(data => ({
+  request(`/trips/v1/${username}`, {
+    limit,
+    // TODO: This is required for the API to not break. Remove when API is ready.
+    zip: 10001
+  }).then(data => ({
     completed: data.feed_trips,
     trips: data.trips.map(formatTrip)
   }))

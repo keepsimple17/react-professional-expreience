@@ -33,11 +33,7 @@ const TripsTimeline = ({ limit, trips, url }) => (
         <div className="row">
           <div className="col text-center text-md-right">
             <div>
-              <Link
-                className="see-all-trips-link"
-                title="See carbon production"
-                to={url}
-              >
+              <Link className="see-all-trips-link" title="See carbon production" to={url}>
                 Show all trips
               </Link>
             </div>
