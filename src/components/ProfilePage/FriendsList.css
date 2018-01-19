@@ -5,11 +5,14 @@
   border: 2px dashed transparent;
   list-style: none;
   margin: 0;
-  min-height: 30rem;
   padding: 0;
 
-  &.-empty {
+  &.-loading {
     border: 2px dashed color(var(--slate) alpha(40%));
+  }
+
+  &.-empty {
+    border: 2px solid color(var(--slate) alpha(40%));
   }
 
   & .friend-item {
@@ -21,21 +24,22 @@
     width: 125%;
   }
 
-  & > .loading-message {
+  & .box-message {
     align-items: center;
-    color: var(--gunmetal);
     display: flex;
-    font-size: 2rem;
+    flex-direction: column;
     justify-content: center;
+    min-height: 30rem;
     pointer-events: none;
-  }
 
-  &.-empty > .loading-message {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    text-align: center;
-    top: 0;
+    & .box-title {
+      color: var(--gunmetal);
+      font-size: 1.5rem;
+    }
+
+    & .box-tagline {
+      color: color(var(--gunmetal) alpha(50%));
+      font-size: 1.25rem;
+    }
   }
 }

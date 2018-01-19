@@ -241,8 +241,9 @@ class ProfilePage extends Component {
                       )}
                   </div>
                 </div>
-                {this.profile &&
-                  this.profile.trips.trips && <TripCardList profile={this.profile} />}
+                {this.profile && this.profile.trips.trips && (
+                  <TripCardList profile={this.profile} />
+                )}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
                 {this.profile && (

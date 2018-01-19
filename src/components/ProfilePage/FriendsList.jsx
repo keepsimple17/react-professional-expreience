@@ -10,17 +10,30 @@ import './FriendsList.css'
 const FriendsList = ({ friends }) => (
   <ul
     {...cn('friends-list', {
-      '-loading': !!friends.loading,
-      '-empty': !friends.friends || !friends.friends.length
+      '-loading': friends.loading && !friends.friends.length,
+      '-empty': !friends.loading && !friends.friends.length
     })}
   >
-    {friends.friends &&
+    {friends.friends && (
       friends.friends.map((profile, i) => (
         <li className="friend-item" key={profile.username}>
           <ProfileCard profile={profile} />
         </li>
-      ))}
-    {!!friends.loading && <li className="loading-message">Loading friends...</li>}
+      ))
+    )}
+
+    {friends.loading && (
+      <div className="col-12 box-message">
+        <p className="box-title">Calculating</p>
+        <p className="box-tagline">Finding friends…</p>
+      </div>
+    )}
+    {!friends.loading && !friends.friends.length && (
+      <div className="col-12 box-message">
+        <p className="box-title">No friends</p>
+        <p className="box-tagline">We could not find any any friends</p>
+      </div>
+    )}
   </ul>
 )
 

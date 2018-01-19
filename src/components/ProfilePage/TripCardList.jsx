@@ -10,8 +10,8 @@ import './TripCardList.css'
 const TripCardList = ({ profile }) => (
   <div
     {...cn('trip-card-list', {
-      '-loading': !!profile.trips.loading,
-      '-empty': !profile.trips.trips || !profile.trips.trips.length
+      '-loading': profile.trips.loading && !profile.trips.trips.length,
+      '-empty': !profile.trips.loading && !profile.trips.trips.length
     })}
   >
     <div className="row">
@@ -22,8 +22,15 @@ const TripCardList = ({ profile }) => (
           </div>
         ))}
       {!!profile.trips.loading && (
-        <div className="col-12 loading-message">
-          <p>Loading travel posts...</p>
+        <div className="col-12 box-message">
+          <p className="box-title">Calculating</p>
+          <p className="box-tagline">Calculating carbon footprint…</p>
+        </div>
+      )}
+      {!profile.trips.loading && !profile.trips.trips.length && (
+        <div className="col-12 box-message">
+          <p className="box-title">No trips</p>
+          <p className="box-tagline">@{profile.username} does not have any travel posts</p>
         </div>
       )}
     </div>
