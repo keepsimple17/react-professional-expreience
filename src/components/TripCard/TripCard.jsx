@@ -16,11 +16,13 @@ const TripCard = ({ profile, trip }) => (
         <p className="trip-description">{profile.fullName || `@${profile.username}`}</p>
       </div>
       <div className="col-auto">
-        <p className="trip-carbon-output text-right">
-          <span className="trip-badge">
-            <FormattedNumber value={gramsToPounds(trip.carbonOutput)} /> lbs
-          </span>
-        </p>
+        {!profile.trips.loading && (
+          <p className="trip-carbon-output text-right">
+            <span className="trip-badge">
+              <FormattedNumber value={gramsToPounds(trip.carbonOutput)} /> lbs
+            </span>
+          </p>
+        )}
         <p className="trip-date text-right">
           <FormattedDate
             day="2-digit"
@@ -41,7 +43,11 @@ const TripCard = ({ profile, trip }) => (
     <div className="row no-gutters align-items-center details-row">
       <div className="col">
         <p className="trip-description">
-          Traveled <FormattedNumber value={meterToMiles(trip.distance)} /> mi to{' '}
+          {!profile.trips.loading && (
+            <span>
+              Traveled <FormattedNumber value={meterToMiles(trip.distance)} /> mi to{' '}
+            </span>
+          )}
           {trip.destinationName}
         </p>
       </div>

@@ -30,15 +30,9 @@ export const Profile = types
     trips: types.late(() =>
       types.optional(TripsStore, {
         trips: []
-      })),
-    zipcode: types.maybe(types.string, null)
+      }))
   })
   .actions((self) => {
-    const updateZipcode = (zipcode) => {
-      self.zipcode = zipcode
-      if (!self.private) self.trips.pullTrips()
-    }
-
     const refreshProfile = flow(function * refreshProfile () {
       try {
         const { carbonOutput } = yield api.fetchProfile(self.username)
@@ -58,8 +52,7 @@ export const Profile = types
 
     return {
       cancel,
-      refreshProfile,
-      updateZipcode
+      refreshProfile
     }
   })
   .views(self => ({
@@ -85,9 +78,9 @@ export const FriendsStore = types
       self.lastCount = self.friends.length
 
       try {
-        const { username, zipcode } = getParent(self)
+        const { username } = getParent(self)
 
-        const data = yield api.fetchProfileFriends(username, zipcode)
+        const data = yield api.fetchProfileFriends(username)
 
         self.friends = data.friends
         self.completed = data.completed
@@ -147,9 +140,9 @@ export const TripsStore = types
       self.lastCount = self.trips.length
 
       try {
-        const { username, zipcode } = getParent(self)
+        const { username } = getParent(self)
 
-        const data = yield api.fetchProfileTrips(username, zipcode, limit)
+        const data = yield api.fetchProfileTrips(username, limit)
 
         self.trips = data.trips
         self.completed = data.completed
