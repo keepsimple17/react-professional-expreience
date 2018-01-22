@@ -52,7 +52,7 @@ class ProfilePage extends Component {
       .then((profile) => {
         if (!profile.private && profile.friends.loading) this.profile.friends.pullFriends()
 
-        this.profile.trips.pullTrips()
+        this.profile.trips.pullTrips(60)
       })
       .catch((error) => {
         this.setState(() => ({ error }))
