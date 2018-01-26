@@ -30,7 +30,7 @@ class ProfilePage extends Component {
 
   componentWillReceiveProps (nextProps) {
     if (this.props.username !== nextProps.username) {
-      if (this.profile) this.profile.cancel()
+      if (this.state.profile) this.state.profile.cancel()
 
       this.updateProfileData(nextProps.username)
 
@@ -39,20 +39,20 @@ class ProfilePage extends Component {
   }
 
   componentWillUnmount () {
-    if (this.profile) this.profile.cancel()
-  }
-
-  get profile () {
-    return this.props.store.profiles.get(this.props.username)
+    if (this.state.profile) this.state.profile.cancel()
   }
 
   updateProfileData (username) {
     return this.props.store
       .fetchProfile(username)
       .then((profile) => {
-        if (!profile.private && profile.friends.loading) this.profile.friends.pullFriends()
+        if (!profile.private && profile.friends.loading) profile.friends.pullFriends()
 
-        this.profile.trips.pullTrips(100)
+        profile.trips.pullTrips(100)
+
+        this.setState(() => ({
+          profile: this.props.store.profiles.get(username)
+        }))
       })
       .catch((error) => {
         this.setState(() => ({ error }))
@@ -60,8 +60,8 @@ class ProfilePage extends Component {
   }
 
   render () {
-    if (this.profile && this.profile.private) {
-      return <PrivateProfile profile={this.profile} />
+    if (this.state.profile && this.state.profile.private) {
+      return <PrivateProfile profile={this.state.profile} />
     }
 
     return (
@@ -87,8 +87,8 @@ class ProfilePage extends Component {
             </div>
           </section>
         )}
-        {this.profile &&
-          this.profile.loading && (
+        {this.state.profile &&
+          this.state.profile.loading && (
             <section className="profile-message-bar -info">
               <div className="container">
                 <div className="row">
@@ -103,16 +103,16 @@ class ProfilePage extends Component {
           <div className="container">
             <div className="row">
               <div className="col-xs-12 col-lg-5">
-                {this.profile && <ProfileCard profile={this.profile} />}
+                {this.state.profile && <ProfileCard profile={this.state.profile} />}
               </div>
               <div className="d-none d-lg-block col-lg-7">
-                {this.profile && <TripGrid profile={this.profile} />}
+                {this.state.profile && <TripGrid profile={this.state.profile} />}
               </div>
             </div>
           </div>
         </section>
 
-        {this.profile && (
+        {this.state.profile && (
           <section className="download-app-bar">
             <div className="container">
               <div className="row">
@@ -120,7 +120,7 @@ class ProfilePage extends Component {
                   className="col-12 col-md-auto text-center text-md-left d-flex align-items-center"
                 >
                   <p className="download-app-message">
-                    {`Are you ${getName(this.profile)}? Claim this account to go carbon neutral.`}
+                    {`Are you ${getName(this.state.profile)}? Claim this account to go carbon neutral.`}
                   </p>
                 </div>
                 <div className="col-12 col-md text-center text-md-right">
@@ -141,19 +141,21 @@ class ProfilePage extends Component {
               <div className="col-xs-12 col-lg-8">
                 <div className="row align-items-center">
                   <div className="col">
-                    {this.profile && (
-                      <h3 className="trips-heading">{getName(this.profile)}’s travel posts</h3>
+                    {this.state.profile && (
+                      <h3 className="trips-heading">
+                        {getName(this.state.profile)}’s travel posts
+                      </h3>
                     )}
                   </div>
                 </div>
-                {this.profile &&
-                  this.profile.trips.trips && <TripCardList profile={this.profile} />}
+                {this.state.profile &&
+                  this.state.profile.trips.trips && <TripCardList profile={this.state.profile} />}
               </div>
               <div className="col-xs-12 col-lg-4 order-lg-first">
-                {this.profile && (
-                  <h3 className="friends-heading">{getName(this.profile)}’s friends</h3>
+                {this.state.profile && (
+                  <h3 className="friends-heading">{getName(this.state.profile)}’s friends</h3>
                 )}
-                {this.profile && <FriendsList friends={this.profile.friends} />}
+                {this.state.profile && <FriendsList friends={this.state.profile.friends} />}
               </div>
             </div>
           </div>
