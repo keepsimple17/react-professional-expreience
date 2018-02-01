@@ -99,7 +99,7 @@ export const FriendsStore = types
       try {
         while (shouldRetry(self)) {
           yield updateFriends()
-          if (shouldRetry(self)) yield wait(3000)
+          if (shouldRetry(self)) yield wait(500)
         }
         if (self.attempts > 1) getParent(self).refreshProfile()
       } catch (error) {
@@ -162,7 +162,7 @@ export const TripsStore = types
       try {
         while (shouldRetry(self, limit)) {
           yield updateTrips(limit)
-          if (shouldRetry(self, limit)) yield wait(3000)
+          if (shouldRetry(self, limit)) yield wait(500)
         }
         if (self.attempts > 1) getParent(self).refreshProfile()
       } catch (error) {
