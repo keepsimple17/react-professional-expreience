@@ -1,5 +1,8 @@
 /* global fetch */
 
+import io from 'socket.io-client'
+
+import defer from './util/defer'
 import pipe from './util/pipe'
 
 const { REACT_APP_API_URI } = process.env
@@ -71,9 +74,51 @@ const fetchProfileTrips = (username, limit) =>
     trips: data.trips.map(formatTrip)
   }))
 
+function * iterateTrips (username) {
+  const socket = io(REACT_APP_API_URI, { query: { user: username } })
+
+  let deferred = defer()
+
+  socket.on('error', (error) => {
+    const last = deferred
+    deferred = null
+    last.reject(error)
+  })
+
+  socket.on('completed_posts', (data) => {
+    const last = deferred
+    deferred = defer()
+    last.resolve(formatTrip(data))
+  })
+
+  socket.on('completed_trips', (data) => {
+    const last = deferred
+    deferred = null
+    socket.close()
+    last.resolve(data.map(formatTrip))
+  })
+
+  try {
+    while (true) {
+      if (!deferred) return Promise.resolve()
+
+      const cancelled = yield deferred
+
+      if (cancelled) {
+        socket.close()
+        return Promise.resolve()
+      }
+    }
+  } catch (error) {
+    socket.close()
+    return Promise.reject(error)
+  }
+}
+
 export default {
   fetchProfile,
   fetchProfileFriends,
   fetchProfileTrips,
-  fetchTopProducers
+  fetchTopProducers,
+  iterateTrips
 }
