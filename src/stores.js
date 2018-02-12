@@ -170,7 +170,8 @@ export const TripsStore = types
       while (true) {
         const { done, value } = iterator.next(self.cancelled)
 
-        if (done || !value) break
+        // done:true means the previous value was the last one
+        if (done) break
 
         const data = yield value
 
