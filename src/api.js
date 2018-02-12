@@ -1,5 +1,8 @@
 /* global fetch */
 
+import io from 'socket.io-client'
+
+import defer from './util/defer'
 import pipe from './util/pipe'
 
 const { REACT_APP_API_URI } = process.env
@@ -71,9 +74,45 @@ const fetchProfileTrips = (username, limit) =>
     trips: data.trips.map(formatTrip)
   }))
 
+const iterateTrips = function * iterateTrips (username) {
+  const socket = io(REACT_APP_API_URI, { query: { user: username } })
+
+  let cancelled
+  let done
+  let nextValue = defer()
+
+  // new trip was found.
+  socket.on('completed_posts', (data) => {
+    nextValue.resolve(formatTrip(data))
+    nextValue = defer()
+  })
+
+  // Profile has been scraped completely and all found trips are provided here.
+  socket.on('completed_trips', (data) => {
+    nextValue.resolve(data.map(formatTrip))
+    done = true
+  })
+
+  // Things went wrong, close.
+  socket.on('error', (error) => {
+    nextValue.reject(error)
+    done = true
+  })
+
+  while (true) {
+    if (done || cancelled) {
+      socket.close()
+      return nextValue
+    }
+
+    cancelled = yield nextValue
+  }
+}
+
 export default {
   fetchProfile,
   fetchProfileFriends,
   fetchProfileTrips,
-  fetchTopProducers
+  fetchTopProducers,
+  iterateTrips
 }

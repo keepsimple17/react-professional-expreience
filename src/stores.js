@@ -127,18 +127,13 @@ export const FriendsStore = types
 
 export const TripsStore = types
   .model('TripsStore', {
-    attempts: 0,
     cancelled: false,
     completed: false,
-    lastCount: 0,
     loading: true,
     trips: types.optional(types.array(Trip), [])
   })
   .actions((self) => {
     const updateTrips = flow(function * updateTrips (limit) {
-      self.attempts += 1
-      self.lastCount = self.trips.length
-
       try {
         const { username } = getParent(self)
 
@@ -153,21 +148,42 @@ export const TripsStore = types
       }
     })
 
-    const shouldRetry = (store, limit) =>
-      !store.completed && !store.cancelled && store.trips.length < (limit || Infinity)
+    const shouldSubscribe = (store, limit) =>
+      !store.completed && store.trips.length < (limit || Infinity)
 
     const pullTrips = flow(function * pullTrips (limit) {
       self.loading = true
 
       try {
-        while (shouldRetry(self, limit)) {
-          yield updateTrips(limit)
-          if (shouldRetry(self, limit)) yield wait(500)
-        }
-        if (self.attempts > 1) getParent(self).refreshProfile()
+        yield updateTrips(limit)
       } catch (error) {
         return Promise.reject(error)
       }
+
+      if (!shouldSubscribe(self, limit)) {
+        self.loading = false
+        return Promise.resolve(self.trips)
+      }
+
+      const iterator = api.iterateTrips(getParent(self).username)
+
+      while (true) {
+        const { done, value } = iterator.next(self.cancelled)
+
+        // done:true means the previous value was the last one
+        if (done) break
+
+        const data = yield value
+
+        if (Array.isArray(data)) {
+          self.trips = data
+          self.completed = true
+        } else {
+          self.trips.push(data)
+        }
+      }
+
+      getParent(self).refreshProfile()
 
       self.loading = false
       self.cancelled = false
