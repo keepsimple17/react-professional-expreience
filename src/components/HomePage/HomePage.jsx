@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { inject, observer } from 'mobx-react'
+import { inject, observer, PropTypes as MobxPropTypes } from 'mobx-react'
+
 import LazyLoad from 'react-lazyload'
 
 import pipe from '../../util/pipe'
@@ -12,19 +13,8 @@ import SingleInputForm from '../SingleInputForm/SingleInputForm'
 import './HomePage.css'
 
 class HomePage extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      topProducers: []
-    }
-  }
-
-  async componentWillMount () {
-    const topProducers = await this.props.store.fetchTopProducers()
-
-    this.setState(() => ({
-      topProducers: topProducers || []
-    }))
+  componentWillMount () {
+    if (!this.props.store.topProducers.length) this.props.store.fetchTopProducers()
   }
 
   render () {
@@ -64,7 +54,7 @@ class HomePage extends Component {
               </div>
             </div>
           </div>
-          {this.state.topProducers.map((profile, i) => (
+          {this.props.store.topProducers && this.props.store.topProducers.map((profile, i) => (
             <LazyLoad key={profile.username} height="8.5rem" offset={300}>
               <ProfileRow profile={profile} rank={i + 1} />
             </LazyLoad>
@@ -80,7 +70,10 @@ HomePage.propTypes = {
     push: PropTypes.func
   }).isRequired,
   store: PropTypes.shape({
-    fetchTopProducers: PropTypes.func
+    fetchTopProducers: PropTypes.func,
+    topProducers: MobxPropTypes.observableArrayOf(PropTypes.shape({
+      username: PropTypes.string
+    }))
   }).isRequired
 }
 
