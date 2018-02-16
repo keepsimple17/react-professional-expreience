@@ -66,17 +66,12 @@ export const Profile = types
 
 export const FriendsStore = types
   .model('FriendsStore', {
-    attempts: 0,
     completed: false,
     friends: types.late(() => types.optional(types.array(Profile), [])),
-    lastCount: 0,
     loading: true
   })
   .actions((self) => {
     const updateFriends = flow(function * updateFriends () {
-      self.attempts += 1
-      self.lastCount = self.friends.length
-
       try {
         const { username } = getParent(self)
 
@@ -91,19 +86,32 @@ export const FriendsStore = types
       }
     })
 
-    const shouldRetry = store => !store.completed && !store.cancelled
+    const shouldSubscribe = store => !store.completed
 
     const pullFriends = flow(function * pullFriends () {
       self.loading = true
 
       try {
-        while (shouldRetry(self)) {
-          yield updateFriends()
-          if (shouldRetry(self)) yield wait(500)
-        }
-        if (self.attempts > 1) getParent(self).refreshProfile()
+        yield updateFriends()
       } catch (error) {
         return Promise.reject(error)
+      }
+
+      if (!shouldSubscribe(self)) {
+        self.loading = false
+        return Promise.resolve(self.friends)
+      }
+
+      const iterator = api.iterateFriends(getParent(self).username)
+
+      while (true) {
+        const { done, value } = iterator.next(self.cancelled)
+
+        // done:true means the previous value was the last one
+        if (done) break
+
+        const data = yield value
+        self.friends = data
       }
 
       self.loading = false

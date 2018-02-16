@@ -113,10 +113,45 @@ const iterateTrips = function * iterateTrips (username) {
   }
 }
 
+const iterateFriends = function * iterateFriends (username) {
+  // FIXME use single socket connection
+  const socket = io(REACT_APP_API_URI, { query: { user: username } })
+
+  let cancelled
+  let done
+  let nextValue = defer()
+
+  // new friend was found.
+  socket.on('completed_friends', (data) => {
+    nextValue.resolve(data.friends.map(formatProfile))
+    if (data.completed) {
+      done = true
+    } else {
+      nextValue = defer()
+    }
+  })
+
+  // Things went wrong, close.
+  socket.on('error', (error) => {
+    nextValue.reject(error)
+    done = true
+  })
+
+  while (true) {
+    if (done || cancelled) {
+      socket.close()
+      return nextValue
+    }
+
+    cancelled = yield nextValue
+  }
+}
+
 export default {
   fetchProfile,
   fetchProfileFriends,
   fetchProfileTrips,
   fetchTopProducers,
-  iterateTrips
+  iterateTrips,
+  iterateFriends
 }
