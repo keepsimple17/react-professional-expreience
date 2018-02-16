@@ -77,7 +77,6 @@ const fetchProfileTrips = (username, limit) =>
 const iterateTrips = function * iterateTrips (username) {
   const socket = io(REACT_APP_API_URI, { query: { user: username } })
 
-  let cancelled
   let done
   let nextValue = defer()
 
@@ -93,19 +92,24 @@ const iterateTrips = function * iterateTrips (username) {
     done = true
   })
 
-  // Things went wrong, close.
+  // Things went wrong, mark the iterator as done and reject with error.
   socket.on('error', (error) => {
     nextValue.reject(error)
     done = true
   })
 
-  while (true) {
-    if (done || cancelled) {
-      socket.close()
-      return nextValue
+  try {
+    while (true) {
+      // Finish the iterator whenever all posts have been called or an error has ocurred.
+      if (done) return nextValue
+      yield nextValue
     }
-
-    cancelled = yield nextValue
+  } finally {
+    // This gets called whenever 1) the loop above is broken (break or return alike), 2) the
+    // iterator is forced to finish with it.return(), 3) the iterator is forced to fisnish with
+    // it.throw(), or 4) something throws an error inside the try block.
+    // That's it, this is assured to be called.
+    socket.close()
   }
 }
 

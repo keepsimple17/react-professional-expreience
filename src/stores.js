@@ -168,30 +168,57 @@ export const TripsStore = types
       const iterator = api.iterateTrips(getParent(self).username)
 
       while (true) {
+        // If the subscription was cancelled via self.cancel(), gracefully finish the trips iterator
+        // and exit the while loop.
+        if (self.cancelled) {
+          iterator.return()
+          break
+        }
+
+        // Get next value out of the trips iterator, it is going to be a Promise if done:false,
+        // and going to be undefined otherwise.
         const { done, value } = iterator.next(self.cancelled)
 
-        // done:true means the previous value was the last one
+        // done:true means the previous value was the last one and current one is undefined.
         if (done) break
 
+        // value is a promise, yield it to mobx-state-tree.
+        // Once the Promise resolves, the generator execution is resumend and data is going to hold
+        // the value of whatever the Promise resolved.
         const data = yield value
 
+        // The socketio api returns 2 types of data structure depending on the event type:
+        // 1) An Array containing all the trips that have been scraped, once scrape is completed.
+        // 2) An Object representing a single trip that has been found; scraping is not done yet.
         if (Array.isArray(data)) {
+          // Replace whatever the list of trips was with this fresh data from the API.
           self.trips = data
+          // Mark the trips store as completed.
           self.completed = true
+          // At this point we know stuff is done. But don't break the loop here to let the generator
+          // finish gracefully to run its cleanup (close connections and stuff).
         } else {
+          // If we got a single trip, add it to whatever we have already in the list.
           self.trips.push(data)
         }
       }
 
+      // The following is excecuted whenever the subscription has finished or has been cancelled.
+
+      // Re-fetch the profile, mainly to get new stats on carbon output.
       getParent(self).refreshProfile()
 
+      // This profile's trips are not loading anymore.
       self.loading = false
+      // Reset the cancelled state, no matter if it was cancelled or not.
       self.cancelled = false
 
+      // Handle back the trips collected to the callee.
       return Promise.resolve(self.trips)
     })
 
     const cancel = () => {
+      // Do not cancel if it is not loading.
       if (self.loading && !self.cancelled) {
         self.cancelled = true
       }
