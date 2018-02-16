@@ -3,7 +3,6 @@
 import { types, flow, getParent } from 'mobx-state-tree'
 
 import api from './api'
-import wait from './util/wait'
 
 export const Trip = types.model('Trip', {
   carbonOutput: types.number,
