@@ -25,7 +25,7 @@ const formatTrip = data => ({
   carbonOutput: data.carbon_generated,
   destinationName: data.to.name,
   distance: data.distance,
-  id: data.picture_url,
+  id: data.id,
   pictureUrl: data.picture_url,
   tripDate: data.to.time_unix
 })
