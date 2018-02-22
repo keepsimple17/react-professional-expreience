@@ -16,11 +16,12 @@ const TripCardList = ({ profile }) => (
   >
     <div className="row">
       {profile.trips.trips &&
-        profile.trips.trips.map(trip => (
-          <div className="col-12 col-md-6 col-xl-4 trip-col" key={trip.pictureUrl}>
-            <TripCard profile={profile} trip={trip} />
-          </div>
-        ))}
+        profile.trips.trips.filter(trip => !trip.completed || (trip.completed && !trip.errored))
+          .map(trip => (
+            <div className="col-12 col-md-6 col-xl-4 trip-col" key={trip.pictureUrl}>
+              <TripCard profile={profile} trip={trip} />
+            </div>
+          ))}
       {!!profile.trips.loading && (
         <div className="col-12 box-message">
           <p className="box-title">Calculating</p>

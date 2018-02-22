@@ -27,7 +27,9 @@ const formatTrip = data => ({
   distance: data.distance,
   id: data.id,
   pictureUrl: data.picture_url,
-  tripDate: data.to.time_unix
+  tripDate: data.to.time_unix,
+  completed: data.completed || false,
+  errored: data.errored || false
 })
 
 const normalizeProfile = (profile) => {

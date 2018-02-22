@@ -7,6 +7,9 @@ import SmallTripBox from '../SmallTripBox/SmallTripBox'
 import './TripGridItem.css'
 
 const getColor = (carbon) => {
+  // Grey if location is not ready
+  if (carbon === -1) return '#e0e0eb'
+
   // Blue if no carbon output
   if (!carbon) return '#1ba1fb'
 
