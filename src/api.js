@@ -116,7 +116,6 @@ const iterateTrips = function * iterateTrips (username) {
 }
 
 const iterateFriends = function * iterateFriends (username) {
-  // FIXME use single socket connection
   const socket = io(REACT_APP_API_URI, { query: { user: username } })
 
   let cancelled
