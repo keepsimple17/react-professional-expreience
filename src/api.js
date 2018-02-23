@@ -27,7 +27,9 @@ const formatTrip = data => ({
   distance: data.distance,
   id: data.id,
   pictureUrl: data.picture_url,
-  tripDate: data.to.time_unix
+  tripDate: data.to.time_unix,
+  completed: data.completed || false,
+  errored: data.errored || false
 })
 
 const normalizeProfile = (profile) => {
@@ -114,7 +116,6 @@ const iterateTrips = function * iterateTrips (username) {
 }
 
 const iterateFriends = function * iterateFriends (username) {
-  // FIXME use single socket connection
   const socket = io(REACT_APP_API_URI, { query: { user: username } })
 
   let cancelled

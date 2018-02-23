@@ -17,13 +17,14 @@ const getDelay = (current, last, index) => {
 const TripGrid = ({ profile }) => (
   <ul {...cn('trip-grid', { '-loading': profile.trips.loading })}>
     {profile.trips.trips &&
-      profile.trips.trips.map((trip, i) => (
-        <TripGridItem
-          delay={getDelay(profile.trips.trips.length, profile.trips.lastCount, i)}
-          key={trip.pictureUrl}
-          trip={trip}
-        />
-      ))}
+      profile.trips.trips.filter(trip => !trip.completed || (trip.completed && !trip.errored))
+        .map((trip, i) => (
+          <TripGridItem
+            delay={getDelay(profile.trips.trips.length, profile.trips.lastCount, i)}
+            key={trip.pictureUrl}
+            trip={trip}
+          />
+        ))}
 
     {!(profile.trips.trips && profile.trips.trips.length) && (
       <li className="loading-message">

@@ -10,7 +10,9 @@ export const Trip = types.model('Trip', {
   distance: types.number,
   id: types.identifier(types.string),
   pictureUrl: types.string,
-  tripDate: types.number
+  tripDate: types.number,
+  completed: types.boolean,
+  errored: types.boolean
 })
 
 export const Profile = types
@@ -205,7 +207,7 @@ export const TripsStore = types
           // At this point we know stuff is done. But don't break the loop here to let the generator
           // finish gracefully to run its cleanup (close connections and stuff).
         } else {
-          // If we got a single trip, add it in the list if it's new, or update just existing.
+          // If we got a single trip, add it in the list if is new, or update existing.
           const index = self.trips.findIndex(trip => trip.id === data.id)
 
           if (index > -1) {
