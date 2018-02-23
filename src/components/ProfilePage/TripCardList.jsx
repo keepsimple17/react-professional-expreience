@@ -1,11 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react'
+import { Transition } from 'react-transition-group'
 
 import cn from '../../util/cn'
 import TripCard from '../TripCard/TripCard'
 
 import './TripCardList.css'
+
+const duration = 500
 
 const TripCardList = ({ profile }) => (
   <div
@@ -15,13 +18,21 @@ const TripCardList = ({ profile }) => (
     })}
   >
     <div className="row">
-      {profile.trips.trips &&
-        profile.trips.trips.filter(trip => !trip.completed || (trip.completed && !trip.errored))
-          .map(trip => (
-            <div className="col-12 col-md-6 col-xl-4 trip-col" key={trip.pictureUrl}>
+      {profile.trips.trips && profile.trips.trips.map(trip => (
+        <Transition
+          in={!trip.completed || (trip.completed && !trip.errored)}
+          appear={!trip.completed || (trip.completed && !trip.errored)}
+          unmountOnExit
+          timeout={duration}
+          key={trip.pictureUrl}
+        >
+          {status => (
+            <div className={`col-12 col-md-6 col-xl-4 trip-col card-${status}`}>
               <TripCard profile={profile} trip={trip} />
             </div>
-          ))}
+          )}
+        </Transition>
+      ))}
       {!!profile.trips.loading && (
         <div className="col-12 box-message">
           <p className="box-title">Calculating</p>

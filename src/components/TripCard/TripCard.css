@@ -51,4 +51,11 @@
     object-fit: cover;
     width: 100%;
   }
+
+  & .trip-errored {
+    background-color: var(--reddish);
+    border-radius: 2px;
+    color: #fff;
+    padding: 0.5em 0.75em;
+  }
 }
