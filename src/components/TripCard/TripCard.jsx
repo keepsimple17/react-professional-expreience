@@ -48,7 +48,12 @@ const TripCard = ({ profile, trip }) => (
               Traveled <FormattedNumber value={meterToMiles(trip.distance)} /> mi to{' '}
             </span>
           )}
-          {trip.destinationName}
+          {!trip.errored && trip.destinationName}
+          {trip.errored && (
+            <span className="trip-errored">
+              {trip.destinationName}
+            </span>
+          )}
         </p>
       </div>
     </div>
