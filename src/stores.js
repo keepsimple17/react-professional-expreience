@@ -31,7 +31,8 @@ export const Profile = types
     trips: types.late(() =>
       types.optional(TripsStore, {
         trips: []
-      }))
+      })),
+    score: types.number
   })
   .actions((self) => {
     const refreshProfile = flow(function * refreshProfile () {
@@ -112,7 +113,19 @@ export const FriendsStore = types
         if (done) break
 
         const data = yield value
-        self.friends = data
+        if (!data.completed) {
+          let friends = self.friends.concat(data.friends
+            .filter(f => self.friends
+              .findIndex(friend => friend.instagramId === f.instagramId) < 0))
+          friends = friends.sort((a, b) => b.score - a.score).slice(0, 20)
+          self.friends = friends.sort((a, b) => {
+            if (a.username > b.username) return 1
+            if (a.username < b.username) return -1
+            return 0
+          })
+        } else {
+          self.friends = data.friends
+        }
       }
 
       self.loading = false
