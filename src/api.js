@@ -55,7 +55,8 @@ const formatProfile = profile => ({
     trips: profile.trips ? profile.trips.map(formatTrip) : [],
     completed: false
   },
-  username: profile.instagram_username
+  username: profile.instagram_username,
+  score: profile.score || 0
 })
 
 const fetchProfile = username =>
@@ -125,7 +126,7 @@ const iterateFriends = function * iterateFriends (username) {
 
   // new friend was found.
   socket.on('completed_friends', (data) => {
-    nextValue.resolve(data.friends.map(formatProfile))
+    nextValue.resolve({ friends: data.friends.map(formatProfile), completed: data.completed })
     if (data.completed) {
       done = true
     } else {
