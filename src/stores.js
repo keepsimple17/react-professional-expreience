@@ -114,9 +114,16 @@ export const FriendsStore = types
 
         const data = yield value
         if (!data.completed) {
-          let friends = self.friends.concat(data.friends
-            .filter(f => self.friends
-              .findIndex(friend => friend.instagramId === f.instagramId) < 0))
+          let friends = [...self.friends]
+          // we send friends one by one, by we use array for
+          // compatability with final friends
+          const newFriend = data.friends[0]
+          const index = self.friends.findIndex(f => f.instagramId === newFriend.instagramId)
+          if (index === -1) {
+            friends.push(newFriend)
+          } else {
+            friends[index].score = newFriend.score
+          }
           friends = friends.sort((a, b) => b.score - a.score).slice(0, 20)
           self.friends = friends.sort((a, b) => {
             if (a.username > b.username) return 1
