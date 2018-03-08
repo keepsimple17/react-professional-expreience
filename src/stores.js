@@ -122,9 +122,14 @@ export const FriendsStore = types
           if (index === -1) {
             friends.push(newFriend)
           } else {
-            friends[index].score = newFriend.score
+            friends[index] = newFriend
           }
-          friends = friends.sort((a, b) => b.score - a.score).slice(0, 20)
+          friends = friends.sort((a, b) => {
+            if (a.completed && !b.completed) return 1
+            if (!a.completed && b.completed) return -1
+            return 0
+          }).slice(0, 20)
+          friends = friends.sort((a, b) => b.score - a.score)
           self.friends = friends.sort((a, b) => {
             if (a.username > b.username) return 1
             if (a.username < b.username) return -1

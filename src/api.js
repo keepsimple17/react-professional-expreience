@@ -56,7 +56,8 @@ const formatProfile = profile => ({
     completed: false
   },
   username: profile.instagram_username,
-  score: profile.score || 0
+  score: profile.score || 0,
+  completed: profile.completed
 })
 
 const fetchProfile = username =>
