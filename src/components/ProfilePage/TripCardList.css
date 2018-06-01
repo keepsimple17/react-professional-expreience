@@ -3,15 +3,18 @@
 .card-entering {
   opacity: 0;
 }
+
 .card-entered {
   opacity: 1;
   transition: opacity 0.3s linear;
 }
+
 .card-exiting {
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s 1s, opacity 1s linear;
 }
+
 .trip-card-list {
   border-radius: 4px;
   border: 2px dashed transparent;
