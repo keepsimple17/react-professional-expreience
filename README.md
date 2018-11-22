@@ -1,4 +1,4 @@
-# Frontend Best Practice with React, MobX & TypeScript
+# Frontend Best Practice with React, MobX
 
 A bare minimum react-mobx-webpack-es6 boilerplate with TodoMVC example.
 
